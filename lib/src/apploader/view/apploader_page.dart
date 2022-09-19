@@ -22,7 +22,7 @@ class ApploaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ApploaderCubit, ApploaderState>(
       builder: (context, state) {
-        // TODO: return correct widget based on the state.
+        // TODO(akyunus): return correct widget based on the state.
         return const SizedBox();
       },
     );

@@ -28,7 +28,7 @@ class SplashPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20),
                   child: BlocBuilder<ApploaderCubit, ApploaderState>(
                     builder: (context, state) {
                       if (state is ApploaderStateLoadingPuzzles) {

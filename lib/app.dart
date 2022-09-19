@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
-import 'package:sozzle/src/splash/splash_page.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class App extends StatelessWidget {

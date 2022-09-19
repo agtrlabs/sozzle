@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 
 part 'apploader_state.dart';
 
-/// TODO: Implement data loading
+// TODO(akyunus): Implement data loading
 class ApploaderCubit extends Cubit<ApploaderState> {
   ApploaderCubit() : super(const ApploaderStateInitial());
 
@@ -11,7 +13,7 @@ class ApploaderCubit extends Cubit<ApploaderState> {
     emit(const ApploaderStateLoadingPuzzles(0));
 
     // update status while loading
-    int fakeLoadingTime = 600;
+    const fakeLoadingTime = 600;
     for (var i = 0; i < fakeLoadingTime; i++) {
       await Future.delayed(
         const Duration(milliseconds: 10),
@@ -23,14 +25,14 @@ class ApploaderCubit extends Cubit<ApploaderState> {
 
     // be sure to finalize loading by emitting 100 percent
     emit(const ApploaderStateLoadingPuzzles(100));
-    updateUserData();
+    unawaited(updateUserData());
   }
 
   Future<void> updateUserData() async {
     //start loading user data
     emit(const ApploaderStateLoadingPuzzles(50));
 
-    // TODO: implement logic to load  user data
+    // TODO(akyunus): implement logic to load  user data
     const fakeLoadingTime = 1;
 
     await Future.delayed(
