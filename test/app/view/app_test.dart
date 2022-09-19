@@ -7,6 +7,7 @@ void main() {
   group('App', () {
     testWidgets('renders SplashPage', (tester) async {
       await tester.pumpWidget(const App());
+      await tester.pump(Duration(seconds: 10));
       expect(find.byType(SplashPage), findsOneWidget);
     });
   });
