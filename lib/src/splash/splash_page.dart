@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
@@ -41,7 +42,7 @@ class SplashPage extends StatelessWidget {
                           value: state.percent / 100,
                         );
                       } else if (state.loaderState == LoaderState.loaded) {
-                        return StartButton();
+                        return const StartButton();
                       }
                       apploader.updatePuzzleData();
                       return Container();
@@ -59,15 +60,16 @@ class SplashPage extends StatelessWidget {
 
 class StartButton extends StatelessWidget {
   const StartButton({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return TextButton(
-      child: const Text(
-        'Tap to Start',
-        style: TextStyle(fontSize: 24),
+      child: Text(
+        l10n.startButton,
+        style: const TextStyle(fontSize: 24),
       ),
       onPressed: () {
         GoRouter.of(context).replace('/home');

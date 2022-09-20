@@ -18,8 +18,12 @@ class ApploaderCubit extends Cubit<ApploaderState> {
       await Future.delayed(
         const Duration(milliseconds: 10),
         () {
-          emit(ApploaderState(
-              LoaderState.loadingPuzzle, i * 100 ~/ fakeLoadingTime));
+          emit(
+            ApploaderState(
+              LoaderState.loadingPuzzle,
+              i * 100 ~/ fakeLoadingTime,
+            ),
+          );
         },
       );
     }
