@@ -1,7 +1,6 @@
 part of 'theme_cubit.dart';
 
 abstract class ThemeState {
-  ThemeState();
   Color get backgroundColor;
   Color get primaryTextColor;
 }

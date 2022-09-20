@@ -31,24 +31,17 @@ class SplashPage extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: BlocBuilder<ApploaderCubit, ApploaderState>(
                     builder: (context, state) {
-                      if (state is ApploaderStateLoadingPuzzles) {
+                      if (state.loaderState == LoaderState.loadingPuzzle) {
                         return LinearProgressIndicator(
                           value: state.percent / 100,
                         );
-                      } else if (state is ApploaderStateLoadingUserData) {
+                      } else if (state.loaderState ==
+                          LoaderState.loadingUserData) {
                         return LinearProgressIndicator(
                           value: state.percent / 100,
                         );
-                      } else if (state is ApploaderStateLoaded) {
-                        return TextButton(
-                          child: const Text(
-                            'Tap to Start',
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          onPressed: () {
-                            GoRouter.of(context).replace('/home');
-                          },
-                        );
+                      } else if (state.loaderState == LoaderState.loaded) {
+                        return StartButton();
                       }
                       apploader.updatePuzzleData();
                       return Container();
@@ -59,6 +52,25 @@ class SplashPage extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
+  }
+}
+
+class StartButton extends StatelessWidget {
+  const StartButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: const Text(
+        'Tap to Start',
+        style: TextStyle(fontSize: 24),
+      ),
+      onPressed: () {
+        GoRouter.of(context).replace('/home');
       },
     );
   }
