@@ -7,7 +7,7 @@ part of 'apploader_cubit.dart';
 enum LoaderState { initial, loadingPuzzle, loadingUserData, loaded }
 
 class ApploaderState {
-  const ApploaderState(this.loaderState, this.percent);
+  const ApploaderState(this.loaderState, [this.percent = 0]);
   final int percent;
   final LoaderState loaderState;
 }
