@@ -6,8 +6,11 @@ part of 'apploader_cubit.dart';
 /// loaded: All data loaded and the app is ready
 enum LoaderState { initial, loadingPuzzle, loadingUserData, loaded }
 
-class ApploaderState {
+class ApploaderState extends Equatable {
   const ApploaderState(this.loaderState, [this.percent = 0]);
   final int percent;
   final LoaderState loaderState;
+
+  @override
+  List<Object?> get props => [loaderState, percent];
 }
