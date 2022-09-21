@@ -7,11 +7,11 @@ part 'apploader_state.dart';
 
 // TODO(akyunus): Implement data loading
 class ApploaderCubit extends Cubit<ApploaderState> {
-  ApploaderCubit() : super(const ApploaderState(LoaderState.initial, 0));
+  ApploaderCubit() : super(const ApploaderState(LoaderState.initial));
 
   Future<void> updatePuzzleData() async {
     //start loading data
-    emit(const ApploaderState(LoaderState.loadingPuzzle, 0));
+    emit(const ApploaderState(LoaderState.loadingPuzzle));
 
     // update status while loading
     const fakeLoadingTime = 600;
