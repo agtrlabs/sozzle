@@ -6,7 +6,8 @@ import 'package:sozzle/src/apploader/apploader.dart';
 
 part 'apploader_state.dart';
 
-// TODO(akyunus): Implement data loading
+/// Loads Updates the game data and user data
+/// Saves to local
 class ApploaderCubit extends Cubit<ApploaderState> {
   ApploaderCubit({required this.repository})
       : super(const ApploaderState(LoaderState.initial));
