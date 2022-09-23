@@ -16,6 +16,7 @@ class ApploaderCubit extends Cubit<ApploaderState> {
   Future<void> updatePuzzleData() async {
     //start loading data
     emit(const ApploaderState(LoaderState.loadingPuzzle));
+    final levelData = await repository.getLevels();
 
     // update status while loading
     const fakeLoadingTime = 600;
@@ -41,7 +42,7 @@ class ApploaderCubit extends Cubit<ApploaderState> {
   Future<void> updateUserData() async {
     //start loading user data
     emit(const ApploaderState(LoaderState.loadingUserData, 50));
-
+    final userData = await repository.getUserProgressData();
     // TODO(akyunus): implement logic to load  user data
     const fakeLoadingTime = 1;
 

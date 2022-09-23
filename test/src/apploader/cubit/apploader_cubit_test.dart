@@ -9,10 +9,17 @@ class MockAppLoaderRepo extends Mock implements AppLoaderRepository {}
 void main() {
   group('ApploaderCubit', () {
     late ApploaderCubit apploader;
+    late MockAppLoaderRepo appLoaderRepo;
 
     setUp(() {
-      final appLoaderRepo = MockAppLoaderRepo();
+      appLoaderRepo = MockAppLoaderRepo();
       apploader = ApploaderCubit(repository: appLoaderRepo);
+
+      when(() => appLoaderRepo.getLevels()).thenAnswer(
+        (_) async => LevelList([]),
+      );
+      when(() => appLoaderRepo.getUserProgressData())
+          .thenAnswer((invocation) async => UserProgressData(currentLevel: 1));
     });
 
     tearDown(() async {
@@ -21,6 +28,18 @@ void main() {
 
     test('Initial State test', () {
       expect(apploader.state, const ApploaderState(LoaderState.initial));
+    });
+
+    test('should call AppLoaderRepository.getLevels() on startup', () async {
+      apploader.updatePuzzleData();
+
+      /// delay to finish apploader
+      await Future.delayed(const Duration(seconds: 10), () {});
+      verify(() => appLoaderRepo.getLevels()).called(1);
+    });
+    test('should getUserProgressData after loading levels()', () async {
+      await apploader.updatePuzzleData();
+      verify(() => appLoaderRepo.getUserProgressData()).called(1);
     });
   });
 }
