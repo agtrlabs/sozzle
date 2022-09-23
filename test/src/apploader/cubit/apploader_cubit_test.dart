@@ -8,7 +8,6 @@ class MockAppLoaderRepo extends Mock implements AppLoaderRepository {}
 
 void main() {
   group('ApploaderCubit', () {
-
     late ApploaderCubit apploader;
 
     setUp(() {
@@ -23,8 +22,5 @@ void main() {
     test('Initial State test', () {
       expect(apploader.state, const ApploaderState(LoaderState.initial));
     });
-
-    
-    
   });
 }
