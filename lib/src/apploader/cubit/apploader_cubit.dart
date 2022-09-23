@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sozzle/src/apploader/apploader.dart';
 
 part 'apploader_state.dart';
 
 // TODO(akyunus): Implement data loading
 class ApploaderCubit extends Cubit<ApploaderState> {
-  ApploaderCubit() : super(const ApploaderState(LoaderState.initial));
+  ApploaderCubit({required this.repository})
+      : super(const ApploaderState(LoaderState.initial));
+
+  AppLoaderRepository repository;
 
   Future<void> updatePuzzleData() async {
     //start loading data

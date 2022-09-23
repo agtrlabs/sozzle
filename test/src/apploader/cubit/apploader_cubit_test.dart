@@ -1,13 +1,19 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:sozzle/src/apploader/apploader.dart';
+
+/// mock loader for test
+class MockAppLoaderRepo extends Mock implements AppLoaderRepository {}
 
 void main() {
   group('ApploaderCubit', () {
+
     late ApploaderCubit apploader;
 
     setUp(() {
-      apploader = ApploaderCubit();
+      final appLoaderRepo = MockAppLoaderRepo();
+      apploader = ApploaderCubit(repository: appLoaderRepo);
     });
 
     tearDown(() async {
@@ -18,6 +24,7 @@ void main() {
       expect(apploader.state, const ApploaderState(LoaderState.initial));
     });
 
+    
     
   });
 }
