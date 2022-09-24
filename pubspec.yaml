@@ -16,6 +16,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   go_router: ^4.5.0
+  http: ^0.13.5
   intl: ^0.17.0
 
 dev_dependencies:

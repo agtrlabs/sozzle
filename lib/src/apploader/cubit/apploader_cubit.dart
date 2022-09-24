@@ -9,15 +9,16 @@ part 'apploader_state.dart';
 /// Loads Updates the game data and user data
 /// Saves to local
 class ApploaderCubit extends Cubit<ApploaderState> {
-  ApploaderCubit({required this.repository})
+  ApploaderCubit({required this.apploaderRepository})
       : super(const ApploaderState(LoaderState.initial));
 
-  IApploaderRepository repository;
+  IApploaderRepository apploaderRepository;
 
   Future<void> updatePuzzleData() async {
     //start loading data
     emit(const ApploaderState(LoaderState.loadingPuzzle));
-    final levelData = await repository.getLevels();
+
+    //final levelData = await apploaderRepository.getLevels();
 
     // update status while loading
     const fakeLoadingTime = 600;
@@ -43,8 +44,10 @@ class ApploaderCubit extends Cubit<ApploaderState> {
   Future<void> updateUserData() async {
     //start loading user data
     emit(const ApploaderState(LoaderState.loadingUserData, 50));
-    final userData = await repository.getUserProgressData();
-    // TODO(akyunus): implement logic to load  user data
+
+    //final userData = await apploaderRepository.getUserProgressData();
+
+    // TODO(akyunus): save user data to local
     const fakeLoadingTime = 1;
 
     await Future.delayed(

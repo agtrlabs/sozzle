@@ -4,13 +4,13 @@ import 'package:sozzle/core/domain/level_data.dart';
 class LevelRepository implements ILevelRepository {
   @override
   Future<LevelData> getLevel(int id) {
-    // TODO: implement getLevel
+    // TODO(any): implement getLevel
     throw UnimplementedError();
   }
 
   @override
   Future<bool> setLevel(LevelData level) {
-    // TODO: implement setLevel
+    // TODO(any): implement setLevel
     throw UnimplementedError();
   }
 }

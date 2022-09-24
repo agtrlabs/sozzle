@@ -1,3 +1,4 @@
+//import 'package:http/http.dart' as http;
 import 'package:sozzle/core/domain/i_level_repository.dart';
 import 'package:sozzle/core/domain/level_data.dart';
 import 'package:sozzle/core/domain/user_progress_data.dart';
@@ -5,7 +6,12 @@ import 'package:sozzle/src/apploader/apploader.dart';
 
 class ApploaderRepository implements IApploaderRepository {
   ApploaderRepository(this.levelRepository);
+
   LevelList list = LevelList([]);
+
+  @override
+  ILevelRepository levelRepository;
+
   @override
   Future<LevelList> getLevels() async {
     // TODO(akyunus): get data online
@@ -41,7 +47,4 @@ class ApploaderRepository implements IApploaderRepository {
 
     yield 1;
   }
-
-  @override
-  ILevelRepository levelRepository;
 }

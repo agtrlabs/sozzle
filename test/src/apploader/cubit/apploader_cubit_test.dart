@@ -15,7 +15,7 @@ void main() {
 
     setUp(() {
       appLoaderRepo = MockAppLoaderRepo();
-      apploader = ApploaderCubit(repository: appLoaderRepo);
+      apploader = ApploaderCubit(apploaderRepository: appLoaderRepo);
 
       when(() => appLoaderRepo.getLevels()).thenAnswer(
         (_) async => LevelList([]),
