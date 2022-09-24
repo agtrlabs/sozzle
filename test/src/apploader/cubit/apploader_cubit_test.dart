@@ -6,7 +6,7 @@ import 'package:sozzle/core/domain/user_progress_data.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
 
 /// mock loader for test
-class MockAppLoaderRepo extends Mock implements AppLoaderRepository {}
+class MockAppLoaderRepo extends Mock implements IApploaderRepository {}
 
 void main() {
   group('ApploaderCubit', () {

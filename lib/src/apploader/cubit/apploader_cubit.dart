@@ -12,7 +12,7 @@ class ApploaderCubit extends Cubit<ApploaderState> {
   ApploaderCubit({required this.repository})
       : super(const ApploaderState(LoaderState.initial));
 
-  AppLoaderRepository repository;
+  IApploaderRepository repository;
 
   Future<void> updatePuzzleData() async {
     //start loading data

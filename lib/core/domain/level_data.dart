@@ -12,6 +12,16 @@ class LevelData {
     required this.words,
   });
 
+  factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
+        levelId: json['id'] as int,
+        boardData: List<String>.from(
+          (json['board'] as Iterable<String>).map((x) => x),
+        ),
+        words: List<String>.from(
+          (json['words'] as Iterable<String>).map((x) => x),
+        ),
+      );
+
   /// The data required to draw puzzle board
   List<String> boardData;
 
@@ -20,14 +30,6 @@ class LevelData {
 
   /// level id
   int levelId;
-
-  factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
-        levelId: json['id'] as int,
-        boardData: List<String>.from(
-            (json['board'] as Iterable<String>).map((x) => x)),
-        words: List<String>.from(
-            (json['words'] as Iterable<String>).map((x) => x)),
-      );
 
   Map<String, dynamic> toMap() => {
         'id': levelId,
