@@ -5,13 +5,12 @@ import 'package:sozzle/src/splash/splash_page.dart';
 
 void main() {
   group('App', () {
-
     late App myApp;
 
     setUp(() async {
       myApp = const App();
     });
-    
+
     Future<void> appinit(WidgetTester tester) async {
       await tester.pumpWidget(myApp);
       await tester.pump(const Duration(seconds: 20));
