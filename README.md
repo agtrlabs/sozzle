@@ -55,6 +55,27 @@ $ open coverage/index.html
 
 ---
 
+## Contribution
+
+Before a pull request run the following commands to be sure that;
+
+The source code is formatted.
+```sh
+flutter format --set-exit-if-changed lib test
+```
+
+The source code has no issues.
+```sh
+flutter analyze lib test
+```
+
+All tests passes.
+```sh
+flutter test --no-pub --coverage --test-randomize-ordering-seed random
+```
+
+---
+
 ## Working with Translations 🌐
 
 This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
