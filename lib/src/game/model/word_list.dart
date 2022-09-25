@@ -33,6 +33,7 @@ class LetterGrid {
   const LetterGrid({
     required this.letter,
     required this.wordPosition,
+    this.isClicked = false,
   });
 
   factory LetterGrid.fromMap(Map<String, dynamic> map) {
@@ -53,9 +54,18 @@ class LetterGrid {
     );
   }
 
+  LetterGrid copyWith({required bool isClicked}) {
+    return LetterGrid(
+      letter: letter,
+      wordPosition: wordPosition,
+      isClicked: isClicked,
+    );
+  }
+
   final String letter;
   // final GridPosition wordPosition;
   final LetterPosition wordPosition;
+  final bool isClicked;
 }
 
 class LetterPosition {
