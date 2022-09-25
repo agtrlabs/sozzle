@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
@@ -72,7 +73,8 @@ class StartButton extends StatelessWidget {
         style: const TextStyle(fontSize: 24),
       ),
       onPressed: () {
-        GoRouter.of(context).replace('/home');
+        context.goNamed(AppRoute.game.name);
+        // GoRouter.of(context).replace('/home');
       },
     );
   }
