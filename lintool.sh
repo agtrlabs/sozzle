@@ -6,6 +6,6 @@ exit_message () {
 
 flutter format --set-exit-if-changed lib test || exit_message
 flutter analyze lib test || exit_message
-flutter test --no-pub --coverage --test-randomize-ordering-seed random
+flutter test --no-pub --coverage --test-randomize-ordering-seed random || exit_message
 
 echo "\e[1;42m It's ready to go!\e[0m 🚀"
