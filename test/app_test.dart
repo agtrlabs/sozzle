@@ -13,7 +13,9 @@ void main() {
 
     Future<void> appinit(WidgetTester tester) async {
       await tester.pumpWidget(myApp);
-      await tester.pump(const Duration(seconds: 20));
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pump(const Duration(seconds: 4));
+      // await tester.pump(const Duration(seconds: 8));
     }
 
     testWidgets('renders SplashPage', (tester) async {
