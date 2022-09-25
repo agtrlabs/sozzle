@@ -1,4 +1,4 @@
-import 'package:sozzle/core/domain/level_data.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
 
 // load/save level
 abstract class ILevelRepository {

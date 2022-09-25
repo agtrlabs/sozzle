@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sozzle/core/domain/level_data.dart';
-import 'package:sozzle/core/domain/user_progress_data.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/level/domain/user_progress_data.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
 
 /// mock loader for test
@@ -33,7 +33,7 @@ void main() {
     });
 
     test('should call AppLoaderRepository.getLevels() on startup', () async {
-      unawaited(apploader.updatePuzzleData());
+      await apploader.updatePuzzleData();
 
       /// delay to finish apploader
       await Future.delayed(const Duration(seconds: 10), () {});

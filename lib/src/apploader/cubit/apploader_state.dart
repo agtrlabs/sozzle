@@ -8,7 +8,7 @@ enum LoaderState { initial, loadingPuzzle, loadingUserData, loaded }
 
 class ApploaderState extends Equatable {
   const ApploaderState(this.loaderState, [this.percent = 0]);
-  final int percent;
+  final double percent;
   final LoaderState loaderState;
 
   @override
