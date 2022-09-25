@@ -10,4 +10,4 @@ flutter test -j 4 --no-pub --coverage --test-randomize-ordering-seed random || e
 
 coverage_value=$(genhtml coverage/lcov.info -o coverage/ | grep -Eoh '[0-9]+.[0-9]+%')
 echo "Coverage Value = ${coverage_value}"
-echo "\e[1;42m It's ready to go!\e[0m 🚀"
+echo "\e[1;32m Ready to push!\e[0m 🚀"
