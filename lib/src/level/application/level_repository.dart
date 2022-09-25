@@ -1,10 +1,11 @@
-import 'package:sozzle/core/domain/i_level_repository.dart';
-import 'package:sozzle/core/domain/level_data.dart';
+import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
 
 class LevelRepository implements ILevelRepository {
   @override
   Future<LevelData> getLevel(int id) {
     // TODO(any): implement getLevel
+
     throw UnimplementedError();
   }
 

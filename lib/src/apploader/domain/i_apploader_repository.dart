@@ -1,6 +1,6 @@
-import 'package:sozzle/core/domain/i_level_repository.dart';
-import 'package:sozzle/core/domain/level_data.dart';
-import 'package:sozzle/core/domain/user_progress_data.dart';
+import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/level/domain/user_progress_data.dart';
 
 /// checks updates, loads updated data, saves to local
 abstract class IApploaderRepository {
