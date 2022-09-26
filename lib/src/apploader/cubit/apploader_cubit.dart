@@ -36,7 +36,7 @@ class ApploaderCubit extends Cubit<ApploaderState> {
 
   Future<void> updateUserData() async {
     //start loading user data
-    emit(const ApploaderState(LoaderState.loadingUserData, 0));
+    emit(const ApploaderState(LoaderState.loadingUserData));
 
     //final userData = await apploaderRepository.getUserProgressData();
 
