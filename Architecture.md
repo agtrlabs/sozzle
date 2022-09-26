@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     SP[SplashPage]
     HO[HomePage]
@@ -23,3 +24,5 @@ graph TD
     AC--->LR
     AC--->UR
     US--->UR
+
+```
