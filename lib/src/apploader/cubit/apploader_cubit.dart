@@ -32,13 +32,14 @@ class ApploaderCubit extends Cubit<ApploaderState> {
 
     // be sure to finalize loading by emitting 100 percent
     emit(const ApploaderState(LoaderState.loadingPuzzle, 1));
+    await updateUserData();
   }
 
   Future<void> updateUserData() async {
     //start loading user data
     emit(const ApploaderState(LoaderState.loadingUserData));
 
-    //final userData = await apploaderRepository.getUserProgressData();
+    await apploaderRepository.getUserProgressData();
 
     final saveData = apploaderRepository.saveData();
 
