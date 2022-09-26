@@ -21,6 +21,7 @@ class ApploaderCubit extends Cubit<ApploaderState> {
     await apploaderRepository.getLevels();
 
     // update status while loading
+
     final saveData = apploaderRepository.saveData();
 
     await for (final percent in saveData) {
@@ -35,9 +36,9 @@ class ApploaderCubit extends Cubit<ApploaderState> {
 
   Future<void> updateUserData() async {
     //start loading user data
-    emit(const ApploaderState(LoaderState.loadingUserData, 50));
+    emit(const ApploaderState(LoaderState.loadingUserData, 0));
 
-    final userData = await apploaderRepository.getUserProgressData();
+    //final userData = await apploaderRepository.getUserProgressData();
 
     final saveData = apploaderRepository.saveData();
 

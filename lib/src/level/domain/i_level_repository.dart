@@ -1,7 +1,7 @@
 import 'package:sozzle/src/level/domain/level_data.dart';
 
-// load/save level
+// load/save leveldata
 abstract class ILevelRepository {
   Future<LevelData> getLevel(int id);
-  Future<bool> setLevel(LevelData level);
+  Future<void> setLevel(LevelData level);
 }
