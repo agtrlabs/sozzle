@@ -4,9 +4,21 @@ class WordList {
   const WordList({
     required this.words,
     required this.grid,
+    required this.letters,
   });
 
-  final List<LetterGrid> words;
+  factory WordList.fromMap(Map<String, dynamic> map) {
+    return WordList(
+      grid: GridPosition.fromMap(map),
+      words: (map['data'] as List)
+          .map((e) => Word.fromMap(e as Map<String, dynamic>))
+          .toList(),
+      letters: List.from(map['letters'] as List),
+    );
+  }
+
+  final List<Word> words;
+  final List<String> letters;
   final GridPosition grid;
 }
 
@@ -38,15 +50,6 @@ class LetterGrid {
 
   factory LetterGrid.fromMap(Map<String, dynamic> map) {
     final letter = map.keys.first;
-
-    // final wordPosition = (map[letter] as List<dynamic>).cast<int>().toList();
-    // return LetterGrid(
-    //   letter: letter,
-    //   wordPosition: GridPosition(
-    //     row: wordPosition[0],
-    //     col: wordPosition[1],
-    //   ),
-    // );
     final wordPosition = (map[letter] as List<dynamic>).cast<int>().toList();
     return LetterGrid(
       letter: letter,

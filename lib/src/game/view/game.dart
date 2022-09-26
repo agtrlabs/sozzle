@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:grid_board/grid_board.dart';
 import 'package:sozzle/services/mock_server.dart';
 import 'package:sozzle/src/game/model/word_list.dart' as word;
 import 'package:sozzle/src/game/view/game_board.dart';
@@ -13,23 +14,12 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
-  // final _gridSize = const GridSize(
-  //   10,
-  //   10,
-  // );
-  GridBoardController? _controller;
   late final Future<Map<String, dynamic>> _mockData;
 
   @override
   void initState() {
     super.initState();
     _mockData = MockServer().loadAsset();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
   }
 
   @override
@@ -42,26 +32,12 @@ class _GameState extends State<Game> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData && snapshot.data != null) {
                 final data = snapshot.data!;
-                final gridPosition = word.GridPosition.fromMap(data);
-                final gridSize = GridSize(
-                  gridPosition.maxSize,
-                  gridPosition.maxSize,
+                final wordList = word.WordList.fromMap(
+                  data,
                 );
-                final words = (data['data'] as List)
-                    .map(
-                      (w) => word.Word.fromMap(w as Map<String, dynamic>),
-                    )
-                    .toList();
 
-                final lettersGrid = words
-                    .expand(
-                      (word) => word.letters,
-                    )
-                    .toList();
                 return GameBoard(
-                  gridSize: gridSize,
-                  lettersGrid: lettersGrid,
-                  gridPosition: gridPosition,
+                  wordList: wordList,
                 );
               }
 
