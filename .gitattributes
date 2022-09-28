@@ -1,0 +1,2 @@
+*.cpp linguist-detectable=false
+CMakeList.txt linguist-detectable=false
