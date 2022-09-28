@@ -1,19 +1,16 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:sozzle/services/mock_server.dart';
-import 'package:sozzle/src/game/model/word_list.dart' as word;
-import 'package:sozzle/src/game/view/game_board.dart';
+import 'package:sozzle/src/level/models/level.dart';
+import 'package:sozzle/src/level/view/game_board.dart';
 
-class Game extends StatefulWidget {
-  const Game({super.key});
-  static const String path = 'game';
+class GamePage extends StatefulWidget {
+  const GamePage({super.key});
 
   @override
-  State<Game> createState() => _GameState();
+  State<GamePage> createState() => _GamePageState();
 }
 
-class _GameState extends State<Game> {
+class _GamePageState extends State<GamePage> {
   late final Future<Map<String, dynamic>> _mockData;
 
   @override
@@ -32,12 +29,12 @@ class _GameState extends State<Game> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData && snapshot.data != null) {
                 final data = snapshot.data!;
-                final wordList = word.WordList.fromMap(
+                final levelData = LevelData.fromMap(
                   data,
                 );
 
                 return GameBoard(
-                  wordList: wordList,
+                  levelData: levelData,
                 );
               }
 

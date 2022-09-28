@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class MockServer {
-  static const String path = 'assets/mock/mock_data.json';
+  static const String path = 'assets/mock/board_game.json';
   Future<Map<String, dynamic>> loadAsset() async {
     final dataString = await rootBundle.loadString(path);
     Map<String, dynamic> dataJson;
