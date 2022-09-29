@@ -6,7 +6,8 @@ import 'package:sozzle/src/user_stats/domain/i_user_stats_repository.dart';
 import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 
 class MockApploaderRepository implements IApploaderRepository {
-  MockApploaderRepository({required this.levelRepository, required this.userStatsRepository);
+  MockApploaderRepository(
+      {required this.levelRepository, required this.userStatsRepository});
 
   LevelList list = LevelList([]);
 
@@ -150,7 +151,8 @@ class MockApploaderRepository implements IApploaderRepository {
 
   @override
   Future<UserProgressData> getUserProgressData() async {
-    return UserProgressData(currentLevel: 1);
+    return userStatsRepository.getCurrent();
+    
   }
 
   @override
@@ -167,7 +169,6 @@ class MockApploaderRepository implements IApploaderRepository {
       //level save to file
       yield progress < 1 ? progress : 0.99;
     }
-    
 
     yield 1;
   }
