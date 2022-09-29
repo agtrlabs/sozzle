@@ -19,7 +19,7 @@ class UserStatsRepository implements IUserStatsRepository {
   @override
   Future<void> save(UserProgressData progressData) async {
     final data = progressData.toMap();
-    await _db.collection('levels').doc('current').set(data);
+    await _db.collection('stats').doc('current').set(data);
     return;
   }
 }
