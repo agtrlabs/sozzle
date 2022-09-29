@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
-import 'package:sozzle/src/level/domain/user_progress_data.dart';
+import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 
 /// mock loader for test
 class MockAppLoaderRepo extends Mock implements IApploaderRepository {}

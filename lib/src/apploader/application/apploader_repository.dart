@@ -2,7 +2,7 @@
 import 'package:sozzle/src/apploader/apploader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
-import 'package:sozzle/src/level/domain/user_progress_data.dart';
+import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 
 class MockApploaderRepository implements IApploaderRepository {
   MockApploaderRepository(this.levelRepository);
