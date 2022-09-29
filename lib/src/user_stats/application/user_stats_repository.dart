@@ -7,6 +7,12 @@ class UserStatsRepository implements IUserStatsRepository {
   @override
   Future<UserProgressData> getCurrent() async {
     final data = await _db.collection('stats').doc('current').get();
+    // create initial ProgressData
+    if (data == null) {
+      final initialProgres = UserProgressData(currentLevel: 1);
+      await save(initialProgres);
+      return initialProgres;
+    }
     return UserProgressData.fromMap(data!);
   }
 

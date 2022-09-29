@@ -13,6 +13,10 @@ void main() {
     testWidgets('renders SplashPage', (tester) async {
       await tester.pumpWidget(myApp);
       await tester.pump(wait);
+      
+      await tester.pump(wait);
+      await tester.pump(wait);
+      await tester.pump(Duration(seconds: 10));
       expect(find.byType(SplashPage), findsOneWidget);
     });
 
