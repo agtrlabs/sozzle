@@ -13,7 +13,7 @@ class UserStatsRepository implements IUserStatsRepository {
       await save(initialProgres);
       return initialProgres;
     }
-    return UserProgressData.fromMap(data!);
+    return UserProgressData.fromMap(data);
   }
 
   @override

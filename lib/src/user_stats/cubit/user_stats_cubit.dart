@@ -11,12 +11,10 @@ class UserStatsCubit extends Cubit<UserStatsState> {
   IUserStatsRepository repository;
 
   void advanceLevelUp() {
-    emit(
-      UserStatsState(
-        progress: UserProgressData(
-          currentLevel: state.progress.currentLevel + 1,
-        ),
-      ),
+    final newProgress = UserProgressData(
+      currentLevel: state.progress.currentLevel + 1,
     );
+    emit(UserStatsState(progress: newProgress));
+    repository.save(newProgress);
   }
 }

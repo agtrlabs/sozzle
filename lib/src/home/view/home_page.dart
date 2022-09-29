@@ -30,6 +30,7 @@ class HomePage extends StatelessWidget {
                   return TextButton(
                     onPressed: () {
                       // TODO(any): route to game play
+                      context.read<UserStatsCubit>().advanceLevelUp();
                     },
                     child:
                         Text('Current Level: ${state.progress.currentLevel}'),
