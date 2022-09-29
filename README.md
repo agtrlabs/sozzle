@@ -77,6 +77,10 @@ $ flutter analyze lib test
 $ flutter test --no-pub --coverage --test-randomize-ordering-seed random
 ```
 
+- Code coverage is enough. 
+
+  So, new tests should be added belong the new codes to keep ![coverage][coverage_badge]
+
 ---
 
 ## Working with Translations 🌐
