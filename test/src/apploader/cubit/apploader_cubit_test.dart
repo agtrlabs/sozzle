@@ -1,9 +1,9 @@
-import 'dart:async';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sozzle/core/domain/level_data.dart';
-import 'package:sozzle/core/domain/user_progress_data.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/level/domain/user_progress_data.dart';
 
 /// mock loader for test
 class MockAppLoaderRepo extends Mock implements IApploaderRepository {}
@@ -22,6 +22,8 @@ void main() {
       );
       when(() => appLoaderRepo.getUserProgressData())
           .thenAnswer((invocation) async => UserProgressData(currentLevel: 1));
+      when(() => appLoaderRepo.saveData())
+          .thenAnswer((_) => Stream.fromIterable([0, 0.4, 0.6, 0.8, 1]));
     });
 
     tearDown(() async {
@@ -32,16 +34,19 @@ void main() {
       expect(apploader.state, const ApploaderState(LoaderState.initial));
     });
 
-    test('should call AppLoaderRepository.getLevels() on startup', () async {
-      unawaited(apploader.updatePuzzleData());
+    blocTest<ApploaderCubit, ApploaderState>(
+      'should getUserProgressData after loading levels()',
+      build: () => apploader,
+      act: (bloc) => bloc.updatePuzzleData(),
+      verify: (bloc) =>
+          verify(() => appLoaderRepo.getUserProgressData()).called(1),
+    );
 
-      /// delay to finish apploader
-      await Future.delayed(const Duration(seconds: 10), () {});
-      verify(() => appLoaderRepo.getLevels()).called(1);
-    });
-    test('should getUserProgressData after loading levels()', () async {
-      await apploader.updatePuzzleData();
-      verify(() => appLoaderRepo.getUserProgressData()).called(1);
-    });
+    blocTest<ApploaderCubit, ApploaderState>(
+      'should call AppLoaderRepository.getLevels() on startup',
+      build: () => apploader,
+      act: (bloc) => bloc.updatePuzzleData(),
+      verify: (bloc) => verify(() => appLoaderRepo.getLevels()).called(1),
+    );
   });
 }

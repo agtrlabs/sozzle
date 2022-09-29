@@ -18,44 +18,41 @@ class ApploaderCubit extends Cubit<ApploaderState> {
     //start loading data
     emit(const ApploaderState(LoaderState.loadingPuzzle));
 
-    //final levelData = await apploaderRepository.getLevels();
+    await apploaderRepository.getLevels();
 
     // update status while loading
-    const fakeLoadingTime = 600;
-    for (var i = 0; i < fakeLoadingTime; i++) {
-      await Future.delayed(
-        const Duration(milliseconds: 10),
-        () {
-          emit(
-            ApploaderState(
-              LoaderState.loadingPuzzle,
-              i * 100 ~/ fakeLoadingTime,
-            ),
-          );
-        },
+
+    final saveData = apploaderRepository.saveData();
+
+    await for (final percent in saveData) {
+      emit(
+        ApploaderState(LoaderState.loadingPuzzle, percent),
       );
     }
 
     // be sure to finalize loading by emitting 100 percent
-    emit(const ApploaderState(LoaderState.loadingPuzzle, 100));
-    unawaited(updateUserData());
+    emit(const ApploaderState(LoaderState.loadingPuzzle, 1));
+    await updateUserData();
   }
 
   Future<void> updateUserData() async {
     //start loading user data
-    emit(const ApploaderState(LoaderState.loadingUserData, 50));
+    emit(const ApploaderState(LoaderState.loadingUserData));
 
-    //final userData = await apploaderRepository.getUserProgressData();
+    await apploaderRepository.getUserProgressData();
 
-    // TODO(akyunus): save user data to local
-    const fakeLoadingTime = 1;
+    final saveData = apploaderRepository.saveData();
 
-    await Future.delayed(
-      const Duration(seconds: fakeLoadingTime),
-      () {
-        emit(const ApploaderState(LoaderState.loadingUserData, 100));
-      },
-    );
+    await for (final percent in saveData) {
+      emit(
+        ApploaderState(
+          LoaderState.loadingUserData,
+          percent,
+        ),
+      );
+    }
+    emit(const ApploaderState(LoaderState.loadingUserData, 100));
+
     setAppReady();
   }
 

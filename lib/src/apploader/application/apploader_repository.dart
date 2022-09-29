@@ -1,11 +1,11 @@
 //import 'package:http/http.dart' as http;
-import 'package:sozzle/core/domain/i_level_repository.dart';
-import 'package:sozzle/core/domain/level_data.dart';
-import 'package:sozzle/core/domain/user_progress_data.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
+import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/level/domain/user_progress_data.dart';
 
-class ApploaderRepository implements IApploaderRepository {
-  ApploaderRepository(this.levelRepository);
+class MockApploaderRepository implements IApploaderRepository {
+  MockApploaderRepository(this.levelRepository);
 
   LevelList list = LevelList([]);
 
@@ -16,11 +16,133 @@ class ApploaderRepository implements IApploaderRepository {
   Future<LevelList> getLevels() async {
     // TODO(akyunus): get data online
     list.levels.addAll([
-      LevelData(boardData: [], levelId: 1, words: []),
-      LevelData(boardData: [], levelId: 2, words: []),
-      LevelData(boardData: [], levelId: 3, words: []),
-      LevelData(boardData: [], levelId: 4, words: []),
+      LevelData(
+        levelId: 1,
+        words: ['SAW', 'WASP', 'SWAP', 'NAP', 'SPAWN'],
+        boardHeight: 5,
+        boardWidth: 5,
+        boardData: [
+          'W',
+          '',
+          'S',
+          'A',
+          'W',
+          'A',
+          '',
+          'W',
+          '',
+          '',
+          'S',
+          'P',
+          'A',
+          'W',
+          'N',
+          'P',
+          '',
+          'P',
+          '',
+          'A',
+          '',
+          '',
+          '',
+          '',
+          'P'
+        ],
+      ),
+      LevelData(
+        levelId: 2,
+        words: [
+          'RIFLE',
+          'FLIRT',
+          'FIRE',
+          'LEFT',
+          'TIRE',
+          'REFIT',
+          'FILTER',
+          'RELIT',
+          'TIER',
+        ],
+        boardHeight: 8,
+        boardWidth: 9,
+        boardData: [
+          '',
+          'R',
+          'I',
+          'F',
+          'L',
+          'E',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          'I',
+          '',
+          '',
+          '',
+          '',
+          '',
+          'R',
+          '',
+          'F',
+          'L',
+          'I',
+          'R',
+          'T',
+          '',
+          '',
+          'E',
+          '',
+          '',
+          'T',
+          '',
+          'E',
+          '',
+          '',
+          '',
+          'F',
+          'I',
+          'R',
+          'E',
+          '',
+          'L',
+          'E',
+          'F',
+          'T',
+          'I',
+          '',
+          '',
+          'R',
+          '',
+          'I',
+          '',
+          '',
+          'I',
+          'T',
+          '',
+          '',
+          '',
+          '',
+          'T',
+          'I',
+          'R',
+          'E',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          'R',
+        ],
+      ),
     ]);
+    /*LevelData(boardData: [], levelId: 2, words: []),
+      LevelData(boardData: [], levelId: 3, words: []),
+      LevelData(boardData: [], levelId: 4, words: []),*/
 
     return list;
   }
