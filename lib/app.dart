@@ -34,7 +34,8 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => ApploaderCubit(
               apploaderRepository: MockApploaderRepository(
-                context.read<ILevelRepository>(),
+                levelRepository: context.read<ILevelRepository>(),
+                userStatsRepository: context.read<IUserStatsRepository>(),
               ),
             ),
           ),

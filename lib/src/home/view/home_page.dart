@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                 builder: (context, state) {
                   return TextButton(
                     onPressed: () {
-                      //TODO(any): route to game play,
+                      // TODO(any): route to game play
                     },
                     child:
                         Text('Current Level: ${state.progress.currentLevel}'),
