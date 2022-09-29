@@ -2,10 +2,11 @@
 import 'package:sozzle/src/apploader/apploader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/user_stats/domain/i_user_stats_repository.dart';
 import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 
 class MockApploaderRepository implements IApploaderRepository {
-  MockApploaderRepository(this.levelRepository);
+  MockApploaderRepository({required this.levelRepository, required this.userStatsRepository);
 
   LevelList list = LevelList([]);
 
@@ -166,7 +167,11 @@ class MockApploaderRepository implements IApploaderRepository {
       //level save to file
       yield progress < 1 ? progress : 0.99;
     }
+    
 
     yield 1;
   }
+
+  @override
+  IUserStatsRepository userStatsRepository;
 }
