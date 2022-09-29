@@ -22,7 +22,7 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ApploaderCubit(
-            apploaderRepository: ApploaderRepository(
+            apploaderRepository: MockApploaderRepository(
               LevelRepository(),
             ),
           ),

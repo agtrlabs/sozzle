@@ -14,11 +14,11 @@ void main() {
 
   group('Apploader', () {
     /// System Under Test
-    late ApploaderRepository sut;
+    late MockApploaderRepository sut;
 
     setUp(() {
       final levelRepo = MockLevelRepo();
-      sut = ApploaderRepository(levelRepo);
+      sut = MockApploaderRepository(levelRepo);
     });
 
     tearDown(() {
