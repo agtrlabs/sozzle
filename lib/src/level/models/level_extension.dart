@@ -1,5 +1,10 @@
 import 'package:sozzle/src/level/models/level.dart';
 
+enum ReveilSelection {
+  concealed,
+  blocked,
+}
+
 extension LevelExtension on LevelData {
   bool includesWord(String word) => words.contains(word);
   static final List<String> _foundWords = [];
@@ -16,27 +21,31 @@ extension LevelExtension on LevelData {
 
   String getCellValue(int index) {
     if (!_getCellsWithData.contains(index)) {
-      return '';
+      return ReveilSelection.blocked.name;
     } else if (_isRevealedLetter(index)) {
       final word =
           boardData.firstWhere((word) => word.positions.contains(index));
       return word.word[word.positions.indexOf(index)];
     } else {
-      return '-';
+      return ReveilSelection.concealed.name;
     }
-    // if (_getCellsWithData.contains(index)) {
-    //   final word =
-    //       boardData.firstWhere((word) => word.positions.contains(index));
-    //   return word.word[word.positions.indexOf(index)];
-    // } else {
-    //   return '';
-    // }
   }
 
-  List<String> get getUniqueLetters =>
+  List<String> get _uniqueLetters =>
       words.join().toUpperCase().split('').toSet().toList();
 
-  void shuffle() => words.shuffle();
+  static final List<String> _letters = [];
+
+  List<String> get getUniqueLetters {
+    if (_letters.isEmpty) _letters.addAll(_uniqueLetters);
+    return _letters;
+  }
+
+  void shuffle() => _letters.shuffle();
 
   void wordIsFound(String word) => _foundWords.add(word);
+}
+
+extension WordPositionsExt on WordPosition {
+  void reveal() => revealed = true;
 }

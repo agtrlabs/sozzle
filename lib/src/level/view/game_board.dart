@@ -44,9 +44,11 @@ class _GameBoardState extends State<GameBoard> {
               child: ColoredBox(
                 color: Colors.blueAccent,
                 child: Center(
-                  child: val.isNotEmpty
+                  child: val != ReveilSelection.blocked.name
                       ? Text(
-                          val == '-' ? '' : val.toUpperCase(),
+                          val == ReveilSelection.concealed.name
+                              ? ''
+                              : val.toUpperCase(),
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -77,70 +79,73 @@ class _GameBoardState extends State<GameBoard> {
 
         return Column(
           children: [
-            SizedBox(
-              height: _gridHeight,
-              width: _gridHeight,
-              child: _buildBoard(),
-            ),
-            SizedBox(
-              height: _consoleHeight,
-              child: Stack(
-                children: [
-                  CircularPattern(
-                    onComplete: (List<PatternDot> input) {
-                      final combination =
-                          input.map((e) => e.value).join().toLowerCase();
-                      if (levelData.includesWord(combination)) {
-                        setState(() {
-                          levelData.boardData
-                              .firstWhere((word) => word.word == combination)
-                              .reveal();
-                        });
-                      }
-                    },
-                    options: const CircularPatternOptions(
-                      primaryTextStyle: TextStyle(fontSize: 4),
-                      selectedTextStyle: TextStyle(fontSize: 4),
-                    ),
-                    dots: levelData.getUniqueLetters
-                        .map(
-                          (l) => PatternDot(value: l),
-                        )
-                        .toList(),
-                  ),
-                  Align(
-                    child: IconButton(
-                      onPressed: () =>
-                          setState(() => levelData.words.shuffle()),
-                      iconSize: 34,
-                      color: const Color.fromARGB(255, 193, 215, 223),
-                      splashRadius: 18,
-                      icon: const DecoratedBox(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromARGB(255, 193, 215, 223),
-                        ),
-                        child: Icon(
-                          Icons.shuffle,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildBoard(_gridHeight, _gridHeight),
+            _buildControlPanel(_consoleHeight),
           ],
         );
       },
     );
   }
 
-  Widget _buildBoard() {
-    return GridBoard(
-      backgroundColor: Colors.white,
-      controller: _controller!,
-      gridSize: _gridSize,
+  Widget _buildBoard(double gridHeight, double gridWidth) {
+    return SizedBox(
+      height: gridHeight,
+      width: gridWidth,
+      child: GridBoard(
+        backgroundColor: Colors.white,
+        controller: _controller!,
+        gridSize: _gridSize,
+      ),
+    );
+  }
+
+  Widget _buildControlPanel(double consoleHeight) {
+    return SizedBox(
+      height: consoleHeight,
+      child: Stack(
+        children: [
+          CircularPattern(
+            onComplete: (List<PatternDot> input) {
+              final combination =
+                  input.map((e) => e.value).join().toLowerCase();
+              if (levelData.includesWord(combination)) {
+                setState(() {
+                  levelData.boardData
+                      .firstWhere((word) => word.word == combination)
+                      .reveal();
+                });
+              }
+            },
+            options: const CircularPatternOptions(
+              primaryTextStyle: TextStyle(fontSize: 14),
+              selectedTextStyle: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            dots: levelData.getUniqueLetters
+                .map(
+                  (l) => PatternDot(value: l),
+                )
+                .toList(),
+          ),
+          Align(
+            child: ElevatedButton(
+              onPressed: () => setState(
+                () => levelData.shuffle(),
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(10),
+                backgroundColor: const Color.fromARGB(255, 193, 215, 223),
+              ),
+              child: const Icon(
+                Icons.shuffle,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

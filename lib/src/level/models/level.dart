@@ -18,9 +18,6 @@ class LevelData {
 
   factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
         levelId: json['id'] as int,
-        // boardData: List<String>.from(
-        //   (json['board'] as Iterable<String>).map((x) => x),
-        // ),
         words: List<String>.from(
           (json['words'] as List<dynamic>).map((x) => x),
         ),
@@ -29,9 +26,6 @@ class LevelData {
           json['boardData'] as Iterable<dynamic>,
         ).map(WordPosition.fromMap).toList(),
       );
-
-  // /// The data required to draw puzzle board
-  // List<String> boardData;
 
   /// hidden goal words of the level
   List<String> words;
@@ -47,11 +41,14 @@ class LevelData {
 
   Map<String, dynamic> toMap() => {
         'id': levelId,
-        // 'board': List<dynamic>.from(boardData.map((x) => x)),
+        'grid': grid.toMap(),
         'words': List<dynamic>.from(words.map((x) => x)),
+        'boardData': List<Map<String, dynamic>>.from(
+          boardData.map(
+            (e) => e.toMap(),
+          ),
+        ),
       };
-
-  void shuffle() => words.shuffle();
 }
 
 class BoardGrid {
@@ -71,8 +68,6 @@ class BoardGrid {
         'rows': rows,
         'cols': cols,
       };
-
-  // int get maxSize => max(cols, rows);
 }
 
 class WordPosition {
@@ -93,22 +88,13 @@ class WordPosition {
   final List<int> positions;
   bool revealed;
 
+  Map<String, dynamic> toMap() => {word: positions};
+
   @override
   String toString() {
-    return 'word: $word, revealed: $revealed';
+    return '''
+    WordPosition(word: $word, revealed: $revealed, 
+    positions: ${positions.map((p) => p)})
+    ''';
   }
-
-  WordPosition copyWith({
-    String? word,
-    List<int>? positions,
-    bool? revealed,
-  }) {
-    return WordPosition(
-      word: word ?? this.word,
-      positions: positions ?? this.positions,
-      revealed: revealed ?? this.revealed,
-    );
-  }
-
-  void reveal() => revealed = true;
 }
