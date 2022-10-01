@@ -3,9 +3,12 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/user_stats/domain/i_user_stats_repository.dart';
 
 // mocks for test
 class MockLevelRepo extends Mock implements ILevelRepository {}
+
+class MockUserStatsRepo extends Mock implements IUserStatsRepository {}
 
 void main() {
   // setUpAll(() {
@@ -18,7 +21,11 @@ void main() {
 
     setUp(() {
       final levelRepo = MockLevelRepo();
-      sut = MockApploaderRepository(levelRepo);
+      final userStatsRepo = MockUserStatsRepo();
+      sut = MockApploaderRepository(
+        levelRepository: levelRepo,
+        userStatsRepository: userStatsRepo,
+      );
     });
 
     tearDown(() {
