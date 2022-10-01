@@ -42,7 +42,7 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => UserStatsCubit(
               context.read<IUserStatsRepository>(),
-            ),
+            )..readCurrentStats(),
           )
         ],
         child: MaterialApp.router(
