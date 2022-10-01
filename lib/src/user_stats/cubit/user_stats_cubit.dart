@@ -6,9 +6,7 @@ import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 part 'user_stats_state.dart';
 
 class UserStatsCubit extends Cubit<UserStatsState> {
-  UserStatsCubit(this.repository) : super(UserStatsState.initial()) {
-    readCurrentStats();
-  }
+  UserStatsCubit(this.repository) : super(UserStatsState.initial());
 
   IUserStatsRepository repository;
 
