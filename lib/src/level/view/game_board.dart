@@ -29,24 +29,26 @@ class GameBoard extends StatelessWidget {
           gridCellChildMap: {
             GridCellStatus.initial: ConstrainedBox(
               constraints: const BoxConstraints.expand(),
-              child: ColoredBox(
-                color: Colors.blueAccent,
-                child: Center(
-                  child: val != ReveilSelection.blocked.name
-                      ? Text(
-                          val == ReveilSelection.concealed.name
+              child: val != ReveilSelection.blocked.name
+                  ? DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        border: Border.all(),
+                      ),
+                      child: Center(
+                        child: Text(
+                          (val == ReveilSelection.concealed.name ||
+                                  val == ReveilSelection.blocked.name)
                               ? ''
                               : val.toUpperCase(),
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
-                        )
-                      : Container(
-                          color: Colors.grey.shade300,
                         ),
-                ),
-              ),
+                      ),
+                    )
+                  : Container(),
             ),
           },
         );
