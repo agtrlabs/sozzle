@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sozzle/services/mock_server.dart';
-import 'package:sozzle/src/level/models/level.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sozzle/src/level/bloc/game_play/game_play_bloc.dart';
 import 'package:sozzle/src/level/view/game_board.dart';
 
 class GamePage extends StatefulWidget {
@@ -11,46 +11,23 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  late final Future<Map<String, dynamic>> _mockData;
-
   @override
   void initState() {
     super.initState();
-    _mockData = MockServer().loadAsset();
+    BlocProvider.of<GamePlayBloc>(context).add(LoadLevelData());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: FutureBuilder<Map<String, dynamic>>(
-          future: _mockData,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData && snapshot.data != null) {
-                final data = snapshot.data!;
-                final levelData = LevelData.fromMap(
-                  data,
-                );
-
-                return GameBoard(
-                  levelData: levelData,
-                );
-              }
-
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text('Something went wrong!'),
-                );
-              }
-
-              return const Center(
-                child: Text('No data available.'),
-              );
+        child: BlocConsumer<GamePlayBloc, GamePlayState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is GamePlayLoaded) {
+              return GameBoard(levelData: state.levelData);
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const CircularProgressIndicator();
             }
           },
         ),
