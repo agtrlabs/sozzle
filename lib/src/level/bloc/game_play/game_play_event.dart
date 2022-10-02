@@ -4,7 +4,9 @@ part of 'game_play_bloc.dart';
 abstract class GamePlayEvent {}
 
 class LoadLevelData extends GamePlayEvent {
-  LoadLevelData();
+  LoadLevelData({required this.level});
+
+  final int level;
 }
 
 class AddWord extends GamePlayEvent {
@@ -15,4 +17,8 @@ class AddWord extends GamePlayEvent {
 
 class ShuffleLetters extends GamePlayEvent {}
 
-class FinishLevel extends GamePlayEvent {}
+class FinishLevel extends GamePlayEvent {
+  FinishLevel(this.level);
+
+  final int level;
+}

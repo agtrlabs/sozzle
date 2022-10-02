@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sozzle/services/mock_server.dart';
 
 import 'package:sozzle/src/level/models/level.dart';
@@ -13,6 +13,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     on<LoadLevelData>(_onLoadLevelData);
     on<AddWord>(_onAddWord);
     on<ShuffleLetters>(_onShuffleLetters);
+    on<FinishLevel>(_onFinishLevel);
   }
 
   Future<void> _onLoadLevelData(
@@ -20,10 +21,13 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     Emitter<GamePlayState> emit,
   ) async {
     final data = await MockServer().loadAsset();
-    emit(GamePlayLoaded(levelData: LevelData.fromMap(data)));
+
+    // emit(GamePlayLoaded(levelData: LevelData.fromMap(data)));
+    final index = event.level - 1;
+    emit(GamePlayLoaded(levelData: LevelList.fromMap(data).levels[index]));
   }
 
-  void _onAddWord(AddWord event, Emitter<GamePlayState> emit) {
+  Future<void> _onAddWord(AddWord event, Emitter<GamePlayState> emit) async {
     final state = this.state;
     if (state is GamePlayLoaded) {
       final wordExists = state.levelData.includesWord(event.word);
@@ -33,9 +37,18 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
             .firstWhere((word) => word.word == event.word)
             .reveal();
       }
-      emit(
-        GamePlayLoaded(levelData: state.levelData),
-      );
+      if (state.levelData.isLevelDone) {
+        final level = state.levelData.levelId++;
+        emit(
+          GamePlayLoaded(levelData: state.levelData),
+        );
+        await Future<void>.delayed(const Duration(seconds: 1));
+        emit(GamePlayFinished(level: level));
+      } else {
+        emit(
+          GamePlayLoaded(levelData: state.levelData),
+        );
+      }
     }
   }
 
@@ -46,6 +59,19 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
       emit(
         GamePlayLoaded(levelData: state.levelData),
       );
+    }
+  }
+
+  Future<void> _onFinishLevel(
+    FinishLevel event,
+    Emitter<GamePlayState> emit,
+  ) async {
+    final state = this.state;
+    if (state is GamePlayFinished) {
+      final data = await MockServer().loadAsset();
+      final index = state.level < data.length ? state.level : data.length;
+      await Future<void>.delayed(const Duration(seconds: 1));
+      emit(GamePlayLoaded(levelData: LevelList.fromMap(data).levels[index]));
     }
   }
 }

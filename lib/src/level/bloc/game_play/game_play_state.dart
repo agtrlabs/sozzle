@@ -10,3 +10,9 @@ class GamePlayLoaded extends GamePlayState {
 
   final LevelData levelData;
 }
+
+class GamePlayFinished extends GamePlayState {
+  GamePlayFinished({required this.level});
+
+  final int level;
+}

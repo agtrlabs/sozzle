@@ -73,7 +73,7 @@ class GameBoard extends StatelessWidget {
               controller: _controller,
               gridSize: _gridSize,
             ),
-            _buildControlPanel(_consoleHeight),
+            _buildControlPanel(context, _consoleHeight),
           ],
         );
       },
@@ -97,58 +97,48 @@ class GameBoard extends StatelessWidget {
     );
   }
 
-  Widget _buildControlPanel(double consoleHeight) {
-    return BlocConsumer<GamePlayBloc, GamePlayState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return SizedBox(
-          height: consoleHeight,
-          child: Stack(
-            children: [
-              CircularPattern(
-                onComplete: (List<PatternDot> input) {
-                  final combination =
-                      input.map((e) => e.value).join().toLowerCase();
-                  if (state is GamePlayLoaded) {
-                    context
-                        .read<GamePlayBloc>()
-                        .add(AddWord(word: combination));
-                  }
-                },
-                options: const CircularPatternOptions(
-                  primaryTextStyle: TextStyle(fontSize: 14),
-                  selectedTextStyle: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                dots: levelData.getUniqueLetters
-                    .map(
-                      (l) => PatternDot(value: l),
-                    )
-                    .toList(),
+  Widget _buildControlPanel(BuildContext context, double consoleHeight) {
+    return SizedBox(
+      height: consoleHeight,
+      child: Stack(
+        children: [
+          CircularPattern(
+            onComplete: (List<PatternDot> input) {
+              final combination =
+                  input.map((e) => e.value).join().toLowerCase();
+              BlocProvider.of<GamePlayBloc>(context)
+                  .add(AddWord(word: combination));
+            },
+            options: const CircularPatternOptions(
+              primaryTextStyle: TextStyle(fontSize: 14),
+              selectedTextStyle: TextStyle(
+                fontSize: 14,
               ),
-              Align(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (state is GamePlayLoaded) {
-                      context.read<GamePlayBloc>().add(ShuffleLetters());
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(10),
-                    backgroundColor: const Color.fromARGB(255, 193, 215, 223),
-                  ),
-                  child: const Icon(
-                    Icons.shuffle,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
+            ),
+            dots: levelData.getUniqueLetters
+                .map(
+                  (l) => PatternDot(value: l),
+                )
+                .toList(),
           ),
-        );
-      },
+          Align(
+            child: ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<GamePlayBloc>(context).add(ShuffleLetters());
+              },
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(10),
+                backgroundColor: const Color.fromARGB(255, 193, 215, 223),
+              ),
+              child: const Icon(
+                Icons.shuffle,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -14,7 +14,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<GamePlayBloc>(context).add(LoadLevelData());
+    BlocProvider.of<GamePlayBloc>(context).add(LoadLevelData(level: 1));
   }
 
   @override
@@ -26,8 +26,12 @@ class _GamePageState extends State<GamePage> {
           builder: (context, state) {
             if (state is GamePlayLoaded) {
               return GameBoard(levelData: state.levelData);
+            } else if (state is GamePlayFinished) {
+              context.read<GamePlayBloc>().add(FinishLevel(state.level));
+
+              return const Center(child: CircularProgressIndicator());
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),

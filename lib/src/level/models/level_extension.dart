@@ -44,6 +44,17 @@ extension LevelExtension on LevelData {
   void shuffle() => _letters.shuffle();
 
   void wordIsFound(String word) => _foundWords.add(word);
+
+  // bool get isLevelDone => words.toSet() == _foundWords.toSet();
+  bool get isLevelDone =>
+      words.toSet().every((word) => _foundWords.toSet().contains(word));
+
+  void clear() {
+    _foundWords.clear();
+    _letters.clear();
+  }
+
+  int get nextLevel => levelId++;
 }
 
 extension WordPositionsExt on WordPosition {

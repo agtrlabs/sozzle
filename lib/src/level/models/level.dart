@@ -1,7 +1,12 @@
 import 'dart:math';
 
+import 'package:sozzle/src/level/models/level_extension.dart';
+
 class LevelList {
   LevelList(this.levels);
+  factory LevelList.fromMap(List<dynamic> json) => LevelList(
+        json.map((e) => LevelData.fromMap(e as Map<String, dynamic>)).toList(),
+      );
 
   /// data list of all available levels
   List<LevelData> levels;
@@ -25,7 +30,7 @@ class LevelData {
         boardData: List<Map<String, dynamic>>.from(
           json['boardData'] as Iterable<dynamic>,
         ).map(WordPosition.fromMap).toList(),
-      );
+      )..clear();
 
   /// hidden goal words of the level
   List<String> words;
