@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
+import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class App extends StatelessWidget {
@@ -20,6 +21,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ApploaderCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SettingCubit(),
         ),
       ],
       child: MaterialApp.router(

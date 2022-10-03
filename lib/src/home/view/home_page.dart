@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sozzle/src/settings/view/settings-page.dart';
 import 'package:sozzle/src/theme/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,6 +13,7 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: state.backgroundColor,
+          appBar: AppBar(),
           body: Center(
             child: Text(
               'Sozzle Home Page',
@@ -21,6 +23,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          endDrawer: const SettingsPage(),
         );
       },
     );
