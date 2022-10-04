@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sozzle/src/settings/view/settings-page.dart';
+import 'package:sozzle/src/common/border_elevated_button.dart';
 import 'package:sozzle/src/theme/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,17 +13,30 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: state.backgroundColor,
-          appBar: AppBar(),
           body: Center(
-            child: Text(
-              'Sozzle Home Page',
-              style: TextStyle(
-                color: state.primaryTextColor,
-                fontSize: 24,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Sozzle Home Page',
+                  style: TextStyle(
+                    color: state.primaryTextColor,
+                    fontSize: 24,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                BorderElevatedButton(
+                  route: '/home/settings',
+                  text: 'Settings',
+                  backgroundColor: Colors.blue,
+                  borderColor: Colors.white,
+                  textColor: state.primaryTextColor,
+                ),
+              ],
             ),
           ),
-          endDrawer: const SettingsPage(),
         );
       },
     );

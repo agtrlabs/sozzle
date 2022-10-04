@@ -42,6 +42,9 @@ class App extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
+        // const [
+        //   Locale('es', ''),
+        // ],
       ),
     );
   }
