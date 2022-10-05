@@ -1,51 +1,58 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sozzle/src/apploader/apploader.dart';
 
 part 'apploader_state.dart';
 
-// TODO(akyunus): Implement data loading
+/// Loads Updates the game data and user data
+/// Saves to local
 class ApploaderCubit extends Cubit<ApploaderState> {
-  ApploaderCubit() : super(const ApploaderState(LoaderState.initial, 0));
+  ApploaderCubit({required this.apploaderRepository})
+      : super(const ApploaderState(LoaderState.initial));
+
+  IApploaderRepository apploaderRepository;
 
   Future<void> updatePuzzleData() async {
     //start loading data
-    emit(const ApploaderState(LoaderState.loadingPuzzle, 0));
+    emit(const ApploaderState(LoaderState.loadingPuzzle));
+
+    await apploaderRepository.getLevels();
 
     // update status while loading
-    const fakeLoadingTime = 600;
-    for (var i = 0; i < fakeLoadingTime; i++) {
-      await Future.delayed(
-        const Duration(milliseconds: 10),
-        () {
-          emit(
-            ApploaderState(
-              LoaderState.loadingPuzzle,
-              i * 100 ~/ fakeLoadingTime,
-            ),
-          );
-        },
+
+    final saveData = apploaderRepository.saveData();
+
+    await for (final percent in saveData) {
+      emit(
+        ApploaderState(LoaderState.loadingPuzzle, percent),
       );
     }
 
     // be sure to finalize loading by emitting 100 percent
-    emit(const ApploaderState(LoaderState.loadingPuzzle, 100));
-    unawaited(updateUserData());
+    emit(const ApploaderState(LoaderState.loadingPuzzle, 1));
+    await updateUserData();
   }
 
   Future<void> updateUserData() async {
     //start loading user data
-    emit(const ApploaderState(LoaderState.loadingUserData, 50));
+    emit(const ApploaderState(LoaderState.loadingUserData));
 
-    // TODO(akyunus): implement logic to load  user data
-    const fakeLoadingTime = 1;
+    await apploaderRepository.getUserProgressData();
 
-    await Future.delayed(
-      const Duration(seconds: fakeLoadingTime),
-      () {
-        emit(const ApploaderState(LoaderState.loadingUserData, 100));
-      },
-    );
+    final saveData = apploaderRepository.saveData();
+
+    await for (final percent in saveData) {
+      emit(
+        ApploaderState(
+          LoaderState.loadingUserData,
+          percent,
+        ),
+      );
+    }
+    emit(const ApploaderState(LoaderState.loadingUserData, 100));
+
     setAppReady();
   }
 
