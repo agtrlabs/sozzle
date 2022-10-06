@@ -57,6 +57,7 @@ class SettingsPage extends StatelessWidget {
                               ),
                             ),
                             trailing: Switch.adaptive(
+                              key: const Key('switchSound'),
                               value: state.isSoundOn,
                               onChanged: (val) => context
                                   .read<SettingCubit>()
