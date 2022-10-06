@@ -50,7 +50,11 @@ void main() {
         ),
       );
 
+      when(() => mockSettingCubit.state).thenReturn(
+        SettingStateFake(),
+      );
       await tester.pumpWidget(settingsPage);
+      mockSettingCubit.toggleSoundOption(val: true);
 
       expect(find.widgetWithIcon(ListTile, Icons.music_note), findsOneWidget);
     });
