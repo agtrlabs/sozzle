@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
               ),
               BlocBuilder<UserStatsCubit, UserStatsState>(
                 builder: (context, state) {
-                  return PlayButton('1');
+                  return const PlayButton('1');
                 },
               ),
             ],
