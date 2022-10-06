@@ -1,2 +1,2 @@
 export './cubit/apploader_cubit.dart';
-export './view/view.dart';
+export 'domain/i_apploader_repository.dart';
