@@ -13,15 +13,6 @@ void main() {
   late final Widget app;
   late final GoRouter router;
   setUp(() {
-    /*   app = const MaterialApp(
-      home: BorderElevatedButton(
-        backgroundColor: Colors.blue,
-        borderColor: Colors.white,
-        route: '/home',
-        text: 'Content',
-        textColor: Colors.white,
-      ),
-    ); */
     router = GoRouter(
       routes: <GoRoute>[
         GoRoute(
@@ -65,7 +56,8 @@ void main() {
     );
   });
 
-  testWidgets('d', (WidgetTester tester) async {
+  testWidgets('test routing of BorderElevatedButton',
+      (WidgetTester tester) async {
     await tester.pumpWidget(app);
     final textFinder = find.text('Content');
 
