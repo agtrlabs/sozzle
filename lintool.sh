@@ -4,7 +4,7 @@
 coverage_limit=70
 
 exit_message () {
-    echo "\e[1;31m 😅 Lintool failed.\n 🪛 Check the issues.\n 🐝 Run again.\e[0m"
+    echo -e "\e[1;31m 😅 Lintool failed.\n 🪛 Check the issues.\n 🐝 Run again.\e[0m"
     exit 0
 }
 
@@ -31,4 +31,4 @@ else
     echo "😅 Can't detect Code Coverage Value. Check it yourself."
 fi
 
-echo "\e[1;32m Ready to push!\e[0m 🚀"
+echo -e "\e[1;32m Ready to push!\e[0m 🚀"
