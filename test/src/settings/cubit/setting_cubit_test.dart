@@ -7,8 +7,7 @@ void main() {
     blocTest<SettingCubit, SettingState>(
       'emits [RandomCatStatus.loading, RandomCatStatus.emptyBreeds] '
       'state when cat.breeds are null',
-      setUp: () {
-      },
+      setUp: () {},
       build: SettingCubit.new,
       act: (bloc) => bloc.toggleDarkModeOption(val: true),
       expect: () => [
