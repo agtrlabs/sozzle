@@ -8,8 +8,6 @@ void main() {
       'emits [RandomCatStatus.loading, RandomCatStatus.emptyBreeds] '
       'state when cat.breeds are null',
       setUp: () {
-        /*   when(() => catMock.breeds).thenReturn(null);
-        when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock); */
       },
       build: SettingCubit.new,
       act: (bloc) => bloc.toggleDarkModeOption(val: true),
