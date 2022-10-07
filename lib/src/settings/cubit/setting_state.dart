@@ -1,7 +1,7 @@
 part of 'setting_cubit.dart';
 
 @immutable
-abstract class SettingState {}
+abstract class SettingState extends Equatable {}
 
 class SettingInitial extends SettingState {
   SettingInitial({
@@ -29,4 +29,12 @@ class SettingInitial extends SettingState {
       isMute: isMute ?? this.isMute,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        isSoundOn,
+        isMusicOn,
+        isDarkMode,
+        isMute,
+      ];
 }
