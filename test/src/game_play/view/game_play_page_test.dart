@@ -4,21 +4,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/game_play/view/view.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/level/domain/level_data.dart';
 import '../../../helpers/helpers.dart';
 
 class MockLevelRepository extends Mock implements ILevelRepository {}
 
 void main() {
-  group('App', () {
+  group('GamePlayPage', () {
+    late MockLevelRepository repo;
     setUp(() async {
-      //TODO:  setup Mock Bloc
+      repo = MockLevelRepository();
     });
     testWidgets('should have a FutureBuilder', (WidgetTester tester) async {
+      when(() => repo.getLevel(any())).thenAnswer(
+        (_) async => LevelData(
+          boardData: [],
+          boardWidth: 1,
+          boardHeight: 1,
+          levelId: 1,
+          words: [],
+        ),
+      );
       await tester.pumpApp(
         MultiRepositoryProvider(
           providers: [
             RepositoryProvider<ILevelRepository>(
-              create: (context) => MockLevelRepository(),
+              create: (context) => repo,
             ),
           ],
           child: const GamePlayPage(
@@ -26,11 +37,9 @@ void main() {
           ),
         ),
       );
-      // TODO: add mock behaviour
       await tester.pump();
-      final futureFinder = find.byElementType(FutureBuilder);
+      final futureFinder = find.byType(FutureBuilder<LevelData>);
       expect(futureFinder, findsOneWidget);
     });
-    
   });
 }

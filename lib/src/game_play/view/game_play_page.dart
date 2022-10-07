@@ -13,7 +13,7 @@ class GamePlayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder(
+        child: FutureBuilder<LevelData>(
           future: RepositoryProvider.of<ILevelRepository>(context)
               .getLevel(levelID),
           builder: (BuildContext context, AsyncSnapshot<LevelData> snapshot) {
