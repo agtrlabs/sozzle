@@ -8,8 +8,10 @@ part 'game_play_state.dart';
 class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   GamePlayBloc({required this.levelData})
       : super(const GamePlayState(GamePlayActualState.allHidden)) {
-    on<GamePlayEvent>((event, emit) {
-      // TODO(any): implement event handler
+    on<GamePlayEventInputWord>((event, emit) {
+      if (!levelData.words.contains(event.word)) {
+        emit(const GamePlayState(GamePlayActualState.notFound));
+      }
     });
   }
   final LevelData levelData;
