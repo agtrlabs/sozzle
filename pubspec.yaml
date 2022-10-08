@@ -17,6 +17,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   go_router: ^4.5.0
+  grid_board:
+    git:
+      url: https://github.com/agtrlabs/grid_board.git
+      ref: main
   http: ^0.13.5
   intl: ^0.17.0
   localstore: ^1.2.3

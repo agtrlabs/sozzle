@@ -29,7 +29,7 @@ class GamePlayPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const GamePlayHeader(),
-                    const GamePlayBoard(),
+                    Expanded(child: GamePlayBoard(snapshot.data!)),
                     GamePlayLetters(snapshot.data!),
                   ],
                 ),
