@@ -13,12 +13,11 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: HomePage.path,
           builder: (context, GoRouterState state) => const HomePage(),
-          routes: <GoRoute>[
-            GoRoute(
-              path: SettingsPage.path,
-              builder: (context, GoRouterState state) => const SettingsPage(),
-            ),
-          ],
+          
+        ),
+        GoRoute(
+          path: SettingsPage.path,
+          builder: (context, GoRouterState state) => const SettingsPage(),
         ),
         GoRoute(
           path: '${GamePlayPage.path}/:levelId',
