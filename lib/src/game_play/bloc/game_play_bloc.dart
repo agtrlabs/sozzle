@@ -9,6 +9,8 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   GamePlayBloc({required this.levelData})
       : super(const GamePlayState(GamePlayActualState.allHidden)) {
     on<GamePlayEventInputWord>((event, emit) {
+
+      // TODO(me): implement bonusWord
       if (!levelData.words.contains(event.word)) {
         emit(const GamePlayState(GamePlayActualState.notFound));
       } else {
