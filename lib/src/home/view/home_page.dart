@@ -10,15 +10,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: state.backgroundColor,
+        return const Scaffold(
+          // backgroundColor: state.backgroundColor,
           body: Center(
             child: Text(
               'Sozzle Home Page',
-              style: TextStyle(
-                color: state.primaryTextColor,
-                fontSize: 24,
-              ),
+              // style: TextStyle(
+              //   color: state.primaryTextColor,
+              //   fontSize: 24,
+              // ),
             ),
           ),
         );

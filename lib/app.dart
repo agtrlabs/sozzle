@@ -22,22 +22,31 @@ class App extends StatelessWidget {
           create: (context) => ApploaderCubit(),
         ),
       ],
-      child: MaterialApp.router(
-        routeInformationProvider: router.routeInformationProvider,
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-          colorScheme: ColorScheme.fromSwatch(
-            accentColor: const Color(0xFF13B9FF),
-          ),
-        ),
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            routeInformationProvider: router.routeInformationProvider,
+            routeInformationParser: router.routeInformationParser,
+            routerDelegate: router.routerDelegate,
+            debugShowCheckedModeBanner: false,
+            theme: state is ThemeStateDark
+                ? state.themeData
+                : state is ThemeStateLight
+                    ? state.themeData
+                    : ThemeData.light(),
+            // ThemeData(
+            //   appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+            //   colorScheme: ColorScheme.fromSwatch(
+            //     accentColor: const Color(0xFF13B9FF),
+            //   ),
+            // ),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+          );
+        },
       ),
     );
   }
