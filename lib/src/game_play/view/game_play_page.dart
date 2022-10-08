@@ -27,10 +27,10 @@ class GamePlayPage extends StatelessWidget {
               return BlocProvider(
                 create: (_) => GamePlayBloc(levelData: snapshot.data!),
                 child: Column(
-                  children: const [
-                    GamePlayHeader(),
-                    GamePlayBoard(),
-                    GamePlayLetters(),
+                  children: [
+                    const GamePlayHeader(),
+                    const GamePlayBoard(),
+                    GamePlayLetters(snapshot.data!),
                   ],
                 ),
               );
