@@ -91,8 +91,8 @@ R D
       boardData: [
         ...'L W OWL'.split(''),
         ...'O O L O'.split(''),
-        ...'WORLD R'.split(''),
-        ...'  D   D'.split(''),
+        ...'WORLD W'.split(''),
+        ...'R D    '.split(''),
       ],
       boardWidth: 7,
       boardHeight: 4,

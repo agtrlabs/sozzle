@@ -37,21 +37,37 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   /// scans board data letf to right
   /// if word is found return indexes of letters
   List<int> _scanLR(String word) {
-    var result = <int>[];
+    final result = <int>[];
     for (var row = 0; row < levelData.boardHeight; row++) {
       var wordPointer = 0;
-      result = [];
+      result.clear();
       for (var col = 0; col < levelData.boardWidth; col++) {
         //check current cell matches with wordPointer
         final currentIndex = row * levelData.boardWidth + col;
         if (levelData.boardData[currentIndex] == word[wordPointer]) {
           result.add(currentIndex);
-
-          if (wordPointer == word.length - 1) return result;
           wordPointer++;
+          if (wordPointer == word.length) {
+            // check if next letter is empty or pointer is at the end
+            if (col == levelData.boardWidth - 1) {
+              return result;
+            } else {
+              final nextIndex = row * levelData.boardWidth + col + 1;
+              if ((levelData.boardData[nextIndex] == '') ||
+                  (levelData.boardData[nextIndex] == ' ')) {
+                return result;
+              } else {
+                wordPointer = 0;
+                result.clear();
+              }
+            }
+          }
         } else {
           wordPointer = 0;
-          result = [];
+          result.clear();
+        }
+        if (wordPointer >= word.length) {
+          col = levelData.boardWidth;
         }
       }
     }
@@ -60,19 +76,38 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
 
   // scan each column top to down to find the word
   List<int> _scanTD(String word) {
-    var result = <int>[];
+    final result = <int>[];
     for (var col = 0; col < levelData.boardWidth; col++) {
       var wordPointer = 0;
-      result = [];
+      result.clear();
       for (var row = 0; row < levelData.boardHeight; row++) {
         //check current cell matches with wordPointer
         final currentIndex = row * levelData.boardWidth + col;
+
         if (levelData.boardData[currentIndex] == word[wordPointer]) {
           result.add(currentIndex);
-          if (wordPointer == word.length - 1) return result;
           wordPointer++;
+          if (wordPointer == word.length) {
+            // check if next letter is empty or pointer is at the end
+            if (row == levelData.boardHeight - 1) {
+              return result;
+            } else {
+              final nextIndex = (row + 1) * levelData.boardWidth + col;
+              if ((levelData.boardData[nextIndex] == '') ||
+                  (levelData.boardData[nextIndex] == ' ')) {
+                return result;
+              } else {
+                wordPointer = 0;
+                result.clear();
+              }
+            }
+          }
         } else {
-          result = [];
+          wordPointer = 0;
+          result.clear();
+        }
+        if (wordPointer >= word.length) {
+          col = levelData.boardWidth;
         }
       }
     }
