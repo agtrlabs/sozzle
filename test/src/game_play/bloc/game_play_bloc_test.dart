@@ -79,14 +79,14 @@ EXIST
     );
 
     blocTest<GamePlayBloc, GamePlayState>(
-      'emits state allFound ',
+      'emits state allFound after last wordFound',
       build: () => bloc,
       act: (bloc) {
         for (final word in levelData.words) {
           bloc.add(GamePlayEventInputWord(word));
         }
       },
-      skip: levelData.words.length - 1,
+      skip: levelData.words.length,
       expect: () => [const GamePlayState(GamePlayActualState.allFound)],
     );
   });
@@ -159,14 +159,14 @@ R D
     );
 
     blocTest<GamePlayBloc, GamePlayState>(
-      'emits state allFound ',
+      'emits state allFound after last wordFound',
       build: () => bloc,
       act: (bloc) {
         for (final word in levelData.words) {
           bloc.add(GamePlayEventInputWord(word));
         }
       },
-      skip: levelData.words.length - 1,
+      skip: levelData.words.length,
       expect: () => [const GamePlayState(GamePlayActualState.allFound)],
     );
   });

@@ -25,6 +25,12 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
             emit(
               GamePlayState(GamePlayActualState.wordFound, indexList),
             );
+            //check if all words found
+            if (foundWords.length == levelData.words.length) {
+              emit(
+                const GamePlayState(GamePlayActualState.allFound),
+              );
+            }
           }
         }
       }
