@@ -77,6 +77,18 @@ EXIST
       skip: 1,
       expect: () => [const GamePlayState(GamePlayActualState.alreadyFound)],
     );
+
+    blocTest<GamePlayBloc, GamePlayState>(
+      'emits state allFound ',
+      build: () => bloc,
+      act: (bloc) {
+        for (final word in levelData.words) {
+          bloc.add(GamePlayEventInputWord(word));
+        }
+      },
+      skip: levelData.words.length - 1,
+      expect: () => [const GamePlayState(GamePlayActualState.allFound)],
+    );
   });
 
   group('GamePlayBloc Level2', () {
@@ -144,6 +156,18 @@ R D
       },
       skip: 1,
       expect: () => [const GamePlayState(GamePlayActualState.alreadyFound)],
+    );
+
+    blocTest<GamePlayBloc, GamePlayState>(
+      'emits state allFound ',
+      build: () => bloc,
+      act: (bloc) {
+        for (final word in levelData.words) {
+          bloc.add(GamePlayEventInputWord(word));
+        }
+      },
+      skip: levelData.words.length - 1,
+      expect: () => [const GamePlayState(GamePlayActualState.allFound)],
     );
   });
 }
