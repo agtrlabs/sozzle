@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sozzle/src/common/border_elevated_button.dart';
 import 'package:sozzle/src/home/view/play_button.dart';
 import 'package:sozzle/src/theme/theme.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
+import 'package:sozzle/src/game_play/view/components/game_loader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
 
@@ -13,7 +14,7 @@ class GamePlayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder<LevelData>(
+        child: GameLoader(
           future: RepositoryProvider.of<ILevelRepository>(context)
               .getLevel(levelID),
           builder: (BuildContext context, AsyncSnapshot<LevelData> snapshot) {

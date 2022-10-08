@@ -13,7 +13,6 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: HomePage.path,
           builder: (context, GoRouterState state) => const HomePage(),
-          
         ),
         GoRoute(
           path: SettingsPage.path,
