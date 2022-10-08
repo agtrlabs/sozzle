@@ -9,6 +9,7 @@ import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/level/application/level_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/user_stats.dart';
 
@@ -30,6 +31,9 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => ThemeCubit(),
+          ),
+          BlocProvider(
+            create: (context) => SettingCubit(),
           ),
           BlocProvider(
             create: (context) => ApploaderCubit(
