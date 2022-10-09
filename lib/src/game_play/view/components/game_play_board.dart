@@ -49,6 +49,7 @@ class GamePlayBoard extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 50,
         child: GridBoard(
           margin: 5,
+          backgroundColor: theme.backgroundColor,
           controller: controller,
           gridSize: GridSize(levelData.boardWidth, levelData.boardHeight),
         ),
