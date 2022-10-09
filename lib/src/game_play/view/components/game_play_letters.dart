@@ -1,5 +1,7 @@
 import 'package:circular_pattern/circular_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
 
 class GamePlayLetters extends StatelessWidget {
@@ -19,7 +21,11 @@ class GamePlayLetters extends StatelessWidget {
         aspectRatio: 1,
         child: CircularPattern(
           dots: letters.map((e) => PatternDot(value: e)).toList(),
-          onComplete: (input) {},
+          onComplete: (input) {
+            final word = input.map((e) => e.value).toList().join();
+            BlocProvider.of<GamePlayBloc>(context)
+                .add(GamePlayEventInputWord(word));
+          },
         ),
       ),
     );

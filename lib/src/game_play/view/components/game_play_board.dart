@@ -12,40 +12,45 @@ class GamePlayBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = BlocProvider.of<ThemeCubit>(context).state;
+
+    final gridSize = GridSize(levelData.boardWidth, levelData.boardHeight);
+    final cels = levelData.boardData
+        .map(
+          (e) => GridCell(
+            gridCellChildMap: e.isNotEmpty
+                ? {
+                    GridCellStatus.initial: LetterBox(e),
+                    GridCellStatus.selected: OpenLetterBox(e),
+                  }
+                : {
+                    GridCellStatus.initial: const NoLetterBox(),
+                    GridCellStatus.selected: const NoLetterBox(),
+                  },
+          ),
+        )
+        .toList();
+
     final controller = GridBoardController(
       gridBoardProperties: GridBoardProperties(
-        gridSize: GridSize(levelData.boardWidth, levelData.boardHeight),
+        gridSize: gridSize,
       ),
-      cells: levelData.boardData
-          .map(
-            (e) => GridCell(
-              gridCellChildMap: e.isNotEmpty
-                  ? {
-                GridCellStatus.initial: LetterBox(e),
-                GridCellStatus.selected: OpenLetterBox(e),
-                    }
-                  : {
-                      GridCellStatus.initial: NoLetterBox(),
-                      GridCellStatus.selected: NoLetterBox(),
-                    },
-              
-            ),
-          )
-          .toList(),
+      cells: cels,
     );
     return BlocListener<GamePlayBloc, GamePlayState>(
       listener: (context, game) {
-        game.revealedCells.map(
-            (idx) => controller.updateCellStatus(idx, GridCellStatus.selected));
+        if (game.state == GamePlayActualState.wordFound) {
+          final indexes = game.revealedCells;
+          for (final idx in indexes) {
+            controller.updateCellStatus(idx, GridCellStatus.selected);
+          }
+        }
       },
-      child: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          color: theme.backgroundColor,
-          child: GridBoard(
-            controller: controller,
-            gridSize: GridSize(levelData.boardWidth, levelData.boardHeight),
-          ),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - 50,
+        child: GridBoard(
+          margin: 5,
+          controller: controller,
+          gridSize: GridSize(levelData.boardWidth, levelData.boardHeight),
         ),
       ),
     );
@@ -60,16 +65,13 @@ class LetterBox extends StatelessWidget {
     return Container(
       width: 200,
       height: 200,
-      key: UniqueKey(),
+      key: ValueKey(letter),
       decoration: BoxDecoration(
         color: Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         border: Border.all(),
       ),
-      child: FittedBox(
-        child: Text(''),
-        //fit: BoxFit.contain,
-      ),
+      child: Container(),
     );
   }
 }
@@ -82,10 +84,10 @@ class OpenLetterBox extends StatelessWidget {
     return Container(
       width: 200,
       height: 200,
-      key: UniqueKey(),
+      key: ValueKey(letter),
       decoration: BoxDecoration(
         color: Colors.greenAccent,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         border: Border.all(),
       ),
       child: FittedBox(
