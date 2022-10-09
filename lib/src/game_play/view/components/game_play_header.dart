@@ -13,6 +13,7 @@ class GamePlayHeader extends StatelessWidget {
       builder: (context, state) {
         final theme = BlocProvider.of<ThemeCubit>(context).state;
         return AppBar(
+          elevation: 0,
           backgroundColor: theme.backgroundColor,
           leading: IconButton(
             icon: const Icon(Icons.home),
