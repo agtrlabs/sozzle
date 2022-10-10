@@ -13,53 +13,47 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final apploader = context.read<ApploaderCubit>();
-    return Scaffold(
-      // backgroundColor: state.backgroundColor,
-      floatingActionButton: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (contex, state) {
-          return FloatingActionButton(
-            onPressed: () {
-              state is ThemeStateDark
-                  ? contex.read<ThemeCubit>().getThemeLight()
-                  : contex.read<ThemeCubit>().getThemeDark();
-            },
-          );
-        },
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Sozzle',
-              // style: TextStyle(
-              //   color: state.primaryTextColor,
-              //   fontSize: 24,
-              // ),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: state.backgroundColor,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Sozzle',
+                  style: TextStyle(
+                    color: state.primaryTextColor,
+                    fontSize: 24,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: BlocBuilder<ApploaderCubit, ApploaderState>(
+                    builder: (context, state) {
+                      if (state.loaderState == LoaderState.loadingPuzzle) {
+                        return LinearProgressIndicator(
+                          value: state.percent / 100,
+                        );
+                      } else if (state.loaderState ==
+                          LoaderState.loadingUserData) {
+                        return LinearProgressIndicator(
+                          value: state.percent / 100,
+                        );
+                      } else if (state.loaderState == LoaderState.loaded) {
+                        return const StartButton();
+                      }
+                      apploader.updatePuzzleData();
+                      return Container();
+                    },
+                  ),
+                )
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: BlocBuilder<ApploaderCubit, ApploaderState>(
-                builder: (context, state) {
-                  if (state.loaderState == LoaderState.loadingPuzzle) {
-                    return LinearProgressIndicator(
-                      value: state.percent / 100,
-                    );
-                  } else if (state.loaderState == LoaderState.loadingUserData) {
-                    return LinearProgressIndicator(
-                      value: state.percent / 100,
-                    );
-                  } else if (state.loaderState == LoaderState.loaded) {
-                    return const StartButton();
-                  }
-                  apploader.updatePuzzleData();
-                  return Container();
-                },
-              ),
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

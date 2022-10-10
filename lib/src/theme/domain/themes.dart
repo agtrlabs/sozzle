@@ -66,6 +66,11 @@ class Themes {
         bodySmall: getRegularStyle(color: ColorManager.grey1),
         bodyLarge: getRegularStyle(color: ColorManager.grey),
       ),
+
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+        // size: 24,
+      ),
     );
   }
 
