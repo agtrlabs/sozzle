@@ -9,7 +9,9 @@ import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/level/application/level_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/settings/application/setting_repository.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
+import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/user_stats.dart';
 
@@ -26,16 +28,23 @@ class App extends StatelessWidget {
         RepositoryProvider<IUserStatsRepository>(
           create: (context) => UserStatsRepository(),
         ),
+        RepositoryProvider<ISettingRepository>(
+          create: (context) => SettingRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ThemeCubit(),
+            create: (context) => ThemeCubit(
+              isDarkMode:
+                  context.read<ISettingRepository>().getDarkModeSetting(),
+            )..initialize(),
           ),
           BlocProvider(
             create: (context) => SettingCubit(
-              BlocProvider.of<ThemeCubit>(context),
-            ),
+              settingRep: context.read<ISettingRepository>(),
+              themeCubit: BlocProvider.of<ThemeCubit>(context),
+            )..initialize(),
           ),
           BlocProvider(
             create: (context) => ApploaderCubit(
