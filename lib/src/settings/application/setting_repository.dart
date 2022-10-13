@@ -20,7 +20,6 @@ class SettingRepository implements ISettingRepository {
   Future<void> setSoundSetting({required bool value}) async {
     final settingData = await _getSettingData();
     final newSettingData = settingData.copyWith(isSoundOn: value);
-    print('set sound: ${newSettingData.toMap()}');
 
     await _db.collection(Settings.setting).doc(Settings.setting).set(
           newSettingData.toMap(),
@@ -37,7 +36,6 @@ class SettingRepository implements ISettingRepository {
   Future<void> setMusicSetting({required bool value}) async {
     final settingData = await _getSettingData();
     final newSettingData = settingData.copyWith(isMusicOn: value);
-    print('set music: ${newSettingData.toMap()}');
 
     await _db.collection(Settings.setting).doc(Settings.setting).set(
           newSettingData.toMap(),
@@ -79,11 +77,12 @@ class SettingRepository implements ISettingRepository {
   }
 
   Future<Settings> _getSettingData() async {
-    final data = await _db.collection(Settings.setting).get();
-    final docSetting = data?[Settings.setting] as Map?;
-    final setting = docSetting != null
+    final data =
+        await _db.collection(Settings.setting).doc(Settings.setting).get();
+
+    final setting = data != null
         ? Settings.fromJson(
-            Map<String, dynamic>.from(docSetting),
+            Map<String, dynamic>.from(data),
           )
         : Settings(
             isSoundOn: false,

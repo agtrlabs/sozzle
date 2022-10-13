@@ -25,7 +25,6 @@ class SettingCubit extends Cubit<SettingState> {
 
   Future<void> initialize() async {
     final state = this.state;
-    late final SettingInitial newState;
     if (state is SettingInitial) {
       final setting = await settingRep.getSetting();
       final newSettingState = state.copyWith(
