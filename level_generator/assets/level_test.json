@@ -1,0 +1,37 @@
+
+
+{
+  "levelId": 1,
+  "words": [
+    "SAW", "WASP", "SWAP", "NAP", "SPAWN"
+  ],
+  "boardHeight": 5,
+  "boardWidth": 5,
+  "boardData": [
+    "W",
+    "",
+    "S",
+    "A",
+    "W",
+    "A",
+    "",
+    "W",
+    "",
+    "",
+    "S",
+    "P",
+    "A",
+    "W",
+    "N",
+    "P",
+    "",
+    "P",
+    "",
+    "A",
+    "",
+    "",
+    "",
+    "",
+    "P"
+  ]
+}
