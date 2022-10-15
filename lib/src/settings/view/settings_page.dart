@@ -25,7 +25,6 @@ class SettingsPage extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        themeState.backgroundColor,
                         themeState.backgroundColor.withOpacity(0.9),
                         themeState.backgroundColor.withOpacity(0.8),
                         themeState.backgroundColor.withOpacity(0.7),
@@ -40,9 +39,9 @@ class SettingsPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: IconButton(
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.arrow_back_ios_new,
-                              color: Colors.white,
+                              color: themeState.primaryTextColor,
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -58,16 +57,16 @@ class SettingsPage extends StatelessWidget {
                                 height: 25,
                               ),
                               ListTile(
-                                leading: const Icon(
+                                leading: Icon(
                                   Icons.music_note,
-                                  color: Colors.white,
+                                  color: themeState.primaryTextColor,
                                   size: 40,
                                 ),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   context.l10n.soundSettings,
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  style: TextStyle(
+                                    color: themeState.primaryTextColor,
                                     fontSize: 22,
                                   ),
                                 ),
@@ -88,16 +87,16 @@ class SettingsPage extends StatelessWidget {
                                 ),
                               ),
                               ListTile(
-                                leading: const Icon(
+                                leading: Icon(
                                   Icons.volume_down,
-                                  color: Colors.white,
+                                  color: themeState.primaryTextColor,
                                   size: 40,
                                 ),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   context.l10n.musicSettings,
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  style: TextStyle(
+                                    color: themeState.primaryTextColor,
                                     fontSize: 22,
                                   ),
                                 ),
@@ -117,16 +116,16 @@ class SettingsPage extends StatelessWidget {
                                 ),
                               ),
                               ListTile(
-                                leading: const Icon(
+                                leading: Icon(
                                   Icons.dark_mode,
-                                  color: Colors.white,
+                                  color: themeState.primaryTextColor,
                                   size: 40,
                                 ),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   context.l10n.darkModeSettings,
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  style: TextStyle(
+                                    color: themeState.primaryTextColor,
                                     fontSize: 22,
                                   ),
                                 ),
@@ -138,16 +137,16 @@ class SettingsPage extends StatelessWidget {
                                 ),
                               ),
                               ListTile(
-                                leading: const Icon(
+                                leading: Icon(
                                   Icons.music_off,
-                                  color: Colors.white,
+                                  color: themeState.primaryTextColor,
                                   size: 40,
                                 ),
                                 minLeadingWidth: 0,
                                 title: Text(
                                   context.l10n.muteSettings,
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  style: TextStyle(
+                                    color: themeState.primaryTextColor,
                                     fontSize: 22,
                                   ),
                                 ),

@@ -9,7 +9,9 @@ import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/level/application/level_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/settings/application/setting_repository.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
+import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/user_stats.dart';
 
@@ -26,20 +28,30 @@ class App extends StatelessWidget {
         RepositoryProvider<IUserStatsRepository>(
           create: (context) => UserStatsRepository(),
         ),
+        RepositoryProvider<ISettingRepository>(
+          create: (context) => SettingRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ThemeCubit(),
+            create: (context) => ThemeCubit(
+              isDarkMode:
+                  context.read<ISettingRepository>().getDarkModeSetting(),
+            )..initialize(),
           ),
           BlocProvider(
-            create: (context) => SettingCubit(),
+            create: (context) => SettingCubit(
+              settingRep: context.read<ISettingRepository>(),
+              themeCubit: BlocProvider.of<ThemeCubit>(context),
+            )..initialize(),
           ),
           BlocProvider(
             create: (context) => ApploaderCubit(
               apploaderRepository: MockApploaderRepository(
                 levelRepository: context.read<ILevelRepository>(),
                 userStatsRepository: context.read<IUserStatsRepository>(),
+                settingRepository: context.read<ISettingRepository>(),
               ),
             ),
           ),
@@ -47,24 +59,30 @@ class App extends StatelessWidget {
             create: (context) => UserStatsCubit(
               context.read<IUserStatsRepository>(),
             )..readCurrentStats(),
-          )
-        ],
-        child: MaterialApp.router(
-          routeInformationProvider: router.routeInformationProvider,
-          routeInformationParser: router.routeInformationParser,
-          routerDelegate: router.routerDelegate,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-            colorScheme: ColorScheme.fromSwatch(
-              accentColor: const Color(0xFF13B9FF),
-            ),
           ),
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp.router(
+              routeInformationProvider: router.routeInformationProvider,
+              routeInformationParser: router.routeInformationParser,
+              routerDelegate: router.routerDelegate,
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                appBarTheme: AppBarTheme(color: state.appBarColor),
+                colorScheme: ColorScheme.fromSwatch(
+                  accentColor: state.accentColor,
+                  primarySwatch: state.primarySwatch,
+                ),
+                toggleableActiveColor: state.primarySwatch,
+              ),
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+            );
+          },
         ),
       ),
     );

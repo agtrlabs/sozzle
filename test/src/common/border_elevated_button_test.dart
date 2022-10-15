@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/common/border_elevated_button.dart';
+import 'package:sozzle/src/settings/application/setting_repository.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
+import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
 import 'package:sozzle/src/settings/view/settings_page.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
@@ -34,24 +36,30 @@ void main() {
       ],
     );
 
-    app = MultiBlocProvider(
-      providers: [
-        BlocProvider<ThemeCubit>(
-          create: (context) => ThemeCubit(),
-        ),
-        BlocProvider<SettingCubit>(
-          create: (context) => SettingCubit(),
-        ),
-      ],
-      child: MaterialApp.router(
-        routeInformationProvider: router.routeInformationProvider,
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
+    app = RepositoryProvider<ISettingRepository>(
+      create: (context) => SettingRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(isDarkMode: Future.value(false)),
+          ),
+          BlocProvider<SettingCubit>(
+            create: (context) => SettingCubit(
+              settingRep: context.read<ISettingRepository>(),
+              themeCubit: BlocProvider.of<ThemeCubit>(context),
+            ),
+          ),
         ],
-        supportedLocales: AppLocalizations.supportedLocales,
+        child: MaterialApp.router(
+          routeInformationProvider: router.routeInformationProvider,
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+        ),
       ),
     );
   });
