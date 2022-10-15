@@ -1,7 +1,17 @@
 // import 'package:bloc_test/bloc_test.dart';
+// import 'package:flutter/material.dart';
 // import 'package:flutter_test/flutter_test.dart';
+// import 'package:mocktail/mocktail.dart';
+// import 'package:sozzle/src/settings/application/setting_repository.dart';
 // import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
+// import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
 // import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
+
+// class MockSettingsRepo extends Mock implements ISettingRepository {}
+
+// class MockThemeCubit extends Mock implements ThemeCubit {}
+
+// class MockSettingCubit extends Mock implements SettingCubit {}
 
 // void main() {
 //   group(
@@ -9,8 +19,15 @@
 //     () {
 //       blocTest<SettingCubit, SettingState>(
 //         '',
-//         setUp: () {},
-//         build: () => SettingCubit(ThemeCubit()),
+//         setUp: () {
+//           WidgetsFlutterBinding.ensureInitialized();
+//         },
+//         build: () => SettingCubit(
+//           settingRep: SettingRepository(),
+//           themeCubit: ThemeCubit(
+//             isDarkMode: Future.value(false),
+//           ),
+//         ),
 //         act: (bloc) => bloc.toggleDarkModeOption(val: true),
 //         expect: () => [
 //           SettingInitial(
@@ -25,7 +42,12 @@
 //       blocTest<SettingCubit, SettingState>(
 //         '',
 //         setUp: () {},
-//         build: () => SettingCubit(ThemeCubit()),
+//         build: () => SettingCubit(
+//           settingRep: SettingRepository(),
+//           themeCubit: ThemeCubit(
+//             isDarkMode: Future.value(false),
+//           ),
+//         ),
 //         act: (bloc) => bloc
 //           ..toggleMuteOption(val: true)
 //           ..toggleMusicOption(

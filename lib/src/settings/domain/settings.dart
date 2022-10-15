@@ -1,5 +1,7 @@
-class Settings {
-  Settings({
+import 'package:equatable/equatable.dart';
+
+class Settings extends Equatable {
+  const Settings({
     required this.isSoundOn,
     required this.isMusicOn,
     required this.isDarkMode,
@@ -44,4 +46,12 @@ class Settings {
       isMute: isMute ?? this.isMute,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        isSoundOn,
+        isMusicOn,
+        isDarkMode,
+        isMute,
+      ];
 }
