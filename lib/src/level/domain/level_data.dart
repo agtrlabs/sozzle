@@ -12,10 +12,10 @@ class LevelData {
         boardHeight: json['rows'] as int,
         boardWidth: json['cols'] as int,
         boardData: List<String>.from(
-          (json['board'] as Iterable<String>).map((x) => x),
+          (json['board'] as List<dynamic>).map<String>((x) => x.toString()),
         ),
         words: List<String>.from(
-          (json['words'] as Iterable<String>).map((x) => x),
+          (json['words'] as List<dynamic>).map<String>((x) => x.toString()),
         ),
       );
 
