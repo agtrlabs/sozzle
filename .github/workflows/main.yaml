@@ -1,6 +1,6 @@
 name: sozzle
 
-on: [pull_request, push]
+on: [pull_request]
 
 jobs:
   semantic-pull-request:
