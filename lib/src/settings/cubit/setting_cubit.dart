@@ -34,8 +34,6 @@ class SettingCubit extends Cubit<SettingState> {
         isMute: setting.isMute,
       );
       emit(newSettingState);
-      // newState = state.copyWith(isDarkMode: await themeCubit.isDarkMode);
-      // emit(newState);
     }
   }
 

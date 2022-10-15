@@ -51,6 +51,7 @@ class App extends StatelessWidget {
               apploaderRepository: MockApploaderRepository(
                 levelRepository: context.read<ILevelRepository>(),
                 userStatsRepository: context.read<IUserStatsRepository>(),
+                settingRepository: context.read<ISettingRepository>(),
               ),
             ),
           ),
@@ -73,6 +74,7 @@ class App extends StatelessWidget {
                   accentColor: state.accentColor,
                   primarySwatch: state.primarySwatch,
                 ),
+                toggleableActiveColor: state.primarySwatch,
               ),
               localizationsDelegates: const [
                 AppLocalizations.delegate,

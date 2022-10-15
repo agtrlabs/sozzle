@@ -10,11 +10,11 @@ class SettingRepository implements ISettingRepository {
     return _getSettingData();
   }
 
-  @override
-  Future<bool> getSoundSetting() async {
-    final settingData = await _getSettingData();
-    return settingData.isSoundOn;
-  }
+  // @override
+  // Future<bool> getSoundSetting() async {
+  //   final settingData = await _getSettingData();
+  //   return settingData.isSoundOn;
+  // }
 
   @override
   Future<void> setSoundSetting({required bool value}) async {
@@ -26,11 +26,11 @@ class SettingRepository implements ISettingRepository {
         );
   }
 
-  @override
-  Future<bool> getMusicSetting() async {
-    final settingData = await _getSettingData();
-    return settingData.isMusicOn;
-  }
+  // @override
+  // Future<bool> getMusicSetting() async {
+  //   final settingData = await _getSettingData();
+  //   return settingData.isMusicOn;
+  // }
 
   @override
   Future<void> setMusicSetting({required bool value}) async {
@@ -57,11 +57,11 @@ class SettingRepository implements ISettingRepository {
         );
   }
 
-  @override
-  Future<bool> getMuteSetting() async {
-    final settingData = await _getSettingData();
-    return settingData.isMute;
-  }
+  // @override
+  // Future<bool> getMuteSetting() async {
+  //   final settingData = await _getSettingData();
+  //   return settingData.isMute;
+  // }
 
   @override
   Future<void> setMuteSetting({required bool value}) async {

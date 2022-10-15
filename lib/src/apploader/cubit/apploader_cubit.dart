@@ -15,6 +15,9 @@ class ApploaderCubit extends Cubit<ApploaderState> {
   IApploaderRepository apploaderRepository;
 
   Future<void> updatePuzzleData() async {
+    // start loading setting data
+    await updateSettingsData();
+
     //start loading data
     emit(const ApploaderState(LoaderState.loadingPuzzle));
 
@@ -32,7 +35,29 @@ class ApploaderCubit extends Cubit<ApploaderState> {
 
     // be sure to finalize loading by emitting 100 percent
     emit(const ApploaderState(LoaderState.loadingPuzzle, 1));
+
     await updateUserData();
+    // await updateSettingsData();
+  }
+
+  Future<void> updateSettingsData() async {
+    emit(const ApploaderState(LoaderState.loadingSettingsData));
+
+    await apploaderRepository.getSetting();
+
+    // Add pseudo delay for loading indicator.
+    await for (final x in Stream.fromIterable([1, 2, 3, 4, 5])) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      emit(
+        ApploaderState(
+          LoaderState.loadingSettingsData,
+          (100 / 5) * x,
+        ),
+      );
+    }
+    emit(
+      const ApploaderState(LoaderState.loadingSettingsData, 100),
+    );
   }
 
   Future<void> updateUserData() async {

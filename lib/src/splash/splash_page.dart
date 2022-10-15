@@ -41,6 +41,11 @@ class SplashPage extends StatelessWidget {
                         return LinearProgressIndicator(
                           value: state.percent / 100,
                         );
+                      } else if (state.loaderState ==
+                          LoaderState.loadingSettingsData) {
+                        return LinearProgressIndicator(
+                          value: state.percent / 100,
+                        );
                       } else if (state.loaderState == LoaderState.loaded) {
                         return const StartButton();
                       }
