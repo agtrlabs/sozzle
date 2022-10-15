@@ -10,7 +10,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   final Future<bool> isDarkMode;
 
   Future<void> initialize() async {
-    final themeState = await isDarkMode.then(
+    await isDarkMode.then(
       (data) {
         emit(
           data ? const ThemeStateDark() : const ThemeStateLight(),

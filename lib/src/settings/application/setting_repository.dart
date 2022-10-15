@@ -69,7 +69,7 @@ class SettingRepository implements ISettingRepository {
     final newSettingData = settingData.copyWith(
       isMute: value,
     );
-    print('set mute: ${newSettingData.toMap()}');
+    //print('set mute: ${newSettingData.toMap()}');
 
     await _db.collection(Settings.setting).doc(Settings.setting).set(
           newSettingData.toMap(),
@@ -84,7 +84,7 @@ class SettingRepository implements ISettingRepository {
         ? Settings.fromJson(
             Map<String, dynamic>.from(data),
           )
-        : Settings(
+        : const Settings(
             isSoundOn: false,
             isMusicOn: false,
             isDarkMode: false,
