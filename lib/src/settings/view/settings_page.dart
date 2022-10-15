@@ -59,9 +59,17 @@ class SettingsPage extends StatelessWidget {
                             trailing: Switch.adaptive(
                               key: const Key('switchSound'),
                               value: state.isSoundOn,
-                              onChanged: (val) => context
-                                  .read<SettingCubit>()
-                                  .toggleSoundOption(val: val),
+                              onChanged: (val) {
+                                final settingCubit = context
+                                    .read<SettingCubit>()
+                                  ..toggleSoundOption(val: val);
+                                if (val && state.isMute) {
+                                  settingCubit.toggleMuteOption(val: !val);
+                                }
+                                if (!val && !state.isMusicOn) {
+                                  settingCubit.toggleMuteOption(val: !val);
+                                }
+                              },
                             ),
                           ),
                           ListTile(
@@ -80,9 +88,17 @@ class SettingsPage extends StatelessWidget {
                             ),
                             trailing: Switch.adaptive(
                               value: state.isMusicOn,
-                              onChanged: (val) => context
-                                  .read<SettingCubit>()
-                                  .toggleMusicOption(val: val),
+                              onChanged: (val) {
+                                final settingCubit = context
+                                    .read<SettingCubit>()
+                                  ..toggleMusicOption(val: val);
+                                if (state.isMute && val) {
+                                  settingCubit.toggleMuteOption(val: !val);
+                                }
+                                if (!val && !state.isSoundOn) {
+                                  settingCubit.toggleMuteOption(val: !val);
+                                }
+                              },
                             ),
                           ),
                           ListTile(
@@ -122,9 +138,17 @@ class SettingsPage extends StatelessWidget {
                             ),
                             trailing: Switch.adaptive(
                               value: state.isMute,
-                              onChanged: (val) => context
-                                  .read<SettingCubit>()
-                                  .toggleMuteOption(val: val),
+                              onChanged: (val) {
+                                final settingCubit = context
+                                    .read<SettingCubit>()
+                                  ..toggleMuteOption(val: val);
+                                if (state.isMusicOn == val) {
+                                  settingCubit.toggleMusicOption(val: !val);
+                                }
+                                if (state.isSoundOn == val) {
+                                  settingCubit.toggleSoundOption(val: !val);
+                                }
+                              },
                             ),
                           ),
                         ],
