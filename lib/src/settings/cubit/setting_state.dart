@@ -13,7 +13,7 @@ class SettingState extends Equatable {
         isSoundOn: false,
         isMusicOn: false,
         isDarkMode: false,
-        isMute: false,
+        isMute: true,
       );
 
   final bool isSoundOn;

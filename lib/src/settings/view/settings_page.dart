@@ -129,6 +129,7 @@ class SettingsPage extends StatelessWidget {
                                 ),
                               ),
                               trailing: Switch.adaptive(
+                                key: const Key('switchDark'),
                                 value: state.isDarkMode,
                                 onChanged: (val) => context
                                     .read<SettingCubit>()

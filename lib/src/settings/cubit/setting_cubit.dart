@@ -8,24 +8,14 @@ import 'package:sozzle/utilities/settings_helper.dart';
 part 'setting_state.dart';
 
 class SettingCubit extends Cubit<SettingState> {
-  // SettingCubit(this.context)
   SettingCubit({
     required this.settingRep,
     required this.themeCubit,
-  }) : super(
-          const SettingState(
-            isSoundOn: false,
-            isMusicOn: false,
-            isMute: false,
-            isDarkMode: false,
-          ),
-        );
+  }) : super(SettingState.initial());
   final ISettingRepository settingRep;
   final ThemeCubit themeCubit;
 
   Future<void> initialize() async {
-    final state = this.state;
-
     final setting = await settingRep.getSetting();
     final newSettingState = state.copyWith(
       isSoundOn: setting.isSoundOn,

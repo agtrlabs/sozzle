@@ -13,7 +13,7 @@ class AudioController implements IAudioController {
   SettingState get settings => _settings;
 
   @override
-  void play(Sfx sfx) async {
+  Future<void> play(Sfx sfx) async {
     // if (!_settings.isMute && _settings.isSoundOn) {
     await player.play(AssetSource(sound[sfx]!));
 
