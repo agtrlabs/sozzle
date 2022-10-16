@@ -11,7 +11,7 @@ void main() {
       build: SettingCubit.new,
       act: (bloc) => bloc.toggleDarkModeOption(val: true),
       expect: () => [
-        SettingInitial(
+        const SettingState(
           isSoundOn: false,
           isMusicOn: false,
           isDarkMode: true,
@@ -34,31 +34,31 @@ void main() {
         ..toggleDarkModeOption(val: true)
         ..toggleMuteOption(val: false),
       expect: () => [
-        SettingInitial(
+        const SettingState(
           isSoundOn: false,
           isMusicOn: false,
           isDarkMode: false,
           isMute: true,
         ),
-        SettingInitial(
+        const SettingState(
           isSoundOn: false,
           isMusicOn: true,
           isDarkMode: false,
           isMute: true,
         ),
-        SettingInitial(
+        const SettingState(
           isSoundOn: true,
           isMusicOn: true,
           isDarkMode: false,
           isMute: true,
         ),
-        SettingInitial(
+        const SettingState(
           isSoundOn: true,
           isMusicOn: true,
           isDarkMode: true,
           isMute: true,
         ),
-        SettingInitial(
+        const SettingState(
           isSoundOn: true,
           isMusicOn: true,
           isDarkMode: true,

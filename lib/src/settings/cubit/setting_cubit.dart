@@ -5,49 +5,21 @@ import 'package:meta/meta.dart';
 part 'setting_state.dart';
 
 class SettingCubit extends Cubit<SettingState> {
-  SettingCubit()
-      : super(
-          SettingInitial(
-            isSoundOn: false,
-            isMusicOn: false,
-            isMute: false,
-            isDarkMode: false,
-          ),
-        );
+  SettingCubit() : super(SettingState.initial());
 
   void toggleSoundOption({required bool val}) {
-    final state = this.state;
-    late final SettingInitial newState;
-    if (state is SettingInitial) {
-      newState = state.copyWith(isSoundOn: val);
-      emit(newState);
-    }
+    emit(state.copyWith(isSoundOn: val));
   }
 
   void toggleMusicOption({required bool val}) {
-    final state = this.state;
-    late final SettingInitial newState;
-    if (state is SettingInitial) {
-      newState = state.copyWith(isMusicOn: val);
-      emit(newState);
-    }
+    emit(state.copyWith(isMusicOn: val));
   }
 
   void toggleDarkModeOption({required bool val}) {
-    final state = this.state;
-    late final SettingInitial newState;
-    if (state is SettingInitial) {
-      newState = state.copyWith(isDarkMode: val);
-      emit(newState);
-    }
+    emit(state.copyWith(isDarkMode: val));
   }
 
   void toggleMuteOption({required bool val}) {
-    final state = this.state;
-    late final SettingInitial newState;
-    if (state is SettingInitial) {
-      newState = state.copyWith(isMute: val);
-      emit(newState);
-    }
+    emit(state.copyWith(isMute: val));
   }
 }

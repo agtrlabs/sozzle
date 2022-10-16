@@ -3,14 +3,9 @@ import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 
 void main() {
   group('Settings Cubit', () {
-    late SettingInitial settingInitial;
+    late SettingState settingInitial;
     setUp(() {
-      settingInitial = SettingInitial(
-        isSoundOn: false,
-        isMusicOn: false,
-        isDarkMode: false,
-        isMute: false,
-      );
+      settingInitial = SettingState.initial();
     });
 
     test('initial state is correct', () {
@@ -28,7 +23,7 @@ void main() {
           isDarkMode: true,
           isMute: true,
         ),
-        SettingInitial(
+        const SettingState(
           isSoundOn: true,
           isMusicOn: true,
           isDarkMode: true,
@@ -42,7 +37,7 @@ void main() {
         settingInitial.copyWith(
           isMusicOn: true,
         ),
-        SettingInitial(
+        const SettingState(
           isSoundOn: false,
           isMusicOn: true,
           isDarkMode: false,

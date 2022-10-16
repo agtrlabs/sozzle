@@ -69,7 +69,7 @@ void main() {
 
       expect(
         settingCubit.state,
-        SettingInitial(
+        const SettingState(
           isSoundOn: true,
           isMusicOn: false,
           isDarkMode: false,
