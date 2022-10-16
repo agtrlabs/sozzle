@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sozzle/l10n/l10n.dart';
+import 'package:sozzle/src/settings/application/setting_repository.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
+import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
 import 'package:sozzle/src/settings/view/settings_page.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
@@ -14,24 +16,29 @@ void main() {
     late Widget settingsPage;
 
     setUp(() {
-      settingCubit = SettingCubit();
-      themeCubit = ThemeCubit();
-      settingsPage = MultiBlocProvider(
-        providers: [
-          BlocProvider<ThemeCubit>(
-            create: (context) => themeCubit,
-          ),
-          BlocProvider<SettingCubit>(
-            create: (context) => settingCubit,
-          ),
-        ],
-        child: const MaterialApp(
-          home: SettingsPage(),
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
+      themeCubit = ThemeCubit(isDarkMode: Future.value(false));
+      settingsPage = RepositoryProvider<ISettingRepository>(
+        create: (context) => SettingRepository(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeCubit>(
+              create: (context) => themeCubit,
+            ),
+            BlocProvider<SettingCubit>(
+              create: (context) => settingCubit = SettingCubit(
+                settingRep: context.read<ISettingRepository>(),
+                themeCubit: BlocProvider.of<ThemeCubit>(context),
+              ),
+            ),
           ],
-          supportedLocales: AppLocalizations.supportedLocales,
+          child: const MaterialApp(
+            home: SettingsPage(),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
         ),
       );
     });
@@ -46,7 +53,7 @@ void main() {
 
       expect(finderSwitchOff, findsNWidgets(4));
 
-      settingCubit.toggleMusicOption(val: true);
+      await settingCubit.toggleMusicOption(val: true);
       await tester.pump();
 
       final finderSwitchOn = find.byWidgetPredicate(
@@ -55,7 +62,7 @@ void main() {
       );
       expect(finderSwitchOn, findsOneWidget);
 
-      settingCubit.toggleMusicOption(val: false);
+      await settingCubit.toggleMusicOption(val: false);
       await tester.pump();
 
       expect(finderSwitchOn, findsNothing);

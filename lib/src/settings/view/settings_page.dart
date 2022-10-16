@@ -24,7 +24,6 @@ class SettingsPage extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      themeState.backgroundColor,
                       themeState.backgroundColor.withOpacity(0.9),
                       themeState.backgroundColor.withOpacity(0.8),
                       themeState.backgroundColor.withOpacity(0.7),
@@ -34,100 +33,141 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: ListView(
-                      children: <Widget>[
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.music_note,
-                            color: Colors.white,
-                            size: 40,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: themeState.primaryTextColor,
                           ),
-                          minLeadingWidth: 0,
-                          title: Text(
-                            context.l10n.soundSettings,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            const SizedBox(
+                              height: 25,
                             ),
-                          ),
-                          trailing: Switch.adaptive(
-                            key: const Key('switchSound'),
-                            value: state.isSoundOn,
-                            onChanged: (val) => context
-                                .read<SettingCubit>()
-                                .toggleSoundOption(val: val),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.volume_down,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                          minLeadingWidth: 0,
-                          title: Text(
-                            context.l10n.musicSettings,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
+                            ListTile(
+                              leading: Icon(
+                                Icons.music_note,
+                                color: themeState.primaryTextColor,
+                                size: 40,
+                              ),
+                              minLeadingWidth: 0,
+                              title: Text(
+                                context.l10n.soundSettings,
+                                style: TextStyle(
+                                  color: themeState.primaryTextColor,
+                                  fontSize: 22,
+                                ),
+                              ),
+                              trailing: Switch.adaptive(
+                                key: const Key('switchSound'),
+                                value: state.isSoundOn,
+                                onChanged: (val) {
+                                  final settingCubit = context
+                                      .read<SettingCubit>()
+                                    ..toggleSoundOption(val: val);
+                                  if (val && state.isMute) {
+                                    settingCubit.toggleMuteOption(val: !val);
+                                  }
+                                  if (!val && !state.isMusicOn) {
+                                    settingCubit.toggleMuteOption(val: !val);
+                                  }
+                                },
+                              ),
                             ),
-                          ),
-                          trailing: Switch.adaptive(
-                            value: state.isMusicOn,
-                            onChanged: (val) => context
-                                .read<SettingCubit>()
-                                .toggleMusicOption(val: val),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.dark_mode,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                          minLeadingWidth: 0,
-                          title: Text(
-                            context.l10n.darkModeSettings,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
+                            ListTile(
+                              leading: Icon(
+                                Icons.volume_down,
+                                color: themeState.primaryTextColor,
+                                size: 40,
+                              ),
+                              minLeadingWidth: 0,
+                              title: Text(
+                                context.l10n.musicSettings,
+                                style: TextStyle(
+                                  color: themeState.primaryTextColor,
+                                  fontSize: 22,
+                                ),
+                              ),
+                              trailing: Switch.adaptive(
+                                value: state.isMusicOn,
+                                onChanged: (val) {
+                                  final settingCubit = context
+                                      .read<SettingCubit>()
+                                    ..toggleMusicOption(val: val);
+                                  if (state.isMute && val) {
+                                    settingCubit.toggleMuteOption(val: !val);
+                                  }
+                                  if (!val && !state.isSoundOn) {
+                                    settingCubit.toggleMuteOption(val: !val);
+                                  }
+                                },
+                              ),
                             ),
-                          ),
-                          trailing: Switch.adaptive(
-                            value: state.isDarkMode,
-                            onChanged: (val) => context
-                                .read<SettingCubit>()
-                                .toggleDarkModeOption(val: val),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.music_off,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                          minLeadingWidth: 0,
-                          title: Text(
-                            context.l10n.muteSettings,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
+                            ListTile(
+                              leading: Icon(
+                                Icons.dark_mode,
+                                color: themeState.primaryTextColor,
+                                size: 40,
+                              ),
+                              minLeadingWidth: 0,
+                              title: Text(
+                                context.l10n.darkModeSettings,
+                                style: TextStyle(
+                                  color: themeState.primaryTextColor,
+                                  fontSize: 22,
+                                ),
+                              ),
+                              trailing: Switch.adaptive(
+                                value: state.isDarkMode,
+                                onChanged: (val) => context
+                                    .read<SettingCubit>()
+                                    .toggleDarkModeOption(val: val),
+                              ),
                             ),
-                          ),
-                          trailing: Switch.adaptive(
-                            value: state.isMute,
-                            onChanged: (val) => context
-                                .read<SettingCubit>()
-                                .toggleMuteOption(val: val),
-                          ),
+                            ListTile(
+                              leading: Icon(
+                                Icons.music_off,
+                                color: themeState.primaryTextColor,
+                                size: 40,
+                              ),
+                              minLeadingWidth: 0,
+                              title: Text(
+                                context.l10n.muteSettings,
+                                style: TextStyle(
+                                  color: themeState.primaryTextColor,
+                                  fontSize: 22,
+                                ),
+                              ),
+                              trailing: Switch.adaptive(
+                                value: state.isMute,
+                                onChanged: (val) {
+                                  final settingCubit = context
+                                      .read<SettingCubit>()
+                                    ..toggleMuteOption(val: val);
+                                  if (state.isMusicOn == val) {
+                                    settingCubit.toggleMusicOption(val: !val);
+                                  }
+                                  if (state.isSoundOn == val) {
+                                    settingCubit.toggleSoundOption(val: !val);
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

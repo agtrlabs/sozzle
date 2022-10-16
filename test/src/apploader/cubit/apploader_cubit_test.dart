@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:sozzle/src/settings/domain/settings.dart';
 import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 
 /// mock loader for test
@@ -17,6 +18,14 @@ void main() {
       appLoaderRepo = MockAppLoaderRepo();
       apploader = ApploaderCubit(apploaderRepository: appLoaderRepo);
 
+      when(() => appLoaderRepo.getSetting()).thenAnswer(
+        (_) async => const Settings(
+          isDarkMode: false,
+          isMusicOn: false,
+          isMute: false,
+          isSoundOn: false,
+        ),
+      );
       when(() => appLoaderRepo.getLevels()).thenAnswer(
         (_) async => LevelList([]),
       );
