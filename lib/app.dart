@@ -7,6 +7,8 @@ import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
+import 'package:sozzle/src/audio/audio_controller.dart';
+import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/level/application/level_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
@@ -25,6 +27,12 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider<IUserStatsRepository>(
           create: (context) => UserStatsRepository(),
+        ),
+        RepositoryProvider<IAudioController>(
+          create: (context) => AudioController(
+              settings: SettingState.initial().copyWith(
+            isSoundOn: true,
+          )),
         ),
       ],
       child: MultiBlocProvider(
