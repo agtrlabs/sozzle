@@ -104,17 +104,21 @@ class SettingsPage extends StatelessWidget {
                                 ),
                               ),
                               trailing: Switch.adaptive(
+                                key: const Key('switchMusic'),
                                 value: state.isMusicOn,
                                 onChanged: (val) {
-                                  final settingCubit = context
-                                      .read<SettingCubit>()
-                                    ..toggleMusicOption(val: val);
-                                  if (state.isMute && val) {
-                                    settingCubit.toggleMuteOption(val: !val);
-                                  }
-                                  if (!val && !state.isSoundOn) {
-                                    settingCubit.toggleMuteOption(val: !val);
-                                  }
+                                  final settingCubit =
+                                      context.read<SettingCubit>();
+                                  settingCubit
+                                      .toggleMusicOption(val: val)
+                                      .then((value) {
+                                    if (state.isMute && val) {
+                                      settingCubit.toggleMuteOption(val: !val);
+                                    }
+                                    if (!val && !state.isSoundOn) {
+                                      settingCubit.toggleMuteOption(val: !val);
+                                    }
+                                  });
                                 },
                               ),
                             ),
