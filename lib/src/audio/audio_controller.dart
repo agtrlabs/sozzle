@@ -3,6 +3,8 @@ import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/audio/domain/sfx.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 
+/// plays audio
+/// checks settings for mute and audio levels
 class AudioController implements IAudioController {
   AudioController({required SettingState settings}) : _settings = settings;
 
