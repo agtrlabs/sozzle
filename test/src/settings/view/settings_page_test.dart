@@ -96,5 +96,22 @@ void main() {
       );
       expect(find.widgetWithIcon(ListTile, Icons.music_note), findsOneWidget);
     });
+    testWidgets('turn on music', (WidgetTester tester) async {
+      await tester.pumpWidget(settingsPage);
+
+      await tester.tap(find.byKey(const Key('switchMusic')));
+      await tester.pumpAndSettle();
+
+      expect(
+        settingCubit.state,
+        const SettingState(
+          isSoundOn: false,
+          isMusicOn: true,
+          isDarkMode: false,
+          isMute: false,
+        ),
+      );
+      expect(find.widgetWithIcon(ListTile, Icons.music_note), findsOneWidget);
+    });
   });
 }
