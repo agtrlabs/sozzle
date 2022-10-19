@@ -30,7 +30,6 @@ class App extends StatelessWidget {
         RepositoryProvider<IUserStatsRepository>(
           create: (context) => UserStatsRepository(),
         ),
-        
         RepositoryProvider<ISettingRepository>(
           create: (context) => SettingRepository(),
         ),
@@ -69,7 +68,6 @@ class App extends StatelessWidget {
             settingsCubit: context.read<SettingCubit>(),
             initialSettings: context.read<SettingCubit>().state,
           ),
-          
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MaterialApp.router(
