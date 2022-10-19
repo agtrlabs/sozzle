@@ -3,42 +3,42 @@ part of 'setting_cubit.dart';
 @immutable
 class SettingState extends Equatable {
   const SettingState({
-    required this.isSoundOn,
-    required this.isMusicOn,
     required this.isDarkMode,
+    required this.isMusicOn,
     required this.isMute,
+    required this.isSoundOn,
   });
 
   factory SettingState.initial() => const SettingState(
-        isSoundOn: false,
-        isMusicOn: false,
         isDarkMode: false,
+        isMusicOn: false,
         isMute: true,
+        isSoundOn: false,
       );
 
-  final bool isSoundOn;
-  final bool isMusicOn;
   final bool isDarkMode;
+  final bool isMusicOn;
   final bool isMute;
+  final bool isSoundOn;
 
   SettingState copyWith({
-    bool? isSoundOn,
-    bool? isMusicOn,
     bool? isDarkMode,
+    bool? isMusicOn,
     bool? isMute,
+    bool? isSoundOn,
   }) =>
       SettingState(
-        isSoundOn: isSoundOn ?? this.isSoundOn,
-        isMusicOn: isMusicOn ?? this.isMusicOn,
         isDarkMode: isDarkMode ?? this.isDarkMode,
+        isMusicOn: isMusicOn ?? this.isMusicOn,
         isMute: isMute ?? this.isMute,
+        isSoundOn: isSoundOn ?? this.isSoundOn,
       );
 
   @override
   List<Object?> get props => [
-        isSoundOn,
-        isMusicOn,
         isDarkMode,
+        isMusicOn,
         isMute,
+        isSoundOn,
       ];
 }

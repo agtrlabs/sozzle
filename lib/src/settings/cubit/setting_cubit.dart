@@ -57,6 +57,7 @@ class SettingCubit extends Cubit<SettingState> {
     } else {
       await themeCubit.getThemeLight();
     }
+
     emit(newState);
   }
 

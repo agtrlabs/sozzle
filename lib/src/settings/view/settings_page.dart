@@ -73,15 +73,19 @@ class SettingsPage extends StatelessWidget {
                                 key: const Key('switchSound'),
                                 value: state.isSoundOn,
                                 onChanged: (val) {
-                                  final settingCubit = context
-                                      .read<SettingCubit>()
-                                    ..toggleSoundOption(val: val);
-                                  if (val && state.isMute) {
-                                    settingCubit.toggleMuteOption(val: !val);
-                                  }
-                                  if (!val && !state.isMusicOn) {
-                                    settingCubit.toggleMuteOption(val: !val);
-                                  }
+                                  final settingCubit =
+                                      context.read<SettingCubit>();
+
+                                  settingCubit
+                                      .toggleSoundOption(val: val)
+                                      .then((value) {
+                                    if (val && state.isMute) {
+                                      settingCubit.toggleMuteOption(val: !val);
+                                    }
+                                    if (!val && !state.isMusicOn) {
+                                      settingCubit.toggleMuteOption(val: !val);
+                                    }
+                                  });
                                 },
                               ),
                             ),
