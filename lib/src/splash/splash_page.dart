@@ -8,6 +8,8 @@ import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
+import '../settings/cubit/setting_cubit.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -18,7 +20,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   bool a = false;
   bool b = false;
   bool c = false;
@@ -64,94 +65,104 @@ class _SplashPageState extends State<SplashPage> {
     final height = mq.size.height;
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: state.backgroundColor,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AnimatedContainer(
-                  duration: Duration(milliseconds: d ? 900 : 2500),
-                  curve: d ? Curves.fastLinearToSlowEaseIn : Curves.elasticOut,
-                  height: d
-                      ? 0
-                      : a
-                      ? height / 2
-                      : 20,
-                  width: 20,
-                ),
-                if (d)
-                  Text(
-                    'Sozzle',
-                    style: TextStyle(
-                      color: state.primaryTextColor,
-                      fontSize: 24,
+        return BlocBuilder<SettingCubit, SettingState>(
+          builder: (_, settingState) {
+            return Scaffold(
+              backgroundColor: state.backgroundColor,
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: d ? 900 : 2500),
+                      curve:
+                          d ? Curves.fastLinearToSlowEaseIn : Curves.elasticOut,
+                      height: d
+                          ? 0
+                          : a
+                              ? height / 2
+                              : 20,
+                      width: 20,
                     ),
-                  )
-                else
-                  AnimatedContainer(
-                    duration: Duration(seconds: c ? 2 : 0),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    height: c ? 80 : 20,
-                    width: c ? 200 : 20,
-                    decoration: BoxDecoration(
-                      color: b ?  Colors.white : Colors.transparent,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: e
-                        ? Center(
-                      child: AnimatedTextKit(
-                        totalRepeatCount: 1,
-                        animatedTexts: [
-                          ColorizeAnimatedText(
-                            'Sozzle',
-                            colors: colorizeColors,
-                            textStyle: const TextStyle(
-                              fontSize: 24,
-                            ),
-                          ),
-                        ],
+                    if (d)
+                      Text(
+                        'Sozzle',
+                        style: TextStyle(
+                          color: state.primaryTextColor,
+                          fontSize: 24,
+                        ),
+                      )
+                    else
+                      AnimatedContainer(
+                        duration: Duration(seconds: c ? 2 : 0),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        height: c ? 80 : 20,
+                        width: c ? 200 : 20,
+                        decoration: BoxDecoration(
+                          color: b
+                              ? settingState is SettingInitial &&
+                                      settingState.isDarkMode
+                                  ? Colors.white
+                                  : const Color(0xFF123456)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: e
+                            ? Center(
+                                child: AnimatedTextKit(
+                                  totalRepeatCount: 1,
+                                  animatedTexts: [
+                                    ColorizeAnimatedText(
+                                      'Sozzle',
+                                      colors: colorizeColors,
+                                      textStyle: const TextStyle(
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox(),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: BlocBuilder<ApploaderCubit, ApploaderState>(
+                        builder: (context, state) {
+                          if (state.loaderState == LoaderState.loadingPuzzle) {
+                            return LinearProgressIndicator(
+                              value: state.percent / 100,
+                              color: d ? null : Colors.transparent,
+                              backgroundColor: d ? null : Colors.transparent,
+                            );
+                          } else if (state.loaderState ==
+                              LoaderState.loadingUserData) {
+                            return LinearProgressIndicator(
+                              value: state.percent / 100,
+                              color: d ? null : Colors.transparent,
+                              backgroundColor: d ? null : Colors.transparent,
+                            );
+                          } else if (state.loaderState ==
+                              LoaderState.loadingSettingsData) {
+                            return LinearProgressIndicator(
+                              value: state.percent / 100,
+                              color: d ? null : Colors.transparent,
+                              backgroundColor: d ? null : Colors.transparent,
+                            );
+                          } else if (state.loaderState == LoaderState.loaded) {
+                            return StartButton(
+                              textColour: d ? null : Colors.transparent,
+                            );
+                          }
+                          apploader.updatePuzzleData();
+                          return Container();
+                        },
                       ),
                     )
-                        : const SizedBox(),
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: BlocBuilder<ApploaderCubit, ApploaderState>(
-                    builder: (context, state) {
-                      if (state.loaderState == LoaderState.loadingPuzzle) {
-                        return LinearProgressIndicator(
-                          value: state.percent / 100,
-                          color: d ? null : Colors.transparent,
-                          backgroundColor: d ? null : Colors.transparent,
-                        );
-                      } else if (state.loaderState ==
-                          LoaderState.loadingUserData) {
-                        return LinearProgressIndicator(
-                          value: state.percent / 100,
-                          color: d ? null : Colors.transparent,
-                          backgroundColor: d ? null : Colors.transparent,
-                        );
-                      } else if (state.loaderState ==
-                          LoaderState.loadingSettingsData) {
-                        return LinearProgressIndicator(
-                          value: state.percent / 100,
-                          color: d ? null : Colors.transparent,
-                          backgroundColor: d ? null : Colors.transparent,
-                        );
-                      } else if (state.loaderState == LoaderState.loaded) {
-                        return StartButton(
-                          textColour: d ? null : Colors.transparent,
-                        );
-                      }
-                      apploader.updatePuzzleData();
-                      return Container();
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
+                  ],
+                ),
+              ),
+            );
+          },
         );
       },
     );
