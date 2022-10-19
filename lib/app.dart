@@ -30,13 +30,7 @@ class App extends StatelessWidget {
         RepositoryProvider<IUserStatsRepository>(
           create: (context) => UserStatsRepository(),
         ),
-        RepositoryProvider<IAudioController>(
-          create: (context) => AudioController(
-            settings: SettingState.initial().copyWith(
-              isSoundOn: true,
-            ),
-          ),
-        ),
+        
         RepositoryProvider<ISettingRepository>(
           create: (context) => SettingRepository(),
         ),
@@ -70,28 +64,35 @@ class App extends StatelessWidget {
             )..readCurrentStats(),
           ),
         ],
-        child: BlocBuilder<ThemeCubit, ThemeState>(
-          builder: (context, state) {
-            return MaterialApp.router(
-              routeInformationProvider: router.routeInformationProvider,
-              routeInformationParser: router.routeInformationParser,
-              routerDelegate: router.routerDelegate,
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                appBarTheme: AppBarTheme(color: state.appBarColor),
-                colorScheme: ColorScheme.fromSwatch(
-                  accentColor: state.accentColor,
-                  primarySwatch: state.primarySwatch,
+        child: RepositoryProvider<IAudioController>(
+          create: (context) => AudioController(
+            settingsCubit: context.read<SettingCubit>(),
+            initialSettings: context.read<SettingCubit>().state,
+          ),
+          
+          child: BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return MaterialApp.router(
+                routeInformationProvider: router.routeInformationProvider,
+                routeInformationParser: router.routeInformationParser,
+                routerDelegate: router.routerDelegate,
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  appBarTheme: AppBarTheme(color: state.appBarColor),
+                  colorScheme: ColorScheme.fromSwatch(
+                    accentColor: state.accentColor,
+                    primarySwatch: state.primarySwatch,
+                  ),
+                  toggleableActiveColor: state.primarySwatch,
                 ),
-                toggleableActiveColor: state.primarySwatch,
-              ),
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
-            );
-          },
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                ],
+                supportedLocales: AppLocalizations.supportedLocales,
+              );
+            },
+          ),
         ),
       ),
     );
