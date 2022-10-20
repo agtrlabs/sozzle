@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:level_generator/src/level_generator/domain/entities/reward.dart';
-import 'package:level_generator/src/level_generator/domain/repos/reward_repo.dart';
-import 'package:level_generator/src/level_generator/domain/usecases/get_rewards.dart';
+import 'package:level_data/level_data.dart';
+import 'package:level_generator/src/rewards_generator/domain/repos/reward_repo.dart';
+import 'package:level_generator/src/rewards_generator/domain/usecases/get_rewards.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockRewardRepo extends Mock implements RewardRepo {}

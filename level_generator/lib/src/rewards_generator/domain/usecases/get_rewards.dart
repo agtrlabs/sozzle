@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:level_data/level_data.dart';
 import 'package:level_generator/core/error/failure.dart';
+import 'package:level_generator/src/rewards_generator/domain/repos/reward_repo.dart';
 
-import '../entities/reward.dart';
-import '../repos/reward_repo.dart';
+
 
 class GetRewards {
   final RewardRepo _rewardsRepo;
