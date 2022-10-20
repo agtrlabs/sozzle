@@ -7,6 +7,8 @@ import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
+import 'package:sozzle/src/audio/audio_controller.dart';
+import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/level/application/level_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/settings/application/setting_repository.dart';
@@ -61,28 +63,34 @@ class App extends StatelessWidget {
             )..readCurrentStats(),
           ),
         ],
-        child: BlocBuilder<ThemeCubit, ThemeState>(
-          builder: (context, state) {
-            return MaterialApp.router(
-              routeInformationProvider: router.routeInformationProvider,
-              routeInformationParser: router.routeInformationParser,
-              routerDelegate: router.routerDelegate,
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                appBarTheme: AppBarTheme(color: state.appBarColor),
-                colorScheme: ColorScheme.fromSwatch(
-                  accentColor: state.accentColor,
-                  primarySwatch: state.primarySwatch,
+        child: RepositoryProvider<IAudioController>(
+          create: (context) => AudioController(
+            settingsCubit: context.read<SettingCubit>(),
+            initialSettings: context.read<SettingCubit>().state,
+          ),
+          child: BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return MaterialApp.router(
+                routeInformationProvider: router.routeInformationProvider,
+                routeInformationParser: router.routeInformationParser,
+                routerDelegate: router.routerDelegate,
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  appBarTheme: AppBarTheme(color: state.appBarColor),
+                  colorScheme: ColorScheme.fromSwatch(
+                    accentColor: state.accentColor,
+                    primarySwatch: state.primarySwatch,
+                  ),
+                  toggleableActiveColor: state.primarySwatch,
                 ),
-                toggleableActiveColor: state.primarySwatch,
-              ),
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
-            );
-          },
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                ],
+                supportedLocales: AppLocalizations.supportedLocales,
+              );
+            },
+          ),
         ),
       ),
     );

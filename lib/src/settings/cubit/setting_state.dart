@@ -1,40 +1,44 @@
 part of 'setting_cubit.dart';
 
 @immutable
-abstract class SettingState extends Equatable {}
-
-class SettingInitial extends SettingState {
-  SettingInitial({
-    required this.isSoundOn,
-    required this.isMusicOn,
+class SettingState extends Equatable {
+  const SettingState({
     required this.isDarkMode,
+    required this.isMusicOn,
     required this.isMute,
+    required this.isSoundOn,
   });
 
-  final bool isSoundOn;
-  final bool isMusicOn;
-  final bool isDarkMode;
-  final bool isMute;
+  factory SettingState.initial() => const SettingState(
+        isDarkMode: false,
+        isMusicOn: false,
+        isMute: true,
+        isSoundOn: false,
+      );
 
-  SettingInitial copyWith({
-    bool? isSoundOn,
-    bool? isMusicOn,
+  final bool isDarkMode;
+  final bool isMusicOn;
+  final bool isMute;
+  final bool isSoundOn;
+
+  SettingState copyWith({
     bool? isDarkMode,
+    bool? isMusicOn,
     bool? isMute,
-  }) {
-    return SettingInitial(
-      isSoundOn: isSoundOn ?? this.isSoundOn,
-      isMusicOn: isMusicOn ?? this.isMusicOn,
-      isDarkMode: isDarkMode ?? this.isDarkMode,
-      isMute: isMute ?? this.isMute,
-    );
-  }
+    bool? isSoundOn,
+  }) =>
+      SettingState(
+        isDarkMode: isDarkMode ?? this.isDarkMode,
+        isMusicOn: isMusicOn ?? this.isMusicOn,
+        isMute: isMute ?? this.isMute,
+        isSoundOn: isSoundOn ?? this.isSoundOn,
+      );
 
   @override
   List<Object?> get props => [
-        isSoundOn,
-        isMusicOn,
         isDarkMode,
+        isMusicOn,
         isMute,
+        isSoundOn,
       ];
 }

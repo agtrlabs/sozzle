@@ -88,7 +88,7 @@ class SettingRepository implements ISettingRepository {
             isSoundOn: false,
             isMusicOn: false,
             isDarkMode: false,
-            isMute: false,
+            isMute: true,
           );
     return setting;
   }

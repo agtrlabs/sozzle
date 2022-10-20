@@ -99,8 +99,7 @@ class _SplashPageState extends State<SplashPage> {
                         width: c ? 200 : 20,
                         decoration: BoxDecoration(
                           color: b
-                              ? settingState is SettingInitial &&
-                                      settingState.isDarkMode
+                              ? settingState.isDarkMode
                                   ? Colors.white
                                   : const Color(0xFF123456)
                               : Colors.transparent,
