@@ -24,7 +24,6 @@ abstract class Reward extends Equatable {
         throw Exception('Unknown reward type');
     }
   }
-
 }
 
 class RewardCoin extends Reward {
@@ -48,8 +47,6 @@ class RewardCoin extends Reward {
   final int id;
   @override
   String get type => 'coin';
-
-
 
   @override
   Map<String, dynamic> toMap() {

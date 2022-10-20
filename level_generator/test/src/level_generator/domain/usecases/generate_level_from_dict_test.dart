@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:level_data/level_data.dart';
@@ -14,7 +10,7 @@ class MockLevelGeneratorRepo extends Mock implements LevelGeneratorRepo {}
 void main() {
   late MockLevelGeneratorRepo repo;
   late GenerateLevelFromDict useCase;
-  
+
   setUp(() {
     repo = MockLevelGeneratorRepo();
     useCase = GenerateLevelFromDict(repo);
@@ -45,31 +41,31 @@ void main() {
   };
 
   const testLevelData = LevelData(
-    levelId: 1,
-    words: ["SAW", "WASP"],
-    boardHeight: 5,
-    boardWidth: 5,
-    boardData: ["W", "S", ""],
-    rewards: [
-      Badge(
-        id: 1,
-        name: "Test Badge",
-        description: "Test Badge Description",
-        image: "Test Badge Image",
-        points: 50,
-      ),
-      RewardCoin(
-        id: 2,
-        name: "Test Coin",
-        description: "Test Coin Description",
-        image: "Test Coin Image",
-        points: 500,
-      ),
-    ]
-  );
+      levelId: 1,
+      words: ["SAW", "WASP"],
+      boardHeight: 5,
+      boardWidth: 5,
+      boardData: ["W", "S", ""],
+      rewards: [
+        Badge(
+          id: 1,
+          name: "Test Badge",
+          description: "Test Badge Description",
+          image: "Test Badge Image",
+          points: 50,
+        ),
+        RewardCoin(
+          id: 2,
+          name: "Test Coin",
+          description: "Test Coin Description",
+          image: "Test Coin Image",
+          points: 500,
+        ),
+      ]);
 
   test("generate level data from dictionary", () async {
-    when(() => repo.generateLevelFromDict(any())).thenAnswer((_) async => const Right(testLevelData));
+    when(() => repo.generateLevelFromDict(any()))
+        .thenAnswer((_) async => const Right(testLevelData));
 
     final result = await useCase.exec(testDictionary);
 
@@ -77,6 +73,5 @@ void main() {
 
     verify(() => repo.generateLevelFromDict(testDictionary));
     verifyNoMoreInteractions(repo);
-
   });
 }

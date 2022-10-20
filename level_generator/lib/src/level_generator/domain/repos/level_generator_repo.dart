@@ -2,11 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:level_data/level_data.dart';
 import 'package:level_generator/core/error/failure.dart';
 
-
-
-
 abstract class LevelGeneratorRepo {
-
   // TODO: implement this method
   //  static Future<String> _jsonLoader(String key) async {
   //     return await rootBundle.loadString(key);
@@ -24,8 +20,8 @@ abstract class LevelGeneratorRepo {
   ///         boardData: dict["boardData"] as List<String>,
   ///         rewards: dict["rewards"]
   ///     );
-  Future<Either<Failure, LevelData>>? generateLevelFromDict(Map<String, dynamic>? dict);
-
+  Future<Either<Failure, LevelData>>? generateLevelFromDict(
+      Map<String, dynamic>? dict);
 
   /// Accepts the path of the json file and returns a LevelData object
   /// Don't use this for raw HashMaps, if you have a hashmap, use the
@@ -42,6 +38,6 @@ abstract class LevelGeneratorRepo {
   ///         boardData: List<String>.from(data["boardData"]),
   ///         rewards: data["rewards"]
   ///     );
-  Future<Either<Failure, LevelData>>? generateLevelFromJsonFile(String? jsonPath);
-
+  Future<Either<Failure, LevelData>>? generateLevelFromJsonFile(
+      String? jsonPath);
 }

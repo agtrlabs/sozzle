@@ -1,5 +1,3 @@
-
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:level_data/level_data.dart';
@@ -16,7 +14,6 @@ void main() {
     repo = MockLevelGeneratorRepo();
     useCase = GenerateLevelFromJsonFile(repo);
   });
-
 
   const testPath = "assets/level_test.json";
   const testLevelData = LevelData(
@@ -40,12 +37,11 @@ void main() {
           image: "Test Coin Image",
           points: 500,
         ),
-      ]
-  );
+      ]);
 
   test("generate level data from json file", () async {
-    when(() => repo.generateLevelFromJsonFile(any())).thenAnswer((_) async =>
-    const Right(testLevelData));
+    when(() => repo.generateLevelFromJsonFile(any()))
+        .thenAnswer((_) async => const Right(testLevelData));
 
     final result = await useCase.exec(testPath);
 

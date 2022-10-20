@@ -1,5 +1,3 @@
-
-
 // class LevelData {
 //   LevelData({
 //     required this.boardData,
