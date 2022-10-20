@@ -1,6 +1,6 @@
+import 'package:level_data/level_data.dart';
 import 'package:localstore/localstore.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
-import 'package:sozzle/src/level/domain/level_data.dart';
 
 /// Save and load [LevelData] by levelId from disk using [Localstore]
 class LevelRepository implements ILevelRepository {

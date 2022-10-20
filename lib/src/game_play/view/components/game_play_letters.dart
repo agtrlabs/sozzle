@@ -1,10 +1,10 @@
 import 'package:circular_pattern/circular_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/audio/domain/sfx.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
-import 'package:sozzle/src/level/domain/level_data.dart';
 
 class GamePlayLetters extends StatelessWidget {
   const GamePlayLetters(this.levelData, {super.key});

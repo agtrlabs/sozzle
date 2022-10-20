@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/user_stats/application/user_stats_repository.dart';
@@ -6,6 +7,7 @@ import 'package:sozzle/src/user_stats/domain/user_progress_data.dart';
 class MockUserProgressData extends Mock implements UserProgressData {}
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   group('UserStatsRepository', () {
     test('convert  progressdata.toMap and save ', () async {
       final data = MockUserProgressData();

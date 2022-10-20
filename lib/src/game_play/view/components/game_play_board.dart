@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grid_board/grid_board.dart';
+import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
-import 'package:sozzle/src/level/domain/level_data.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class GamePlayBoard extends StatelessWidget {

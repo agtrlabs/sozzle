@@ -1,12 +1,14 @@
+// ignore_for_file: deprecated_member_use_from_same_package
 
 import 'package:equatable/equatable.dart';
 
+@Deprecated("Use Either from dartz package instead")
 abstract class Either<L, R> {
   const Either();
   C unfold<C>(
-      C Function(L left) onLeft,
-      C Function(R right) onRight,
-      );
+    C Function(L left) onLeft,
+    C Function(R right) onRight,
+  );
 }
 
 class Left<L, R> extends Equatable implements Either<L, R> {
@@ -18,9 +20,10 @@ class Left<L, R> extends Equatable implements Either<L, R> {
 
   @override
   C unfold<C>(
-      C Function(L left) onLeft,
-      C Function(R right) onRight,
-      ) => onLeft(_l);
+    C Function(L left) onLeft,
+    C Function(R right) onRight,
+  ) =>
+      onLeft(_l);
 }
 
 class Right<L, R> extends Equatable implements Either<L, R> {
@@ -32,8 +35,8 @@ class Right<L, R> extends Equatable implements Either<L, R> {
 
   @override
   C unfold<C>(
-      C Function(L left) onLeft,
-      C Function(R right) onRight,
-      ) => onRight(_r);
+    C Function(L left) onLeft,
+    C Function(R right) onRight,
+  ) =>
+      onRight(_r);
 }
-
