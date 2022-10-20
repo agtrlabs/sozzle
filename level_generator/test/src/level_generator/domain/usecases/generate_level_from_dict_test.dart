@@ -67,7 +67,8 @@ void main() {
     when(() => repo.generateLevelFromDict(any()))
         .thenAnswer((_) async => const Right(testLevelData));
 
-    final result = await useCase.exec(testDictionary);
+    final result =
+        await useCase(GenerateLevelFromDictParams(dictionary: testDictionary));
 
     expect(result, const Right(testLevelData));
 

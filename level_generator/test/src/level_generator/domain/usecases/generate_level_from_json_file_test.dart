@@ -43,7 +43,8 @@ void main() {
     when(() => repo.generateLevelFromJsonFile(any()))
         .thenAnswer((_) async => const Right(testLevelData));
 
-    final result = await useCase.exec(testPath);
+    final result =
+        await useCase(const GenerateLevelFromFileParams(path: testPath));
 
     expect(result, const Right(testLevelData));
     verify(() => repo.generateLevelFromJsonFile(testPath));
