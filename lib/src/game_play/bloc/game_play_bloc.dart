@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sozzle/src/level/domain/level_data.dart';
+import 'package:level_data/level_data.dart';
 
 part 'game_play_event.dart';
 part 'game_play_state.dart';

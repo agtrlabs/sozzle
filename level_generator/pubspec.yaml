@@ -18,6 +18,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   dartz: ^0.10.1
+  level_data:
+    path: ../packages/level_data
 
 
 dev_dependencies:

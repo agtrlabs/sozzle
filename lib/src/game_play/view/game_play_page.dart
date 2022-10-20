@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/game_play/view/components/game_loader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
-import 'package:sozzle/src/level/domain/level_data.dart';
 import 'package:sozzle/src/theme/theme.dart';
 
 class GamePlayPage extends StatelessWidget {

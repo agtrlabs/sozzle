@@ -25,6 +25,8 @@ dependencies:
       ref: main
   http: ^0.13.5
   intl: ^0.17.0
+  level_data:
+    path: packages/level_data
   localstore: ^1.2.3
 
 dev_dependencies:

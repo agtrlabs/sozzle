@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
 
@@ -24,7 +25,7 @@ EXIST
       boardWidth: 5,
       boardHeight: 5,
       levelId: 1,
-      words: ['EXIST', 'TEST'],
+      words: const ['EXIST', 'TEST'],
     );
     setUp(() {
       bloc = GamePlayBloc(levelData: levelData);

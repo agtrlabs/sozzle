@@ -1,4 +1,5 @@
 //import 'package:http/http.dart' as http;
+import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
@@ -26,7 +27,7 @@ class MockApploaderRepository implements IApploaderRepository {
   Future<LevelList> getLevels() async {
     // TODO(akyunus): get data online
     list.levels.addAll([
-      LevelData(
+      const LevelData(
         levelId: 1,
         words: ['SAW', 'WASP', 'SWAP', 'NAP', 'SPAWN'],
         boardHeight: 5,
@@ -59,7 +60,7 @@ class MockApploaderRepository implements IApploaderRepository {
           'P'
         ],
       ),
-      LevelData(
+      const LevelData(
         levelId: 2,
         words: [
           'RIFLE',
