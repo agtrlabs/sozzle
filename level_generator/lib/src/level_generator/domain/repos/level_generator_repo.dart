@@ -7,14 +7,16 @@ import 'package:level_generator/core/error/failure.dart';
 
 abstract class LevelGeneratorRepo {
 
-  ///  static Future<String> _jsonLoader(String key) async {
-  ///     return await rootBundle.loadString(key);
-  ///   }
+  // TODO: implement this method
+  //  static Future<String> _jsonLoader(String key) async {
+  //     return await rootBundle.loadString(key);
+  //   }
 
   /// Takes a dictionary and returns a LevelData object
   /// Don't use this for json files, if you have a json file, use the
   /// [GenerateLeveLFromJsonFile]
-  /// return LevelData._(
+  ///
+  /// return LevelData(
   ///         levelId: dict["levelId"] as int,
   ///         words: dict["words"] as List<String>,
   ///         boardWidth: dict["boardWidth"] as int,
@@ -28,9 +30,11 @@ abstract class LevelGeneratorRepo {
   /// Accepts the path of the json file and returns a LevelData object
   /// Don't use this for raw HashMaps, if you have a hashmap, use the
   /// [GenerateLevelFromDict]
+  ///
   /// final data =
   ///         jsonDecode(await _jsonLoader(jsonPath)) as Map<String, dynamic>;
-  ///     return LevelData._(
+  ///
+  ///     return LevelData(
   ///         levelId: data["levelId"] as int,
   ///         words: List<String>.from(data["words"]),
   ///         boardWidth: data["boardWidth"] as int,
