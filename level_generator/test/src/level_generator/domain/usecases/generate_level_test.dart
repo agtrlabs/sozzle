@@ -1,5 +1,3 @@
-
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,11 +26,13 @@ void main() async {
   };
 
   final LevelData testLevelData = LevelData.fromDictionary(testDict);
-  final LevelData testLevelDataFromJson = await LevelData.create("assets/level_test.json");
+  final LevelData testLevelDataFromJson =
+      await LevelData.create("assets/level_test.json");
 
   group("Generate Level", () {
-    test("from dictionary", () async{
-      when(() => mockLevelGeneratorRepo.generateLevel()).thenAnswer((_) async => Right(testLevelData));
+    test("from dictionary", () async {
+      when(() => mockLevelGeneratorRepo.generateLevel())
+          .thenAnswer((_) async => Right(testLevelData));
 
       final result = await useCase.exec();
 
@@ -42,7 +42,8 @@ void main() async {
     });
 
     test("from json file", () async {
-      when(() => mockLevelGeneratorRepo.generateLevel()).thenAnswer((_) async => Right(testLevelDataFromJson));
+      when(() => mockLevelGeneratorRepo.generateLevel())
+          .thenAnswer((_) async => Right(testLevelDataFromJson));
 
       final result = await useCase.exec();
 
