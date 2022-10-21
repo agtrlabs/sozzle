@@ -38,7 +38,8 @@ void main() {
     when(() => repo.getRewards(any()))
         .thenAnswer((_) async => const Right(testRewards));
 
-    final result = await useCase.call(testLevel);
+    final result =
+        await useCase.call(const GetRewardsParams(levelId: testLevel));
 
     expect(result, const Right(testRewards));
     verify(() => repo.getRewards(testLevel));
