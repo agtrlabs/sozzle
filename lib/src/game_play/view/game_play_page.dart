@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:level_data/level_data.dart';
+import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/game_play/view/components/game_loader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
@@ -27,7 +28,10 @@ class GamePlayPage extends StatelessWidget {
             if (!snapshot.hasData) {
               return const Text('Ops an error!');
             } else {
-              final bloc = GamePlayBloc(levelData: snapshot.data!);
+              final bloc = GamePlayBloc(
+                levelData: snapshot.data!,
+                audio: RepositoryProvider.of<IAudioController>(context),
+              );
               return BlocProvider<GamePlayBloc>(
                 create: (context) => bloc,
                 child: Column(

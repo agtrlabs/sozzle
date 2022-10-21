@@ -25,7 +25,6 @@ class GamePlayLetters extends StatelessWidget {
           dots: letters.map((e) => PatternDot(value: e)).toList(),
           onComplete: (input) {
             final word = input.map((e) => e.value).toList().join();
-            RepositoryProvider.of<IAudioController>(context).play(Sfx.openBox);
             BlocProvider.of<GamePlayBloc>(context)
                 .add(GamePlayEventInputWord(word));
           },
