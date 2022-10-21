@@ -106,6 +106,15 @@ EXIST
       skip: levelData.words.length,
       expect: () => [const GamePlayState(GamePlayActualState.allFound)],
     );
+
+    blocTest<GamePlayBloc, GamePlayState>(
+      'should play sound on word found',
+      build: () => bloc,
+      act: (bloc) => bloc.add(GamePlayEventInputWord('TEST')),
+      verify: (bloc) {
+        verify(() => audio.play(any())).called(greaterThan(0));
+      },
+    );
   });
 
   group('GamePlayBloc Level2', () {
