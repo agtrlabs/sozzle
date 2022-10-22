@@ -69,19 +69,19 @@ class App extends StatelessWidget {
             initialSettings: context.read<SettingCubit>().state,
           ),
           child: BlocBuilder<ThemeCubit, ThemeState>(
-            builder: (context, state) {
+            builder: (context, theme) {
               return MaterialApp.router(
                 routeInformationProvider: router.routeInformationProvider,
                 routeInformationParser: router.routeInformationParser,
                 routerDelegate: router.routerDelegate,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(
-                  appBarTheme: AppBarTheme(color: state.appBarColor),
+                  appBarTheme: AppBarTheme(color: theme.appBarColor),
                   colorScheme: ColorScheme.fromSwatch(
-                    accentColor: state.accentColor,
-                    primarySwatch: state.primarySwatch,
+                    accentColor: theme.accentColor,
+                    primarySwatch: theme.primarySwatch,
                   ),
-                  toggleableActiveColor: state.primarySwatch,
+                  toggleableActiveColor: theme.primarySwatch,
                 ),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,

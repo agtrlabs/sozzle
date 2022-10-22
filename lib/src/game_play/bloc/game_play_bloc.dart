@@ -1,43 +1,23 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:level_data/level_data.dart';
+import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
+import 'package:sozzle/src/audio/domain/sfx.dart';
 
 part 'game_play_event.dart';
 part 'game_play_state.dart';
 
 class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
-  GamePlayBloc({required this.levelData})
-      : super(const GamePlayState(GamePlayActualState.allHidden)) {
-    on<GamePlayEventInputWord>((event, emit) {
-      // TODO(me): implement bonusWord
-      if (!levelData.words.contains(event.word)) {
-        emit(const GamePlayState(GamePlayActualState.notFound));
-      } else {
-        // scan the board
-        final indexList = _scan(event.word);
-        // if word found
-        if (indexList.length == event.word.length) {
-          //check if alreadyFound
-          if (foundWords.contains(event.word)) {
-            emit(const GamePlayState(GamePlayActualState.alreadyFound));
-          } else {
-            // else add to foundWords
-            foundWords.add(event.word);
-            emit(
-              GamePlayState(GamePlayActualState.wordFound, indexList),
-            );
-            //check if all words found
-            if (foundWords.length == levelData.words.length) {
-              emit(
-                const GamePlayState(GamePlayActualState.allFound),
-              );
-            }
-          }
-        }
-      }
-    });
+  GamePlayBloc({
+    required this.levelData,
+    required this.audio,
+  }) : super(const GamePlayState(GamePlayActualState.allHidden)) {
+    on<GamePlayEventInputWord>(handleInputWord);
   }
   final LevelData levelData;
+  final IAudioController audio;
 
   List<String> foundWords = [];
 
@@ -124,5 +104,41 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   List<int> _scan(String word) {
     final list = _scanLR(word);
     return list.length == word.length ? list : _scanTD(word);
+  }
+
+  FutureOr<void> handleInputWord(
+    GamePlayEventInputWord event,
+    Emitter<GamePlayState> emit,
+  ) {
+    // TODO(me): implement bonusWord
+    if (!levelData.words.contains(event.word)) {
+      audio.play(Sfx.error);
+      emit(const GamePlayState(GamePlayActualState.notFound));
+    } else {
+      // scan the board
+      final indexList = _scan(event.word);
+      // if word found
+      if (indexList.length == event.word.length) {
+        //check if alreadyFound
+        if (foundWords.contains(event.word)) {
+          audio.play(Sfx.hint);
+          emit(const GamePlayState(GamePlayActualState.alreadyFound));
+        } else {
+          // else add to foundWords
+          foundWords.add(event.word);
+          audio.play(Sfx.open);
+          emit(
+            GamePlayState(GamePlayActualState.wordFound, indexList),
+          );
+          //check if all words found
+          if (foundWords.length == levelData.words.length) {
+            audio.play(Sfx.win);
+            emit(
+              const GamePlayState(GamePlayActualState.allFound),
+            );
+          }
+        }
+      }
+    }
   }
 }

@@ -1,11 +1,25 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:level_data/level_data.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
+import 'package:sozzle/src/audio/domain/sfx.dart';
 import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
 
+class MockAudio extends Mock implements IAudioController {}
+
 void main() {
+  late MockAudio audio;
+
+  setUpAll(() {
+    registerFallbackValue(Sfx.open);
+    audio = MockAudio();
+    when(() => audio.play(any())).thenReturn(null);
+  });
+
   group('GamePlayBloc Level1', () {
     late GamePlayBloc bloc;
+
 /*
 
 EXIST
@@ -27,7 +41,10 @@ EXIST
       words: const ['EXIST', 'TEST'],
     );
     setUp(() {
-      bloc = GamePlayBloc(levelData: levelData);
+      bloc = GamePlayBloc(
+        levelData: levelData,
+        audio: audio,
+      );
     });
 
     tearDown(() async {
@@ -89,6 +106,15 @@ EXIST
       skip: levelData.words.length,
       expect: () => [const GamePlayState(GamePlayActualState.allFound)],
     );
+
+    blocTest<GamePlayBloc, GamePlayState>(
+      'should play sound on word found',
+      build: () => bloc,
+      act: (bloc) => bloc.add(GamePlayEventInputWord('TEST')),
+      verify: (bloc) {
+        verify(() => audio.play(any())).called(greaterThan(0));
+      },
+    );
   });
 
   group('GamePlayBloc Level2', () {
@@ -112,7 +138,10 @@ R D
       words: const ['LOWR', 'WORD', 'OLD', 'LOW', 'OWL', 'WORLD'],
     );
     setUp(() {
-      bloc = GamePlayBloc(levelData: levelData);
+      bloc = GamePlayBloc(
+        levelData: levelData,
+        audio: audio,
+      );
     });
 
     tearDown(() async {

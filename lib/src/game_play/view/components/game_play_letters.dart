@@ -23,9 +23,11 @@ class GamePlayLetters extends StatelessWidget {
         aspectRatio: 1,
         child: CircularPattern(
           dots: letters.map((e) => PatternDot(value: e)).toList(),
+          onChange: (input) {
+            RepositoryProvider.of<IAudioController>(context).play(Sfx.slide);
+          },
           onComplete: (input) {
             final word = input.map((e) => e.value).toList().join();
-            RepositoryProvider.of<IAudioController>(context).play(Sfx.openBox);
             BlocProvider.of<GamePlayBloc>(context)
                 .add(GamePlayEventInputWord(word));
           },
