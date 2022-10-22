@@ -2,6 +2,8 @@ import 'package:circular_pattern/circular_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:level_data/level_data.dart';
+import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
+import 'package:sozzle/src/audio/domain/sfx.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
 
 class GamePlayLetters extends StatelessWidget {
@@ -21,6 +23,9 @@ class GamePlayLetters extends StatelessWidget {
         aspectRatio: 1,
         child: CircularPattern(
           dots: letters.map((e) => PatternDot(value: e)).toList(),
+          onChange: (input) {
+            RepositoryProvider.of<IAudioController>(context).play(Sfx.slide);
+          },
           onComplete: (input) {
             final word = input.map((e) => e.value).toList().join();
             BlocProvider.of<GamePlayBloc>(context)

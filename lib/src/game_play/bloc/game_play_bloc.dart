@@ -112,6 +112,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   ) {
     // TODO(me): implement bonusWord
     if (!levelData.words.contains(event.word)) {
+      audio.play(Sfx.error);
       emit(const GamePlayState(GamePlayActualState.notFound));
     } else {
       // scan the board
@@ -120,16 +121,18 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
       if (indexList.length == event.word.length) {
         //check if alreadyFound
         if (foundWords.contains(event.word)) {
+          audio.play(Sfx.hint);
           emit(const GamePlayState(GamePlayActualState.alreadyFound));
         } else {
           // else add to foundWords
           foundWords.add(event.word);
-          audio.play(Sfx.openBox);
+          audio.play(Sfx.open);
           emit(
             GamePlayState(GamePlayActualState.wordFound, indexList),
           );
           //check if all words found
           if (foundWords.length == levelData.words.length) {
+            audio.play(Sfx.win);
             emit(
               const GamePlayState(GamePlayActualState.allFound),
             );
