@@ -12,7 +12,7 @@ void main() {
   late MockAudio audio;
 
   setUpAll(() {
-    registerFallbackValue(Sfx.openBox);
+    registerFallbackValue(Sfx.open);
     audio = MockAudio();
     when(() => audio.play(any())).thenReturn(null);
   });
