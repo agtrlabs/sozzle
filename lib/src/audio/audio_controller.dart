@@ -12,12 +12,13 @@ class AudioController implements IAudioController {
     required SettingCubit settingsCubit,
     required SettingState initialSettings,
   }) {
+    preloadSfx();
     _settings = initialSettings;
     settingsCubit.stream.listen(_reloadSettings);
   }
 
   late SettingState _settings;
-  final player = AudioPlayer();
+  Map<Sfx, AudioPlayer> players = {};
 
   @override
   SettingState get settings => _settings;
@@ -25,12 +26,24 @@ class AudioController implements IAudioController {
   @override
   Future<void> play(Sfx sfx) async {
     if (!_settings.isMute && _settings.isSoundOn) {
-      await player.play(AssetSource(sound[sfx]!));
+      //await player.play(AssetSource(sound[sfx]!));
+
+      await players[sfx]!.play(AssetSource(sound[sfx]!));
     }
   }
 
   void _reloadSettings(SettingState settings) {
     _settings = settings;
     return;
+  }
+
+  Future<void> preloadSfx() async {
+    for (final sfx in Sfx.values) {
+      players[sfx] = AudioPlayer();
+    }
+    players.forEach((key, value) async {
+      await players[key]!.setSource(AssetSource(sound[key]!));
+      await players[key]!.setPlayerMode(PlayerMode.lowLatency);
+    });
   }
 }

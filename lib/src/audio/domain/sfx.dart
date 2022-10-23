@@ -3,7 +3,7 @@ Map<Sfx, String> sound = {
   Sfx.hint: 'sfx/hint.ogg',
   Sfx.open: 'sfx/open.ogg',
   Sfx.slide: 'sfx/slide.ogg',
-  Sfx.win: 'sfx/wing.ogg',
+  Sfx.win: 'sfx/win.ogg',
 };
 
 enum Sfx { slide, open, win, error, hint }
