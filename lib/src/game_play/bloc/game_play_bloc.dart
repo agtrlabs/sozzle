@@ -126,7 +126,6 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
         } else {
           // else add to foundWords
           foundWords.add(event.word);
-          audio.play(Sfx.open);
           emit(
             GamePlayState(GamePlayActualState.wordFound, indexList),
           );
@@ -136,6 +135,8 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
             emit(
               const GamePlayState(GamePlayActualState.allFound),
             );
+          } else {
+            audio.play(Sfx.open);
           }
         }
       }
