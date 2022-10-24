@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sozzle/l10n/l10n.dart';
 
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
@@ -43,7 +44,7 @@ class SettingsPage extends StatelessWidget {
                             color: themeState.primaryTextColor,
                           ),
                           onPressed: () {
-                            Navigator.pop(context);
+                            GoRouter.of(context).replace('/home');
                           },
                         ),
                       ),
