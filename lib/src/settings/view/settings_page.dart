@@ -44,7 +44,6 @@ class SettingsPage extends StatelessWidget {
                             color: themeState.primaryTextColor,
                           ),
                           onPressed: () {
-                            
                             GoRouter.of(context).replace('/home');
                           },
                         ),
