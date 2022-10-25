@@ -34,12 +34,12 @@ class GamePlayPage extends StatelessWidget {
               );
               return BlocProvider<GamePlayBloc>(
                 create: (context) => bloc,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Flex(
+                  direction: Axis.vertical,
                   children: [
                     const GamePlayHeader(),
-                    Expanded(child: GamePlayBoard(snapshot.data!)),
-                    GamePlayLetters(snapshot.data!),
+                    Flexible(flex: 4, child: GamePlayBoard(snapshot.data!)),
+                    Flexible(flex: 3, child: GamePlayLetters(snapshot.data!)),
                   ],
                 ),
               );
