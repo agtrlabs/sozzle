@@ -21,6 +21,10 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
 
   List<String> foundWords = [];
 
+  int _getIndex(int col, int row, int height) {
+    return col * height + row;
+  }
+
   /// scans board data letf to right
   /// if word is found return indexes of letters
   List<int> _scanLR(String word) {
@@ -30,7 +34,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
       result.clear();
       for (var col = 0; col < levelData.boardWidth; col++) {
         //check current cell matches with wordPointer
-        final currentIndex = row * levelData.boardWidth + col;
+        final currentIndex = _getIndex(col, row, levelData.boardHeight);
         if (levelData.boardData[currentIndex] == word[wordPointer]) {
           result.add(currentIndex);
           wordPointer++;
@@ -39,7 +43,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
             if (col == levelData.boardWidth - 1) {
               return result;
             } else {
-              final nextIndex = row * levelData.boardWidth + col + 1;
+              final nextIndex = _getIndex(col + 1, row, levelData.boardHeight);
               if ((levelData.boardData[nextIndex] == '') ||
                   (levelData.boardData[nextIndex] == ' ')) {
                 return result;
@@ -69,7 +73,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
       result.clear();
       for (var row = 0; row < levelData.boardHeight; row++) {
         //check current cell matches with wordPointer
-        final currentIndex = row * levelData.boardWidth + col;
+        final currentIndex = _getIndex(col, row, levelData.boardHeight);
 
         if (levelData.boardData[currentIndex] == word[wordPointer]) {
           result.add(currentIndex);
@@ -79,7 +83,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
             if (row == levelData.boardHeight - 1) {
               return result;
             } else {
-              final nextIndex = (row + 1) * levelData.boardWidth + col;
+              final nextIndex = _getIndex(col, row + 1, levelData.boardHeight);
               if ((levelData.boardData[nextIndex] == '') ||
                   (levelData.boardData[nextIndex] == ' ')) {
                 return result;
