@@ -22,7 +22,7 @@ dependencies:
   grid_board:
     git:
       url: https://github.com/agtrlabs/grid_board.git
-      ref: main
+      ref: 7690c9b
   http: ^0.13.5
   intl: ^0.17.0
   level_data:
