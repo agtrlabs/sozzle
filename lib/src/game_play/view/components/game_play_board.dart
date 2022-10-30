@@ -14,21 +14,22 @@ class GamePlayBoard extends StatelessWidget {
     final theme = BlocProvider.of<ThemeCubit>(context).state;
 
     final gridSize = GridSize(levelData.boardWidth, levelData.boardHeight);
-    final cels = levelData.boardData
-        .map(
-          (e) => GridCell(
-            gridCellChildMap: e.isNotEmpty
-                ? {
-                    GridCellStatus.initial: LetterBox(e),
-                    GridCellStatus.selected: OpenLetterBox(e),
-                  }
-                : {
-                    GridCellStatus.initial: const NoLetterBox(),
-                    GridCellStatus.selected: const NoLetterBox(),
-                  },
-          ),
-        )
-        .toList();
+
+    final cels = levelData.boardData.map(
+      (e) {
+        return GridCell(
+          gridCellChildMap: e.isNotEmpty
+              ? {
+                  GridCellStatus.initial: LetterBox(e),
+                  GridCellStatus.selected: OpenLetterBox(e),
+                }
+              : {
+                  GridCellStatus.initial: const NoLetterBox(),
+                  GridCellStatus.selected: const NoLetterBox(),
+                },
+        );
+      },
+    ).toList();
 
     final controller = GridBoardController(
       gridBoardProperties: GridBoardProperties(
@@ -48,7 +49,6 @@ class GamePlayBoard extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width - 50,
         child: GridBoard(
-          margin: 5,
           backgroundColor: theme.backgroundColor,
           controller: controller,
           gridSize: GridSize(levelData.boardWidth, levelData.boardHeight),
@@ -68,8 +68,8 @@ class LetterBox extends StatelessWidget {
       height: 200,
       key: ValueKey(letter),
       decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: Colors.grey[200],
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
         border: Border.all(),
       ),
       child: Container(),
@@ -87,8 +87,8 @@ class OpenLetterBox extends StatelessWidget {
       height: 200,
       key: ValueKey(letter),
       decoration: BoxDecoration(
-        color: Colors.greenAccent,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: Colors.blue[300],
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
         border: Border.all(),
       ),
       child: FittedBox(
