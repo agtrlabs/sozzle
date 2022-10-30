@@ -127,10 +127,13 @@ R D
 */
     final levelData = LevelData(
       boardData: [
-        ...'L W OWL'.split(''),
-        ...'O O L O'.split(''),
-        ...'WORLD W'.split(''),
-        ...'R D    '.split(''),
+        ...'LOWR'.split(''),
+        ...'  O '.split(''),
+        ...'WORD'.split(''),
+        ...'  L '.split(''),
+        ...'OLD '.split(''),
+        ...'W   '.split(''),
+        ...'LOW '.split(''),
       ],
       boardWidth: 7,
       boardHeight: 4,
@@ -161,7 +164,7 @@ R D
       act: (bloc) => bloc.add(GamePlayEventInputWord('WORLD')),
       verify: (e) {
         expect(e.state.state, GamePlayActualState.wordFound);
-        expect(e.state.revealedCells, [14, 15, 16, 17, 18]);
+        expect(e.state.revealedCells, [2, 6, 10, 14, 18]);
       },
     );
 
@@ -171,7 +174,7 @@ R D
       act: (bloc) => bloc.add(GamePlayEventInputWord('LOW')),
       verify: (e) {
         expect(e.state.state, GamePlayActualState.wordFound);
-        expect(e.state.revealedCells, [6, 13, 20]);
+        expect(e.state.revealedCells, [24, 25, 26]);
       },
     );
 
