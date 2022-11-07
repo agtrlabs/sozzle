@@ -43,6 +43,22 @@ class LevelData extends Equatable {
   final int boardWidth;
 
   /// The data required to draw puzzle board
+  ///
+  /// Indexing starts from Top to Down.
+  ///
+  /// A 3x3 grid example boardData can be:
+  ///
+  /// ```dart
+  /// boardData = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
+  /// ```
+  ///
+  /// The boardData will represent a grid as:
+  ///
+  /// | 0 | 3 | 6 |
+  /// | --|---|-- |
+  /// | 1 | 4 | 7 |
+  /// | 2 | 5 | 8 |
+  ///
   final List<String> boardData;
 
   /// The rewards gained from this level
