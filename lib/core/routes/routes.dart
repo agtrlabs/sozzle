@@ -3,6 +3,7 @@ import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/home/home.dart';
 import 'package:sozzle/src/settings/view/settings_page.dart';
 import 'package:sozzle/src/splash/splash_page.dart';
+import 'package:sozzle/src/win/win_page.dart';
 
 final GoRouter router = GoRouter(
   routes: <GoRoute>[
@@ -23,6 +24,10 @@ final GoRouter router = GoRouter(
           builder: (context, GoRouterState state) => GamePlayPage(
             levelID: int.parse(state.params['levelId']!),
           ),
+        ),
+        GoRoute(
+          path: WinPage.path,
+          builder: (context, GoRouterState state) => const WinPage(),
         ),
       ],
     ),
