@@ -5,26 +5,25 @@ import 'package:sozzle/src/settings/view/settings_page.dart';
 import 'package:sozzle/src/splash/splash_page.dart';
 
 final GoRouter router = GoRouter(
+  initialLocation: SplashPage.path,
   routes: <GoRoute>[
     GoRoute(
       path: SplashPage.path,
       builder: (context, GoRouterState state) => const SplashPage(),
-      routes: <GoRoute>[
-        GoRoute(
-          path: HomePage.path,
-          builder: (context, GoRouterState state) => const HomePage(),
-        ),
-        GoRoute(
-          path: SettingsPage.path,
-          builder: (context, GoRouterState state) => const SettingsPage(),
-        ),
-        GoRoute(
-          path: '${GamePlayPage.path}/:levelId',
-          builder: (context, GoRouterState state) => GamePlayPage(
-            levelID: int.parse(state.params['levelId']!),
-          ),
-        ),
-      ],
+    ),
+    GoRoute(
+      path: HomePage.path,
+      builder: (context, GoRouterState state) => const HomePage(),
+    ),
+    GoRoute(
+      path: SettingsPage.path,
+      builder: (context, GoRouterState state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: '${GamePlayPage.path}/:levelId',
+      builder: (context, GoRouterState state) => GamePlayPage(
+        levelID: int.parse(state.params['levelId']!),
+      ),
     ),
   ],
 );

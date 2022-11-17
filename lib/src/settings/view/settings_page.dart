@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sozzle/l10n/l10n.dart';
+import 'package:sozzle/src/home/home.dart';
 
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 
@@ -10,7 +11,7 @@ import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  static const path = 'settings';
+  static const path = '/settings';
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class SettingsPage extends StatelessWidget {
                             color: themeState.primaryTextColor,
                           ),
                           onPressed: () {
-                            GoRouter.of(context).replace('/home');
+                            context.go(HomePage.path);
                           },
                         ),
                       ),

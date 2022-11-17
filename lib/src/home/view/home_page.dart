@@ -7,7 +7,7 @@ import 'package:sozzle/src/user_stats/user_stats.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  static const String path = 'home';
+  static const String path = '/';
 
   @override
   Widget build(BuildContext context) {
