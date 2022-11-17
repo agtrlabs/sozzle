@@ -6,13 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
+import 'package:sozzle/src/home/home.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
-  static const String path = '/';
+  static const String path = '/splash';
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -184,7 +185,7 @@ class StartButton extends StatelessWidget {
         style: TextStyle(fontSize: 24, color: textColour),
       ),
       onPressed: () {
-        GoRouter.of(context).replace('/home');
+        context.go(HomePage.path);
       },
     );
   }

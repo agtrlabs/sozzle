@@ -11,7 +11,7 @@ import 'package:sozzle/src/win/win_page.dart';
 
 class GamePlayPage extends StatelessWidget {
   const GamePlayPage({super.key, required this.levelID});
-  static const path = 'play';
+  static const path = '/play';
   final int levelID;
 
   @override
