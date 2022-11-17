@@ -7,5 +7,6 @@
     "soundSettings": "Sound",
     "musicSettings": "Music",
     "darkModeSettings": "Dark Mode",
-    "muteSettings": "Mute"
+    "muteSettings": "Mute",
+    "settings": "Settings"
 }
