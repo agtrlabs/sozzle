@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/game_play/view/components/game_loader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/theme/theme.dart';
+import 'package:sozzle/src/win/win_page.dart';
 
 class GamePlayPage extends StatelessWidget {
   const GamePlayPage({super.key, required this.levelID});
@@ -34,13 +36,20 @@ class GamePlayPage extends StatelessWidget {
               );
               return BlocProvider<GamePlayBloc>(
                 create: (context) => bloc,
-                child: Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    const GamePlayHeader(),
-                    Flexible(flex: 4, child: GamePlayBoard(snapshot.data!)),
-                    Flexible(flex: 3, child: GamePlayLetters(snapshot.data!)),
-                  ],
+                child: BlocListener<GamePlayBloc, GamePlayState>(
+                  listener: (context, gamePlay) {
+                    if (gamePlay.state == GamePlayActualState.allFound) {
+                      context.go(WinPage.path);
+                    }
+                  },
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      const GamePlayHeader(),
+                      Flexible(flex: 4, child: GamePlayBoard(snapshot.data!)),
+                      Flexible(flex: 3, child: GamePlayLetters(snapshot.data!)),
+                    ],
+                  ),
                 ),
               );
             }
