@@ -84,12 +84,5 @@ class LevelData extends Equatable {
       ];
 
   @override
-  String toString() => '''LevelData(
-        levelId: $levelId,
-        words: $words,
-        boardHeight: $boardHeight,
-        boardWidth: $boardWidth,
-        boardData: $boardData,
-        rewards: $rewards,
-  );''';
+  bool get stringify => true;
 }

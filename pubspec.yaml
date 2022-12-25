@@ -12,6 +12,7 @@ dependencies:
   audioplayers: ^1.1.1
   bloc: ^8.1.0
   circular_pattern: ^0.0.2
+  device_preview: ^1.1.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
