@@ -1,5 +1,6 @@
 // Copyright (c) 2022, AGTR Labs
 
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -83,6 +84,9 @@ class App extends StatelessWidget {
                   ),
                   toggleableActiveColor: theme.primarySwatch,
                 ),
+                useInheritedMediaQuery: true,
+                builder: DevicePreview.appBuilder,
+                locale: DevicePreview.locale(context),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
