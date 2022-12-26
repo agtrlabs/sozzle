@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:level_data/src/reward_base.dart';
 
@@ -10,6 +12,9 @@ class LevelData extends Equatable {
     required this.boardData,
     this.rewards = const [],
   });
+
+  factory LevelData.fromJson(String json) =>
+      LevelData.fromMap(jsonDecode(json));
 
   factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
         levelId: json['id'] as int,
@@ -72,6 +77,8 @@ class LevelData extends Equatable {
         'cols': boardWidth,
         'rewards': List<dynamic>.from(rewards.map((x) => x.toMap())),
       };
+
+  String toJson() => json.encode(toMap());
 
   @override
   List<dynamic> get props => [
