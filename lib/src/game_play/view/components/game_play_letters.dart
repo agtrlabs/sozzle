@@ -31,6 +31,12 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
   }
 
   @override
+  void dispose() {
+    clearGuessTimer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       //direction: Axis.vertical,
