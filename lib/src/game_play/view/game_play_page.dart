@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/game_play/view/components/game_loader.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
+import 'package:sozzle/src/level_won/view/level_complete_page.dart';
 import 'package:sozzle/src/theme/theme.dart';
+import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
 
 class GamePlayPage extends StatelessWidget {
   const GamePlayPage({super.key, required this.levelID});
+
   static const path = '/play';
   final int levelID;
 
@@ -32,15 +36,25 @@ class GamePlayPage extends StatelessWidget {
                 levelData: snapshot.data!,
                 audio: RepositoryProvider.of<IAudioController>(context),
               );
+              debugPrint(bloc.levelData.toString());
               return BlocProvider<GamePlayBloc>(
                 create: (context) => bloc,
-                child: Flex(
-                  direction: Axis.vertical,
-                  children: [
-                    const GamePlayHeader(),
-                    Flexible(flex: 4, child: GamePlayBoard(snapshot.data!)),
-                    Flexible(flex: 3, child: GamePlayLetters(snapshot.data!)),
-                  ],
+                child: BlocListener<GamePlayBloc, GamePlayState>(
+                  listener: (context, state) {
+                    if (state.state == GamePlayActualState.allFound) {
+                      context.read<UserStatsCubit>().advanceLevelUp();
+                      final levelData = bloc.levelData;
+                      context.go(LevelCompletePage.path, extra: levelData);
+                    }
+                  },
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      const GamePlayHeader(),
+                      Flexible(flex: 4, child: GamePlayBoard(snapshot.data!)),
+                      Flexible(flex: 3, child: GamePlayLetters(snapshot.data!)),
+                    ],
+                  ),
                 ),
               );
             }

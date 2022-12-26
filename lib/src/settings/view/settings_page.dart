@@ -83,10 +83,14 @@ class SettingsPage extends StatelessWidget {
                                         .toggleSoundOption(val: val)
                                         .then((value) {
                                       if (val && state.isMute) {
-                                        settingCubit.toggleMuteOption(val: !val);
+                                        settingCubit.toggleMuteOption(
+                                          val: !val,
+                                        );
                                       }
                                       if (!val && !state.isMusicOn) {
-                                        settingCubit.toggleMuteOption(val: !val);
+                                        settingCubit.toggleMuteOption(
+                                          val: !val,
+                                        );
                                       }
                                     });
                                   },
@@ -116,10 +120,14 @@ class SettingsPage extends StatelessWidget {
                                         .toggleMusicOption(val: val)
                                         .then((value) {
                                       if (state.isMute && val) {
-                                        settingCubit.toggleMuteOption(val: !val);
+                                        settingCubit.toggleMuteOption(
+                                          val: !val,
+                                        );
                                       }
                                       if (!val && !state.isSoundOn) {
-                                        settingCubit.toggleMuteOption(val: !val);
+                                        settingCubit.toggleMuteOption(
+                                          val: !val,
+                                        );
                                       }
                                     });
                                   },
