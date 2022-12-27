@@ -1,18 +1,30 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 abstract class Reward extends Equatable {
   const Reward();
+
   String get name;
+
   String get type;
+
   String get description;
+
   String get image;
+
   int get points;
+
   int get id;
 
   @override
   List<Object?> get props => [name, description, image, points, id];
 
   Map<String, dynamic> toMap();
+
+  String toJson() => json.encode(toMap());
+
+  factory Reward.fromJson(String source) => Reward.fromMap(json.decode(source));
 
   factory Reward.fromMap(Map<String, dynamic> json) {
     switch (json['type'] as String) {
@@ -45,6 +57,7 @@ class RewardCoin extends Reward {
   final int points;
   @override
   final int id;
+
   @override
   String get type => 'coin';
 
@@ -82,6 +95,7 @@ class Badge extends Reward {
   final int points;
   @override
   final int id;
+
   @override
   String get type => 'badge';
 

@@ -12,6 +12,7 @@ dependencies:
   audioplayers: ^1.1.1
   bloc: ^8.1.0
   circular_pattern: ^0.0.2
+  device_preview: ^1.1.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
@@ -28,6 +29,7 @@ dependencies:
   level_data:
     path: packages/level_data
   localstore: ^1.2.3
+  rive: ^0.10.0
 
 dev_dependencies:
   bloc_test: ^9.1.0
@@ -41,3 +43,4 @@ flutter:
   generate: true
   assets:
     - assets/sfx/
+    - assets/rive/

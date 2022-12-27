@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:level_data/src/reward_base.dart';
 
@@ -11,18 +13,18 @@ class LevelData extends Equatable {
     this.rewards = const [],
   });
 
+  factory LevelData.fromJson(String json) =>
+      LevelData.fromMap(jsonDecode(json) as Map<String, dynamic>);
+
   factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
         levelId: json['id'] as int,
         boardHeight: json['rows'] as int,
         boardWidth: json['cols'] as int,
-        boardData: List<String>.from(
-          (json['board'] as List<dynamic>).map<String>((x) => x.toString()),
-        ),
-        words: List<String>.from(
-          (json['words'] as List<dynamic>).map<String>((x) => x.toString()),
-        ),
-        rewards: List<Reward>.from((json['rewards'] as List<dynamic>)
-            .map<Reward>((x) => Reward.fromMap(x))),
+        boardData: List<String>.from(json['board'] as List<dynamic>),
+        words: List<String>.from(json['words'] as List<dynamic>),
+        rewards: List<String>.from((json['rewards'] as List<dynamic>)).map((e) {
+          return Reward.fromJson(e);
+        }).toList(),
       );
 
   static const _levelPoint = 50;
@@ -66,12 +68,14 @@ class LevelData extends Equatable {
 
   Map<String, dynamic> toMap() => {
         'id': levelId,
-        'board': List<dynamic>.from(boardData.map((x) => x)),
-        'words': List<dynamic>.from(words.map((x) => x)),
+        'board': boardData,
+        'words': words,
         'rows': boardHeight,
         'cols': boardWidth,
-        'rewards': List<dynamic>.from(rewards.map((x) => x.toMap())),
+        'rewards': rewards.map((e) => e.toJson()).toList(),
       };
+
+  String toJson() => json.encode(toMap());
 
   @override
   List<dynamic> get props => [
@@ -84,12 +88,5 @@ class LevelData extends Equatable {
       ];
 
   @override
-  String toString() => '''LevelData(
-        levelId: $levelId,
-        words: $words,
-        boardHeight: $boardHeight,
-        boardWidth: $boardWidth,
-        boardData: $boardData,
-        rewards: $rewards,
-  );''';
+  bool get stringify => true;
 }
