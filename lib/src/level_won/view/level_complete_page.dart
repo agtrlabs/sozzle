@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:level_data/level_data.dart';
-import 'package:rive/rive.dart';
+// import 'package:rive/rive.dart';
 import 'package:sozzle/core/common/widgets/sozzle_app_bar.dart';
 import 'package:sozzle/src/game_play/view/game_play_page.dart';
 import 'package:sozzle/src/home/view/home_page.dart';
@@ -29,10 +29,10 @@ class LevelCompletePage extends StatelessWidget {
         builder: (scaffoldContext) {
           return Stack(
             children: [
-              const RiveAnimation.asset(
-                'assets/rive/small_lake_on_a_rainy_day.riv',
-                fit: BoxFit.cover,
-              ),
+              // const RiveAnimation.asset(
+              //   'assets/rive/small_lake_on_a_rainy_day.riv',
+              //   fit: BoxFit.cover,
+              // ),
               Center(
                 child: SafeArea(
                   child: Column(
@@ -70,7 +70,7 @@ class LevelCompletePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

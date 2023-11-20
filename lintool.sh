@@ -8,9 +8,10 @@ exit_message () {
     exit 0
 }
 
-flutter format --set-exit-if-changed lib test || exit_message
+dart format --set-exit-if-changed lib test || exit_message
 
-flutter analyze lib test || exit_message
+# shellcheck disable=SC2015
+flutter analyze lib test || (dart fix --apply && flutter analyze lib test || exit_message)
 
 flutter test -j 4 --no-pub --coverage --test-randomize-ordering-seed random || exit_message
 

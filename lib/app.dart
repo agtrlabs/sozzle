@@ -82,9 +82,53 @@ class App extends StatelessWidget {
                     accentColor: theme.accentColor,
                     primarySwatch: theme.primarySwatch,
                   ),
-                  toggleableActiveColor: theme.primarySwatch,
+                  checkboxTheme: CheckboxThemeData(
+                    fillColor: MaterialStateProperty.resolveWith<Color?>(
+                        (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return null;
+                      }
+                      if (states.contains(MaterialState.selected)) {
+                        return theme.primarySwatch;
+                      }
+                      return null;
+                    }),
+                  ),
+                  radioTheme: RadioThemeData(
+                    fillColor: MaterialStateProperty.resolveWith<Color?>(
+                        (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return null;
+                      }
+                      if (states.contains(MaterialState.selected)) {
+                        return theme.primarySwatch;
+                      }
+                      return null;
+                    }),
+                  ),
+                  switchTheme: SwitchThemeData(
+                    thumbColor: MaterialStateProperty.resolveWith<Color?>(
+                        (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return null;
+                      }
+                      if (states.contains(MaterialState.selected)) {
+                        return theme.primarySwatch;
+                      }
+                      return null;
+                    }),
+                    trackColor: MaterialStateProperty.resolveWith<Color?>(
+                        (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return null;
+                      }
+                      if (states.contains(MaterialState.selected)) {
+                        return theme.primarySwatch;
+                      }
+                      return null;
+                    }),
+                  ),
                 ),
-                useInheritedMediaQuery: true,
                 builder: DevicePreview.appBuilder,
                 locale: DevicePreview.locale(context),
                 localizationsDelegates: const [

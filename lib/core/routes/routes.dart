@@ -24,7 +24,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '${GamePlayPage.path}/:levelId',
       builder: (context, GoRouterState state) => GamePlayPage(
-        levelID: int.parse(state.params['levelId']!),
+        levelID: int.parse(state.pathParameters['levelId']!),
       ),
     ),
     GoRoute(

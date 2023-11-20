@@ -289,18 +289,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: aec1999abe8b2f131eda46d4c9629048fb1befed2b65e90b73f9193a300ce489
+      sha256: c247a4f76071c3b97bb5ae8912968870d5565644801c5e09f3bc961b4d874895
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.1"
-  graphs:
-    dependency: transitive
-    description:
-      name: graphs
-      sha256: aedc5a15e78fc65a6e23bcd927f24c64dd995062bcd1ca6eda65a3cff92a4d19
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
+    version: "12.1.1"
   grid_board:
     dependency: "direct main"
     description:
@@ -549,22 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  rive:
-    dependency: "direct main"
-    description:
-      name: rive
-      sha256: f7f365ee0e6cf0af99fb239bc3424370ca6ee2b9ad6fc879b1a79ba5e3b40770
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.10.4"
-  rive_common:
-    dependency: transitive
-    description:
-      name: rive_common
-      sha256: "7e17937b790bb2f631767b3d505da8c298309c0a6ab08cd317fa6fe081ed5b63"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.10"
   shared_preferences:
     dependency: transitive
     description:
