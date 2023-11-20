@@ -6,9 +6,9 @@ import FlutterMacOS
 import Foundation
 
 import audioplayers_darwin
-import path_provider_macos
+import path_provider_foundation
 import rive_common
-import shared_preferences_macos
+import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AudioplayersDarwinPlugin.register(with: registry.registrar(forPlugin: "AudioplayersDarwinPlugin"))
