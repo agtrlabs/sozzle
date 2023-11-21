@@ -156,7 +156,7 @@ class _SplashPageState extends State<SplashPage> {
                           return Container();
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
