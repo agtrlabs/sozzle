@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:level_data/level_data.dart';
 
 // load/save leveldata

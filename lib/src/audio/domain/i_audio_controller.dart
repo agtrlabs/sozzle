@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:sozzle/src/audio/domain/sfx.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 

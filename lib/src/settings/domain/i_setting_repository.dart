@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:sozzle/src/settings/domain/settings.dart';
 
 abstract class ISettingRepository {

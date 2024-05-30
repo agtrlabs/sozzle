@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:go_router/go_router.dart';
 import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
