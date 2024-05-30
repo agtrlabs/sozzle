@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:level_data/level_data.dart';
+import 'package:rive/rive.dart';
 // import 'package:rive/rive.dart';
 import 'package:sozzle/core/common/widgets/sozzle_app_bar.dart';
 import 'package:sozzle/src/game_play/view/game_play_page.dart';
 import 'package:sozzle/src/home/view/home_page.dart';
 import 'package:sozzle/src/level_won/level_won.dart';
+import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class LevelCompletePage extends StatelessWidget {
-  const LevelCompletePage({super.key, required this.levelData});
+  const LevelCompletePage({required this.levelData, super.key});
 
   static const path = '/won';
   final LevelData levelData;
@@ -20,6 +23,7 @@ class LevelCompletePage extends StatelessWidget {
       appBar: SozzleAppBar(
         leading: IconButton(
           icon: const Icon(Icons.home),
+          color: context.watch<ThemeCubit>().state.primaryTextColor,
           onPressed: () {
             context.go(HomePage.path);
           },
@@ -29,10 +33,10 @@ class LevelCompletePage extends StatelessWidget {
         builder: (scaffoldContext) {
           return Stack(
             children: [
-              // const RiveAnimation.asset(
-              //   'assets/rive/small_lake_on_a_rainy_day.riv',
-              //   fit: BoxFit.cover,
-              // ),
+              const RiveAnimation.asset(
+                'assets/rive/small_lake_on_a_rainy_day.riv',
+                fit: BoxFit.cover,
+              ),
               Center(
                 child: SafeArea(
                   child: Column(
@@ -61,7 +65,6 @@ class LevelCompletePage extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 45),
                               child: NextLevelButton(
                                 onPressed: () {
-                                  // TODO(NextLevel): Implement this
                                   context.go(
                                     '${GamePlayPage.path}/${levelData.levelId + 1}',
                                   );
