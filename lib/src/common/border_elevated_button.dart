@@ -3,12 +3,12 @@ import 'package:go_router/go_router.dart';
 
 class BorderElevatedButton extends StatelessWidget {
   const BorderElevatedButton({
-    super.key,
     required this.route,
     required this.text,
     required this.backgroundColor,
     required this.borderColor,
     required this.textColor,
+    super.key,
   });
 
   final String route;
@@ -24,14 +24,14 @@ class BorderElevatedButton extends StatelessWidget {
         context.go(route);
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(backgroundColor),
-        side: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(backgroundColor),
+        side: WidgetStateProperty.all(
           BorderSide(
             color: borderColor,
             width: 2,
           ),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           const StadiumBorder(),
         ),
         // shape: MaterialStateProperty.all(

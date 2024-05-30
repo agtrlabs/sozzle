@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CollectRewardsButton extends StatelessWidget {
-  const CollectRewardsButton({super.key, required this.onPressed});
+  const CollectRewardsButton({required this.onPressed, super.key});
 
   final VoidCallback onPressed;
 
