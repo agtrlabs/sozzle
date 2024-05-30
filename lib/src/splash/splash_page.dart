@@ -42,17 +42,13 @@ class _SplashPageState extends State<SplashPage> {
         case 400:
           a = true;
           b = true;
-          break;
         case 1300:
           c = true;
-          break;
         case 1700:
           e = true;
-          break;
         case 3400:
           d = true;
           timer.cancel();
-          break;
       }
       setState(() {});
     });
