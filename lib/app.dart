@@ -1,6 +1,5 @@
 // Copyright (c) 2022, AGTR Labs
-
-import 'package:device_preview/device_preview.dart';
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -72,9 +71,10 @@ class App extends StatelessWidget {
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, theme) {
               return MaterialApp.router(
-                routeInformationProvider: router.routeInformationProvider,
-                routeInformationParser: router.routeInformationParser,
-                routerDelegate: router.routerDelegate,
+                routerConfig: router,
+                // routeInformationProvider: router.routeInformationProvider,
+                // routeInformationParser: router.routeInformationParser,
+                // routerDelegate: router.routerDelegate,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(
                   appBarTheme: AppBarTheme(color: theme.appBarColor),
@@ -83,54 +83,57 @@ class App extends StatelessWidget {
                     primarySwatch: theme.primarySwatch,
                   ),
                   checkboxTheme: CheckboxThemeData(
-                    fillColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.disabled)) {
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.disabled)) {
                         return null;
                       }
-                      if (states.contains(MaterialState.selected)) {
+                      if (states.contains(WidgetState.selected)) {
                         return theme.primarySwatch;
                       }
                       return null;
                     }),
                   ),
                   radioTheme: RadioThemeData(
-                    fillColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.disabled)) {
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.disabled)) {
                         return null;
                       }
-                      if (states.contains(MaterialState.selected)) {
+                      if (states.contains(WidgetState.selected)) {
                         return theme.primarySwatch;
                       }
                       return null;
                     }),
                   ),
                   switchTheme: SwitchThemeData(
-                    thumbColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.disabled)) {
+                    thumbColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.disabled)) {
                         return null;
                       }
-                      if (states.contains(MaterialState.selected)) {
-                        return theme.primarySwatch;
+                      if (states.contains(WidgetState.selected)) {
+                        return theme is ThemeStateDark
+                            ? Colors.white
+                            : theme.accentColor;
                       }
-                      return null;
+
+                      return theme.accentColor;
                     }),
-                    trackColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.disabled)) {
+                    trackColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.disabled)) {
                         return null;
                       }
-                      if (states.contains(MaterialState.selected)) {
+                      if (states.contains(WidgetState.selected)) {
                         return theme.primarySwatch;
                       }
                       return null;
                     }),
                   ),
                 ),
-                builder: DevicePreview.appBuilder,
-                locale: DevicePreview.locale(context),
+                // builder: DevicePreview.appBuilder,
+                // locale: DevicePreview.locale(context),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
