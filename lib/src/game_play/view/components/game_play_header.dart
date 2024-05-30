@@ -18,6 +18,7 @@ class GamePlayHeader extends StatelessWidget {
           backgroundColor: theme.backgroundColor,
           leading: IconButton(
             icon: const Icon(Icons.home),
+            color: theme.primaryTextColor,
             onPressed: () {
               context.go(HomePage.path);
             },
