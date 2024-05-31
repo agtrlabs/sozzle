@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    final apploader = context.read<ApploaderCubit>();
+    final appLoader = context.read<ApploaderCubit>();
     final mq = MediaQuery.of(context);
     final height = mq.size.height;
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -148,7 +148,7 @@ class _SplashPageState extends State<SplashPage> {
                               textColour: d ? null : Colors.transparent,
                             );
                           }
-                          apploader.updatePuzzleData();
+                          appLoader.updatePuzzleData();
                           return Container();
                         },
                       ),
