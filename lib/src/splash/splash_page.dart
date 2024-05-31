@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    final apploader = context.read<ApploaderCubit>();
+    final appLoader = context.read<ApploaderCubit>();
     final mq = MediaQuery.of(context);
     final height = mq.size.height;
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -123,33 +123,23 @@ class _SplashPageState extends State<SplashPage> {
                       padding: const EdgeInsets.all(20),
                       child: BlocBuilder<ApploaderCubit, ApploaderState>(
                         builder: (context, state) {
-                          if (state.loaderState == LoaderState.loadingPuzzle) {
-                            return LinearProgressIndicator(
-                              value: state.percent / 100,
-                              color: d ? null : Colors.transparent,
-                              backgroundColor: d ? null : Colors.transparent,
-                            );
-                          } else if (state.loaderState ==
-                              LoaderState.loadingUserData) {
-                            return LinearProgressIndicator(
-                              value: state.percent / 100,
-                              color: d ? null : Colors.transparent,
-                              backgroundColor: d ? null : Colors.transparent,
-                            );
-                          } else if (state.loaderState ==
-                              LoaderState.loadingSettingsData) {
-                            return LinearProgressIndicator(
-                              value: state.percent / 100,
-                              color: d ? null : Colors.transparent,
-                              backgroundColor: d ? null : Colors.transparent,
-                            );
-                          } else if (state.loaderState == LoaderState.loaded) {
-                            return StartButton(
-                              textColour: d ? null : Colors.transparent,
-                            );
-                          }
-                          apploader.updatePuzzleData();
-                          return Container();
+                          return switch (state.loaderState) {
+                            LoaderState.loadingPuzzle ||
+                            LoaderState.loadingUserData ||
+                            LoaderState.loadingSettingsData =>
+                              LinearProgressIndicator(
+                                value: state.percent / 100,
+                                color: d ? null : Colors.transparent,
+                                backgroundColor: d ? null : Colors.transparent,
+                              ),
+                            LoaderState.loaded => StartButton(
+                                textColour: d ? null : Colors.transparent,
+                              ),
+                            _ => () {
+                                appLoader.updatePuzzleData();
+                                return Container();
+                              }(),
+                          };
                         },
                       ),
                     ),
