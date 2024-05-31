@@ -13,6 +13,9 @@ class UserStatsRepository implements IUserStatsRepository {
       await save(initialProgres);
       return initialProgres;
     }
+    if ((data['currentLevel'] as num).toInt() > 2) {
+      await _db.collection('stats').delete();
+    }
     return UserProgressData.fromMap(data);
   }
 
