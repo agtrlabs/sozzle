@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NextLevelButton extends StatelessWidget {
-  const NextLevelButton({super.key, required this.onPressed});
+  const NextLevelButton({required this.onPressed, super.key});
 
   final VoidCallback onPressed;
 

@@ -1,3 +1,4 @@
+// coverage:ignore-file
 Map<Sfx, String> sound = {
   Sfx.error: 'sfx/error.ogg',
   Sfx.hint: 'sfx/hint.ogg',

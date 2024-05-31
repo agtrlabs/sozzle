@@ -11,7 +11,7 @@ import 'package:sozzle/src/theme/theme.dart';
 import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
 
 class GamePlayPage extends StatelessWidget {
-  const GamePlayPage({super.key, required this.levelID});
+  const GamePlayPage({required this.levelID, super.key});
 
   static const path = '/play';
   final int levelID;

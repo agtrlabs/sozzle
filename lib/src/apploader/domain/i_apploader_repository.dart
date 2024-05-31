@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/level/domain/level_data.dart';
 import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
