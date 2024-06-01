@@ -72,7 +72,7 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
     clearGuessTimer = getTimerToCleanInput(500);
     if (input.length >= 3) {
       final word = input.map((e) => e.value).toList().join();
-      BlocProvider.of<GamePlayBloc>(context).add(GamePlayEventInputWord(word));
+      context.read<GamePlayBloc>().add(GamePlayEventInputWord(word));
     }
   }
 
