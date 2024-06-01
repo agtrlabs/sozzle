@@ -7,6 +7,7 @@ import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class GamePlayBoard extends StatelessWidget {
   const GamePlayBoard(this.levelData, {super.key});
+
   final LevelData levelData;
 
   @override
@@ -15,7 +16,7 @@ class GamePlayBoard extends StatelessWidget {
 
     final gridSize = GridSize(levelData.boardWidth, levelData.boardHeight);
 
-    final cels = levelData.boardData.map(
+    final cells = levelData.boardData.map(
       (e) {
         return GridCell(
           gridCellChildMap: e.isNotEmpty
@@ -35,12 +36,13 @@ class GamePlayBoard extends StatelessWidget {
       gridBoardProperties: GridBoardProperties(
         gridSize: gridSize,
       ),
-      cells: cels,
+      cells: cells,
     );
     return BlocListener<GamePlayBloc, GamePlayState>(
       listener: (context, game) {
-        if (game.state == GamePlayActualState.wordFound) {
-          final indexes = game.revealedCells;
+        if (game.state == GamePlayActualState.wordFound ||
+            game.state == GamePlayActualState.initial) {
+          final indexes = context.read<GamePlayBloc>().revealedCells;
           for (final idx in indexes) {
             controller.updateCellStatus(idx, GridCellStatus.selected);
           }
@@ -51,7 +53,6 @@ class GamePlayBoard extends StatelessWidget {
         child: GridBoard(
           backgroundColor: theme.backgroundColor,
           controller: controller,
-          gridSize: GridSize(levelData.boardWidth, levelData.boardHeight),
         ),
       ),
     );
@@ -60,7 +61,9 @@ class GamePlayBoard extends StatelessWidget {
 
 class LetterBox extends StatelessWidget {
   const LetterBox(this.letter, {super.key});
+
   final String? letter;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,7 +82,9 @@ class LetterBox extends StatelessWidget {
 
 class OpenLetterBox extends StatelessWidget {
   const OpenLetterBox(this.letter, {super.key});
+
   final String? letter;
+
   @override
   Widget build(BuildContext context) {
     return Container(
