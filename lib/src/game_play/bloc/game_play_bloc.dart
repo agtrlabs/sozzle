@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/audio/domain/sfx.dart';
@@ -9,23 +9,28 @@ import 'package:sozzle/src/audio/domain/sfx.dart';
 part 'game_play_event.dart';
 part 'game_play_state.dart';
 
-class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
+class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
   GamePlayBloc({
     required this.levelData,
     required this.audio,
   }) : super(const GamePlayState(GamePlayActualState.allHidden)) {
     on<GamePlayEventInputWord>(handleInputWord);
+    on<GamePlayInitialEvent>((event, emit) {
+      emit(const GamePlayState(GamePlayActualState.initial));
+    });
   }
+
   final LevelData levelData;
   final IAudioController audio;
 
   List<String> foundWords = [];
+  List<int> revealedCells = [];
 
   int _getIndex(int col, int row, int height) {
     return col * height + row;
   }
 
-  /// scans board data letf to right
+  /// scans board data left to right
   /// if word is found return indexes of letters
   List<int> _scanLR(String word) {
     final result = <int>[];
@@ -65,7 +70,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     return result;
   }
 
-  // scan each column top to down to find the word
+  /// scans each column top to down to find the word
   List<int> _scanTD(String word) {
     final result = <int>[];
     for (var col = 0; col < levelData.boardWidth; col++) {
@@ -130,9 +135,11 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
         } else {
           // else add to foundWords
           foundWords.add(event.word);
+          revealedCells.addAll(indexList);
           emit(
-            GamePlayState(GamePlayActualState.wordFound, indexList),
+            const GamePlayState(GamePlayActualState.wordFound),
           );
+
           //check if all words found
           if (foundWords.length == levelData.words.length) {
             audio.play(Sfx.win);
@@ -145,5 +152,26 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
         }
       }
     }
+  }
+
+  @override
+  GamePlayState? fromJson(Map<String, dynamic> json) {
+    if (json[levelData.levelId.toString()] != null) {
+      final data = json[levelData.levelId.toString()] as Map<String, dynamic>;
+      foundWords = List<String>.from(data['foundWords'] as List);
+      final revealedCells = List<int>.from(data['revealedCells'] as List);
+      this.revealedCells = revealedCells;
+    }
+    return state;
+  }
+
+  @override
+  Map<String, dynamic>? toJson(GamePlayState state) {
+    return {
+      levelData.levelId.toString(): {
+        'foundWords': foundWords,
+        'revealedCells': revealedCells,
+      },
+    };
   }
 }

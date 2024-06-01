@@ -36,9 +36,9 @@ class GamePlayPage extends StatelessWidget {
                 levelData: snapshot.data!,
                 audio: RepositoryProvider.of<IAudioController>(context),
               );
-              debugPrint(bloc.levelData.toString());
+              debugPrint(bloc.levelData.words.toString());
               return BlocProvider<GamePlayBloc>(
-                create: (context) => bloc,
+                create: (context) => bloc..add(const GamePlayInitialEvent()),
                 child: BlocListener<GamePlayBloc, GamePlayState>(
                   listener: (context, state) {
                     if (state.state == GamePlayActualState.allFound) {

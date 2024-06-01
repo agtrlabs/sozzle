@@ -9,9 +9,9 @@ class UserStatsRepository implements IUserStatsRepository {
     final data = await _db.collection('stats').doc('current').get();
     // create initial ProgressData
     if (data == null) {
-      final initialProgres = UserProgressData(currentLevel: 1);
-      await save(initialProgres);
-      return initialProgres;
+      final initialProgress = UserProgressData(currentLevel: 1);
+      await save(initialProgress);
+      return initialProgress;
     }
     if ((data['currentLevel'] as num).toInt() > 2) {
       await _db.collection('stats').delete();

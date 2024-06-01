@@ -89,4 +89,22 @@ class LevelData extends Equatable {
 
   @override
   bool get stringify => true;
+
+  LevelData copyWith({
+    int? levelId,
+    List<String>? words,
+    int? boardHeight,
+    int? boardWidth,
+    List<String>? boardData,
+    List<Reward>? rewards,
+  }) {
+    return LevelData(
+      levelId: levelId ?? this.levelId,
+      words: words ?? this.words,
+      boardHeight: boardHeight ?? this.boardHeight,
+      boardWidth: boardWidth ?? this.boardWidth,
+      boardData: boardData ?? this.boardData,
+      rewards: rewards ?? this.rewards,
+    );
+  }
 }

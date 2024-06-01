@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:level_data/level_data.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
@@ -9,6 +10,7 @@ import 'package:sozzle/src/game_play/view/view.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/user_stats.dart';
+
 import '../../../helpers/helpers.dart';
 
 class MockLevelRepository extends Mock implements ILevelRepository {}
@@ -20,7 +22,17 @@ class MockUserStatsCubit extends MockCubit<UserStatsState>
 
 class MockThemeCubit extends MockCubit<ThemeState> implements ThemeCubit {}
 
+class MockStorage extends Mock implements Storage {}
+
 void main() {
+  late Storage storage;
+
+  setUp(() {
+    storage = MockStorage();
+    when(() => storage.write(any(), any<dynamic>())).thenAnswer((_) async {});
+    HydratedBloc.storage = storage;
+  });
+
   group('GamePlayPage', () {
     late MockLevelRepository repo;
     late MockUserStatsCubit userStatsCubit;
@@ -32,6 +44,7 @@ void main() {
       themeCubit = MockThemeCubit();
       audio = MockAudio();
     });
+
     testWidgets('should have a GameLoader', (WidgetTester tester) async {
       when(() => repo.getLevel(any())).thenAnswer(
         (_) async => const LevelData(
