@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:level_data/level_data.dart';
 import 'package:rive/rive.dart';
-// import 'package:rive/rive.dart';
 import 'package:sozzle/core/common/widgets/sozzle_app_bar.dart';
 import 'package:sozzle/src/game_play/view/game_play_page.dart';
 import 'package:sozzle/src/home/view/home_page.dart';
 import 'package:sozzle/src/level_won/level_won.dart';
-import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class LevelCompletePage extends StatelessWidget {
   const LevelCompletePage({required this.levelData, super.key});
@@ -23,7 +20,7 @@ class LevelCompletePage extends StatelessWidget {
       appBar: SozzleAppBar(
         leading: IconButton(
           icon: const Icon(Icons.home),
-          color: context.watch<ThemeCubit>().state.primaryTextColor,
+          color: Colors.white,
           onPressed: () {
             context.go(HomePage.path);
           },
