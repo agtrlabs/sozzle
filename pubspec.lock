@@ -314,7 +314,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "7842cd27147ba3cc941f54c08c22420fe813a249"
+      resolved-ref: b9c44a7b69846255668df393a00a97aef82145ed
       url: "https://github.com/agtrlabs/grid_board.git"
     source: git
     version: "0.0.1"
