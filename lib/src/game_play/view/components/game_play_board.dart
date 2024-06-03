@@ -19,6 +19,7 @@ class GamePlayBoard extends StatelessWidget {
     final cells = levelData.boardData.map(
       (e) {
         return GridCell(
+          controller: GridCellController(),
           gridCellChildMap: e.isNotEmpty
               ? {
                   GridCellStatus.initial: LetterBox(e),
