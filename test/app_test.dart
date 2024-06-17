@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:localstore/localstore.dart';
 import 'package:sozzle/app.dart';
 import 'package:sozzle/src/splash/splash_page.dart';
 
@@ -8,6 +9,7 @@ void main() {
     const wait = Duration(seconds: 1);
     setUp(() async {
       myApp = const App();
+      await Localstore.instance.collection('stats').doc('current').delete();
     });
 
     testWidgets('renders SplashPage', (tester) async {
