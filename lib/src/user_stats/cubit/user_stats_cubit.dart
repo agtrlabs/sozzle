@@ -19,6 +19,8 @@ class UserStatsCubit extends Cubit<UserStatsState> {
   void advanceLevelUp() {
     final newProgress = UserProgressData(
       currentLevel: state.progress.currentLevel + 1,
+      // TODO(Level-up): Change the points later
+      points: state.progress.points + 10,
     );
     emit(UserStatsState(progress: newProgress));
     repository.save(newProgress);
