@@ -1,3 +1,4 @@
+// coverage:ignore-file
 sealed class Media {
   const Media();
   static const _baseRive = 'assets/rive';
