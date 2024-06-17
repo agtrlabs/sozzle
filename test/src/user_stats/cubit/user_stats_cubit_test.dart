@@ -32,8 +32,10 @@ void main() {
       when(() => repo.save(any())).thenAnswer((_) async {
         return;
       });
+      final currentPoints = userStatsCubit.state.progress.points;
       userStatsCubit.advanceLevelUp();
       verify(() => repo.save(any())).called(1);
+      expect(userStatsCubit.state.progress.points, equals(currentPoints + 10));
     });
   });
 }
