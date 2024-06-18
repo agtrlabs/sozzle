@@ -8,11 +8,19 @@ class Settings extends Equatable {
     required this.isMute,
   });
 
-  factory Settings.fromJson(Map<String, dynamic> json) => Settings(
-        isSoundOn: json[sound] as bool? ?? false,
-        isMusicOn: json[music] as bool? ?? false,
-        isDarkMode: json[darkMode] as bool? ?? false,
-        isMute: json[mute] as bool? ?? false,
+  const Settings.empty()
+      : this(
+          isSoundOn: false,
+          isMusicOn: false,
+          isDarkMode: true,
+          isMute: true,
+        );
+
+  factory Settings.fromMap(Map<String, dynamic> map) => Settings(
+        isSoundOn: map[sound] as bool? ?? false,
+        isMusicOn: map[music] as bool? ?? false,
+        isDarkMode: map[darkMode] as bool? ?? false,
+        isMute: map[mute] as bool? ?? false,
       );
 
   static const String sound = 'sound';
