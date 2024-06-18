@@ -12,7 +12,7 @@ class GamePlayHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserStatsCubit, UserStatsState>(
       builder: (context, state) {
-        final theme = BlocProvider.of<ThemeCubit>(context).state;
+        final theme = context.watch<ThemeCubit>().state;
         return AppBar(
           elevation: 0,
           backgroundColor: theme.backgroundColor,
@@ -24,7 +24,10 @@ class GamePlayHeader extends StatelessWidget {
             },
           ),
           centerTitle: true,
-          title: Text('Level ${state.progress.currentLevel}'),
+          title: Text(
+            'Level ${state.progress.currentLevel}',
+            style: TextStyle(color: theme.primaryTextColor),
+          ),
         );
       },
     );
