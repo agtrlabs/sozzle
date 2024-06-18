@@ -20,7 +20,7 @@ class UserProgressData {
               ),
             )
             .toList(),
-        points: (json['points'] as num).toInt(),
+        points: (json['points'] as num?)?.toInt() ?? 0,
       );
 
   /// max level user reached
