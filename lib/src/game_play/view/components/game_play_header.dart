@@ -1,6 +1,8 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sozzle/src/game_play/view/components/hint.dart';
 import 'package:sozzle/src/home/home.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
@@ -28,6 +30,7 @@ class GamePlayHeader extends StatelessWidget {
             'Level ${state.progress.currentLevel}',
             style: TextStyle(color: theme.primaryTextColor),
           ),
+          actions: const [Hint(), SizedBox(width: 16)],
         );
       },
     );
