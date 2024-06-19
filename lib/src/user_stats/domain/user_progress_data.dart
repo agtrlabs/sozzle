@@ -25,6 +25,9 @@ class UserProgressData {
 
   /// max level user reached
   final int currentLevel;
+
+  // TODO(Bug): Find a way to make this a set so more than one of the same
+  //  booster can't be added
   final List<Booster> boosters;
   final int points;
 
@@ -40,4 +43,16 @@ class UserProgressData {
             .toList(),
         'points': points,
       };
+
+  UserProgressData copyWith({
+    int? currentLevel,
+    List<Booster>? boosters,
+    int? points,
+  }) {
+    return UserProgressData(
+      currentLevel: currentLevel ?? this.currentLevel,
+      boosters: boosters ?? this.boosters,
+      points: points ?? this.points,
+    );
+  }
 }
