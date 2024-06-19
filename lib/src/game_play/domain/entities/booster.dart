@@ -22,6 +22,9 @@ abstract class IBooster extends Equatable {
   /// Increase the [boosterCount] by the given [boosterCount]
   IBooster increaseBy({int? boosterCount});
 
+  /// Decrease the [boosterCount] by the given [boosterCount]
+  IBooster decreaseBy({int? boosterCount});
+
   @override
   List<Object> get props => [id];
 }
@@ -66,6 +69,11 @@ class Booster extends IBooster {
   @override
   Booster increaseBy({int? boosterCount}) {
     return copyWith(boosterCount: this.boosterCount + boosterCount!);
+  }
+
+  @override
+  Booster decreaseBy({int? boosterCount}) {
+    return copyWith(boosterCount: this.boosterCount - boosterCount!);
   }
 }
 
