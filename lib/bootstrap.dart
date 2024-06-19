@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rive/rive.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -35,5 +36,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         ? HydratedStorage.webStorageDirectory
         : await getApplicationDocumentsDirectory(),
   );
+  unawaited(RiveFile.initialize());
   runApp(await builder());
 }
