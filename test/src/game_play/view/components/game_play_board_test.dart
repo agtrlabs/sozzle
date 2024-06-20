@@ -5,15 +5,8 @@ import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
 import 'package:sozzle/src/theme/theme.dart';
 import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
+
 import '../../../../helpers/helpers.dart';
-
-class MockUserStatsCubit extends MockCubit<UserStatsState>
-    implements UserStatsCubit {}
-
-class MockThemeCubit extends MockCubit<ThemeState> implements ThemeCubit {}
-
-class MockGamePlayBloc extends MockBloc<GamePlayEvent, GamePlayState>
-    implements GamePlayBloc {}
 
 void main() {
   final boardData = <String>[
