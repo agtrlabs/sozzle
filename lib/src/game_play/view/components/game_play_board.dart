@@ -4,6 +4,7 @@ import 'package:grid_board/grid_board.dart';
 import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
+import 'package:sozzle/src/user_stats/user_stats.dart';
 
 class GamePlayBoard extends StatelessWidget {
   const GamePlayBoard(this.levelData, {super.key});
@@ -40,9 +41,15 @@ class GamePlayBoard extends StatelessWidget {
       cells: cells,
     );
     return BlocListener<GamePlayBloc, GamePlayState>(
-      listener: (context, game) {
-        if (game.state == GamePlayActualState.wordFound ||
-            game.state == GamePlayActualState.initial) {
+      listener: (context, gameState) {
+        if (gameState is LetterRevealed) {
+          controller.updateCellStatus(
+            gameState.revealedIndex,
+            GridCellStatus.selected,
+          );
+          context.read<UserStatsCubit>().useAHint();
+        } else if (gameState.actualState == GamePlayActualState.wordFound ||
+            gameState.actualState == GamePlayActualState.initial) {
           final indexes = context.read<GamePlayBloc>().revealedCells;
           for (final idx in indexes) {
             controller.updateCellStatus(idx, GridCellStatus.selected);
