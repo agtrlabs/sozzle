@@ -141,6 +141,7 @@ class SettingsPage extends StatelessWidget {
                                   ),
                                 ),
                                 trailing: Switch.adaptive(
+                                  key: const Key('switchMute'),
                                   value: state.isMute,
                                   onChanged: (val) {
                                     context
