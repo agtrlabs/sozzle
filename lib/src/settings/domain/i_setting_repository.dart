@@ -5,12 +5,13 @@ abstract class ISettingRepository {
   Future<Settings> getSetting();
 
 //   Future<bool> getSoundSetting();
-  Future<void> setSoundSetting({required bool value});
+  Future<void> setSoundSetting({required bool value, bool cache = false});
 
 //   Future<bool> getMusicSetting();
-  Future<void> setMusicSetting({required bool value});
+  Future<void> setMusicSetting({required bool value, bool cache = false});
 
   Future<bool> getDarkModeSetting();
+
   Future<void> setDarkModeSetting({required bool value});
 
 //   Future<bool> getMuteSetting();

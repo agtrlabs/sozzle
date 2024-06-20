@@ -1,6 +1,8 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sozzle/src/game_play/view/components/hint.dart';
 import 'package:sozzle/src/home/home.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
@@ -12,7 +14,7 @@ class GamePlayHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserStatsCubit, UserStatsState>(
       builder: (context, state) {
-        final theme = BlocProvider.of<ThemeCubit>(context).state;
+        final theme = context.watch<ThemeCubit>().state;
         return AppBar(
           elevation: 0,
           backgroundColor: theme.backgroundColor,
@@ -24,7 +26,11 @@ class GamePlayHeader extends StatelessWidget {
             },
           ),
           centerTitle: true,
-          title: Text('Level ${state.progress.currentLevel}'),
+          title: Text(
+            'Level ${state.progress.currentLevel}',
+            style: TextStyle(color: theme.primaryTextColor),
+          ),
+          actions: const [Hint(), SizedBox(width: 16)],
         );
       },
     );

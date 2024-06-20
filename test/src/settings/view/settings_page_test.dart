@@ -22,12 +22,20 @@ void main() {
     setUp(() {
       mockSettignsRepo = MockSettignsRepo();
 
-      when(() => mockSettignsRepo.setSoundSetting(value: any(named: 'value')))
-          .thenAnswer((_) async {});
+      when(
+        () => mockSettignsRepo.setSoundSetting(
+          value: any(named: 'value'),
+          cache: any(named: 'cache'),
+        ),
+      ).thenAnswer((_) async {});
       when(() => mockSettignsRepo.setMuteSetting(value: any(named: 'value')))
           .thenAnswer((_) async {});
-      when(() => mockSettignsRepo.setMusicSetting(value: any(named: 'value')))
-          .thenAnswer((_) async {});
+      when(
+        () => mockSettignsRepo.setMusicSetting(
+          value: any(named: 'value'),
+          cache: any(named: 'cache'),
+        ),
+      ).thenAnswer((_) async {});
       themeCubit = ThemeCubit(isDarkMode: Future.value(false));
       settingCubit =
           SettingCubit(settingRep: mockSettignsRepo, themeCubit: themeCubit);
@@ -54,29 +62,39 @@ void main() {
       );
     });
 
+    testWidgets(
+      'should render [SettingsPage]',
+      (tester) async {
+        await tester.pumpWidget(settingsPage);
+
+        expect(find.byType(SettingsPage), findsOneWidget);
+      },
+    );
+
     testWidgets('turn switch on/off', (WidgetTester tester) async {
       await tester.pumpWidget(settingsPage);
 
       final finderSwitchOff = find.byWidgetPredicate(
-        (widget) => widget is Switch && widget.value == false,
+        (widget) => widget is Switch && !widget.value,
         description: 'Switch is disabled',
       );
 
       expect(finderSwitchOff, findsNWidgets(3));
 
       await settingCubit.toggleMusicOption(val: true);
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       final finderSwitchOn = find.byWidgetPredicate(
-        (widget) => widget is Switch && widget.value == true,
+        (widget) => widget is Switch && widget.value,
         description: 'Switch is enabled',
       );
       expect(finderSwitchOn, findsOneWidget);
 
       await settingCubit.toggleMusicOption(val: false);
-      await tester.pump();
-
-      expect(finderSwitchOn, findsNothing);
+      await tester.pumpAndSettle();
+      // We expect that mute will be turned on here because if music is
+      // turned off and sound is turned off then mute automatically goes on
+      expect(finderSwitchOn, findsOneWidget);
     });
 
     testWidgets('turn on sound', (WidgetTester tester) async {

@@ -17,9 +17,15 @@ class SettingRepository implements ISettingRepository {
   // }
 
   @override
-  Future<void> setSoundSetting({required bool value}) async {
+  Future<void> setSoundSetting({
+    required bool value,
+    bool cache = false,
+  }) async {
     final settingData = await _getSettingData();
-    final newSettingData = settingData.copyWith(isSoundOn: value);
+    final newSettingData = settingData.copyWith(
+      isSoundOn: value,
+      isSoundOnCache: cache ? value : null,
+    );
 
     await _db.collection(Settings.setting).doc(Settings.setting).set(
           newSettingData.toMap(),
@@ -33,9 +39,15 @@ class SettingRepository implements ISettingRepository {
   // }
 
   @override
-  Future<void> setMusicSetting({required bool value}) async {
+  Future<void> setMusicSetting({
+    required bool value,
+    bool cache = false,
+  }) async {
     final settingData = await _getSettingData();
-    final newSettingData = settingData.copyWith(isMusicOn: value);
+    final newSettingData = settingData.copyWith(
+      isMusicOn: value,
+      isMusicOnCache: cache ? value : null,
+    );
 
     await _db.collection(Settings.setting).doc(Settings.setting).set(
           newSettingData.toMap(),
@@ -81,7 +93,7 @@ class SettingRepository implements ISettingRepository {
         await _db.collection(Settings.setting).doc(Settings.setting).get();
 
     final setting = data != null
-        ? Settings.fromJson(
+        ? Settings.fromMap(
             Map<String, dynamic>.from(data),
           )
         : const Settings(

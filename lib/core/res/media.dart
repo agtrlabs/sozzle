@@ -1,6 +1,7 @@
 // coverage:ignore-file
 sealed class Media {
   const Media();
+
   static const _baseRive = 'assets/rive';
   static const _baseIcons = 'assets/icons';
 
@@ -10,4 +11,6 @@ sealed class Media {
   // Rive
   static const lake = '$_baseRive/small_lake_on_a_rainy_day.riv';
   static const space = '$_baseRive/space.riv';
+  static const animatedHint = '$_baseRive/bulb.riv';
+  static const gameButton = '$_baseRive/game_button.riv';
 }

@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sozzle/l10n/l10n.dart';
 import 'package:sozzle/src/home/home.dart';
-
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
-
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -76,23 +74,9 @@ class SettingsPage extends StatelessWidget {
                                   key: const Key('switchSound'),
                                   value: state.isSoundOn,
                                   onChanged: (val) {
-                                    final settingCubit =
-                                        context.read<SettingCubit>();
-
-                                    settingCubit
-                                        .toggleSoundOption(val: val)
-                                        .then((value) {
-                                      if (val && state.isMute) {
-                                        settingCubit.toggleMuteOption(
-                                          val: !val,
-                                        );
-                                      }
-                                      if (!val && !state.isMusicOn) {
-                                        settingCubit.toggleMuteOption(
-                                          val: !val,
-                                        );
-                                      }
-                                    });
+                                    context
+                                        .read<SettingCubit>()
+                                        .toggleSoundOption(val: val);
                                   },
                                 ),
                               ),
@@ -114,22 +98,9 @@ class SettingsPage extends StatelessWidget {
                                   key: const Key('switchMusic'),
                                   value: state.isMusicOn,
                                   onChanged: (val) {
-                                    final settingCubit =
-                                        context.read<SettingCubit>();
-                                    settingCubit
-                                        .toggleMusicOption(val: val)
-                                        .then((value) {
-                                      if (state.isMute && val) {
-                                        settingCubit.toggleMuteOption(
-                                          val: !val,
-                                        );
-                                      }
-                                      if (!val && !state.isSoundOn) {
-                                        settingCubit.toggleMuteOption(
-                                          val: !val,
-                                        );
-                                      }
-                                    });
+                                    context
+                                        .read<SettingCubit>()
+                                        .toggleMusicOption(val: val);
                                   },
                                 ),
                               ),
@@ -170,17 +141,12 @@ class SettingsPage extends StatelessWidget {
                                   ),
                                 ),
                                 trailing: Switch.adaptive(
+                                  key: const Key('switchMute'),
                                   value: state.isMute,
                                   onChanged: (val) {
-                                    final settingCubit = context
+                                    context
                                         .read<SettingCubit>()
-                                      ..toggleMuteOption(val: val);
-                                    if (state.isMusicOn == val) {
-                                      settingCubit.toggleMusicOption(val: !val);
-                                    }
-                                    if (state.isSoundOn == val) {
-                                      settingCubit.toggleSoundOption(val: !val);
-                                    }
+                                        .toggleMuteOption(val: val);
                                   },
                                 ),
                               ),

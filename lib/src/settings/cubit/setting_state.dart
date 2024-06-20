@@ -1,6 +1,5 @@
 part of 'setting_cubit.dart';
 
-@immutable
 class SettingState extends Equatable {
   const SettingState({
     required this.isDarkMode,
@@ -41,4 +40,8 @@ class SettingState extends Equatable {
         isMute,
         isSoundOn,
       ];
+
+  @override
+  String toString() => 'SettingState(isSoundOn: $isSoundOn, isMusicOn: '
+      '$isMusicOn, isDarkMode: $isDarkMode, isMute: $isMute)';
 }

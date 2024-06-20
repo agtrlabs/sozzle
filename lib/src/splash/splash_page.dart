@@ -33,10 +33,12 @@ class _SplashPageState extends State<SplashPage> {
     Colors.red,
   ];
 
+  Timer? timer;
+
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       counter += 100;
       switch (counter) {
         case 400:
@@ -52,6 +54,12 @@ class _SplashPageState extends State<SplashPage> {
       }
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
