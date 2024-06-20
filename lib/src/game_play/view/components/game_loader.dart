@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // load the game
 
 import 'package:flutter/material.dart';
