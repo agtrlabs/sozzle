@@ -6,7 +6,10 @@ class Settings extends Equatable {
     required this.isMusicOn,
     required this.isDarkMode,
     required this.isMute,
-  });
+    bool? isSoundOnCache,
+    bool? isMusicOnCache,
+  })  : isSoundOnCache = isSoundOnCache ?? isSoundOn,
+        isMusicOnCache = isMusicOnCache ?? isMusicOn;
 
   const Settings.empty()
       : this(
@@ -20,7 +23,9 @@ class Settings extends Equatable {
         isSoundOn: map[sound] as bool? ?? false,
         isMusicOn: map[music] as bool? ?? false,
         isDarkMode: map[darkMode] as bool? ?? false,
-        isMute: map[mute] as bool? ?? false,
+        isMute: map[mute] as bool? ?? true,
+        isMusicOnCache: map[cacheMusic] as bool? ?? false,
+        isSoundOnCache: map[cacheSound] as bool? ?? false,
       );
 
   static const String sound = 'sound';
@@ -28,17 +33,23 @@ class Settings extends Equatable {
   static const String darkMode = 'darkMode';
   static const String mute = 'mute';
   static const String setting = 'setting';
+  static const String cacheMusic = 'isMusicOnCache';
+  static const cacheSound = 'isSoundOnCache';
 
   final bool isSoundOn;
   final bool isMusicOn;
   final bool isDarkMode;
   final bool isMute;
+  final bool isMusicOnCache;
+  final bool isSoundOnCache;
 
   Map<String, dynamic> toMap() => {
         sound: isSoundOn,
         music: isMusicOn,
         darkMode: isDarkMode,
         mute: isMute,
+        cacheMusic: isMusicOnCache,
+        cacheSound: isSoundOnCache,
       };
 
   Settings copyWith({
@@ -46,12 +57,16 @@ class Settings extends Equatable {
     bool? isMusicOn,
     bool? isDarkMode,
     bool? isMute,
+    bool? isMusicOnCache,
+    bool? isSoundOnCache,
   }) {
     return Settings(
       isSoundOn: isSoundOn ?? this.isSoundOn,
       isMusicOn: isMusicOn ?? this.isMusicOn,
       isDarkMode: isDarkMode ?? this.isDarkMode,
       isMute: isMute ?? this.isMute,
+      isSoundOnCache: isSoundOnCache ?? this.isSoundOnCache,
+      isMusicOnCache: isMusicOnCache ?? this.isMusicOnCache,
     );
   }
 
@@ -61,5 +76,7 @@ class Settings extends Equatable {
         isMusicOn,
         isDarkMode,
         isMute,
+        isSoundOnCache,
+        isMusicOnCache,
       ];
 }
