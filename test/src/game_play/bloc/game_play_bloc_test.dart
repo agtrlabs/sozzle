@@ -77,7 +77,7 @@ EXIST
       build: () => bloc,
       act: (bloc) => bloc.add(const GamePlayEventInputWord('EXIST')),
       verify: (e) {
-        expect(e.state.state, GamePlayActualState.wordFound);
+        expect(e.state.actualState, GamePlayActualState.wordFound);
         expect(e.revealedCells, [5, 6, 7, 8, 9]);
       },
     );
@@ -87,7 +87,7 @@ EXIST
       build: () => bloc,
       act: (bloc) => bloc.add(const GamePlayEventInputWord('TEST')),
       verify: (e) {
-        expect(e.state.state, GamePlayActualState.wordFound);
+        expect(e.state.actualState, GamePlayActualState.wordFound);
         expect(e.revealedCells, [9, 14, 19, 24]);
       },
     );
@@ -172,7 +172,7 @@ R D
       build: () => bloc,
       act: (bloc) => bloc.add(const GamePlayEventInputWord('WORLD')),
       verify: (e) {
-        expect(e.state.state, GamePlayActualState.wordFound);
+        expect(e.state.actualState, GamePlayActualState.wordFound);
         expect(e.revealedCells, [2, 6, 10, 14, 18]);
       },
     );
@@ -182,7 +182,7 @@ R D
       build: () => bloc,
       act: (bloc) => bloc.add(const GamePlayEventInputWord('LOW')),
       verify: (e) {
-        expect(e.state.state, GamePlayActualState.wordFound);
+        expect(e.state.actualState, GamePlayActualState.wordFound);
         expect(e.revealedCells, [24, 25, 26]);
       },
     );

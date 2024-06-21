@@ -42,7 +42,7 @@ class GamePlayPage extends StatelessWidget {
                 create: (context) => bloc..add(const GamePlayInitialEvent()),
                 child: BlocListener<GamePlayBloc, GamePlayState>(
                   listener: (context, state) {
-                    if (state.state == GamePlayActualState.allFound) {
+                    if (state.actualState == GamePlayActualState.allFound) {
                       context.read<UserStatsCubit>().advanceLevelUp();
                       final levelData = bloc.levelData;
                       context.go(LevelCompletePage.path, extra: levelData);

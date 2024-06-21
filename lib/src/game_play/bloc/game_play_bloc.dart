@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -14,7 +15,8 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
     required this.levelData,
     required this.audio,
   }) : super(const GamePlayState(GamePlayActualState.allHidden)) {
-    on<GamePlayEventInputWord>(handleInputWord);
+    on<GamePlayEventInputWord>(_handleInputWord);
+    on<RevealRandomLetterEvent>(_handleRevealRandomLetter);
     on<GamePlayInitialEvent>((event, emit) {
       emit(const GamePlayState(GamePlayActualState.initial));
     });
@@ -115,7 +117,7 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
     return list.length == word.length ? list : _scanTD(word);
   }
 
-  FutureOr<void> handleInputWord(
+  FutureOr<void> _handleInputWord(
     GamePlayEventInputWord event,
     Emitter<GamePlayState> emit,
   ) {
@@ -151,6 +153,26 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
           }
         }
       }
+    }
+  }
+
+  FutureOr<void> _handleRevealRandomLetter(
+    RevealRandomLetterEvent event,
+    Emitter<GamePlayState> emit,
+  ) {
+    final random = Random();
+    final availableIndices =
+        List<int>.generate(levelData.boardData.length, (i) => i)
+          ..removeWhere(
+            (index) =>
+                levelData.boardData[index].trim() == '' ||
+                revealedCells.contains(index),
+          );
+
+    if (availableIndices.isNotEmpty) {
+      final index = availableIndices[random.nextInt(availableIndices.length)];
+      revealedCells.add(index);
+      emit(LetterRevealed(index));
     }
   }
 

@@ -17,6 +17,10 @@ final class GamePlayEventInputWord extends GamePlayEvent {
   List<Object> get props => [word];
 }
 
+final class RevealRandomLetterEvent extends GamePlayEvent {
+  const RevealRandomLetterEvent();
+}
+
 final class GamePlayInitialEvent extends GamePlayEvent {
   const GamePlayInitialEvent();
 }
