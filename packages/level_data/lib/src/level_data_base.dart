@@ -13,6 +13,14 @@ class LevelData extends Equatable {
     this.rewards = const [],
   });
 
+  LevelData.empty()
+      : levelId = 0,
+        words = const [],
+        boardWidth = 0,
+        boardHeight = 0,
+        boardData = const [],
+        rewards = const [];
+
   factory LevelData.fromJson(String json) =>
       LevelData.fromMap(jsonDecode(json) as Map<String, dynamic>);
 
