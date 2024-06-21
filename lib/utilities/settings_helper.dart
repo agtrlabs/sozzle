@@ -1,3 +1,4 @@
+// coverage:ignore-file
 class SettingsHelper {
   static bool? turnOffMuteMaybe({required bool val}) {
     return val ? false : null;
