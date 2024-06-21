@@ -66,6 +66,9 @@ class SettingCubit extends Cubit<SettingState> {
     Settings? cache;
     if (!val) {
       cache = await settingRep.getSetting();
+    } else {
+      await settingRep.setMusicSetting(value: state.isMusicOn, cache: true);
+      await settingRep.setSoundSetting(value: state.isSoundOn, cache: true);
     }
     final newState = state.copyWith(
       isMute: val,
