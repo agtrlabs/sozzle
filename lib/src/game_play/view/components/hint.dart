@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 import 'package:sozzle/core/common/widgets/game_button.dart';
 import 'package:sozzle/core/res/media.dart';
+import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
 import 'package:sozzle/src/game_play/domain/entities/booster.dart';
 import 'package:sozzle/src/theme/theme.dart';
 import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
@@ -105,7 +106,9 @@ class _HintState extends State<Hint> {
                         text: 'Reveal',
                         onPressed: () {
                           Navigator.of(context).pop();
-                          context.read<UserStatsCubit>().useAHint();
+                          context.read<GamePlayBloc>().add(
+                                const RevealRandomLetterEvent(),
+                              );
                         },
                       ),
                     ).show();
