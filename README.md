@@ -57,6 +57,20 @@ $ open coverage/index.html
 
 ## Contribution 🚸
 
+For a common compatible development and testing environment we'll be utilizing the following versions
+
+```
+Flutter : 3.22.2
+Dart SDK : 3.4.3
+JDK : 19.0.2
+Android NDK : 25.1.8937393
+Android SDK : 34.0.0
+```
+You don't have to stick to the versions, as long as you can compile and test the project with a tool that has a different version. 
+If necessary, the versions mentioned above can be updated. 
+Any changes about the development environment should also be stated in this readme file.
+
+
 Before a pull request run the following commands to be sure that;
 
 - The source code is formatted.
@@ -79,7 +93,21 @@ $ flutter test --no-pub --coverage --test-randomize-ordering-seed random
 
 - Code coverage is enough. 
 
-  So, new tests should be added belong the new codes to keep ![coverage][coverage_badge]
+So, new tests should be added belong the new codes to keep ![coverage][coverage_badge]
+
+We have a simple bash script [lintool.sh](lintool.sh) to speed up the preparation process. Feel free to use and it.
+
+```sh
+$ ./lintool.sh 
+Formatted 96 files (0 changed) in 0.59 seconds.
+Analyzing 2 items...
+No issues found! (ran in 0.9s)
+Shuffling test order with --test-randomize-ordering-seed=1193155465
+00:20 +51: All tests Passed!
+Code Coverage is 73%
+#Ready to push! 🚀
+```
+
 
 ---
 
