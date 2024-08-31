@@ -61,14 +61,27 @@ EXIST
     });
 
     test('Initial State test', () {
-      expect(bloc.state, const GamePlayState(GamePlayActualState.allHidden));
+      expect(
+        bloc.state,
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.allHidden,
+        ),
+      );
     });
 
     blocTest<GamePlayBloc, GamePlayState>(
       'emits state notFound if word does not exist',
       build: () => bloc,
       act: (bloc) => bloc.add(const GamePlayEventInputWord('NOTEXIST')),
-      expect: () => [const GamePlayState(GamePlayActualState.notFound)],
+      expect: () => [
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.notFound,
+        ),
+      ],
       //verify: (e) => expect(e.state.state, GamePlayActualState.notFound),
     );
 
@@ -101,7 +114,13 @@ EXIST
           ..add(const GamePlayEventInputWord('EXIST'));
       },
       skip: 1,
-      expect: () => [const GamePlayState(GamePlayActualState.alreadyFound)],
+      expect: () => [
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.alreadyFound,
+        ),
+      ],
     );
 
     blocTest<GamePlayBloc, GamePlayState>(
@@ -113,7 +132,19 @@ EXIST
         }
       },
       skip: 1,
-      expect: () => [const GamePlayState(GamePlayActualState.allFound)],
+      expect: () => [
+        for (var i = 0; i < levelData.words.length - 1; i++)
+          isA<GamePlayState>().having(
+            (e) => e.actualState,
+            'state',
+            GamePlayActualState.wordFound,
+          ),
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.allFound,
+        ),
+      ],
     );
 
     blocTest<GamePlayBloc, GamePlayState>(
@@ -164,7 +195,13 @@ R D
       'emits state notFound if word does not exist',
       build: () => bloc,
       act: (bloc) => bloc.add(const GamePlayEventInputWord('WOR')),
-      expect: () => [const GamePlayState(GamePlayActualState.notFound)],
+      expect: () => [
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.notFound,
+        ),
+      ],
     );
 
     blocTest<GamePlayBloc, GamePlayState>(
@@ -196,7 +233,13 @@ R D
           ..add(const GamePlayEventInputWord('WORD'));
       },
       skip: 1,
-      expect: () => [const GamePlayState(GamePlayActualState.alreadyFound)],
+      expect: () => [
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.alreadyFound,
+        ),
+      ],
     );
 
     blocTest<GamePlayBloc, GamePlayState>(
@@ -208,7 +251,19 @@ R D
         }
       },
       skip: 1,
-      expect: () => [const GamePlayState(GamePlayActualState.allFound)],
+      expect: () => [
+        for (var i = 0; i < levelData.words.length - 1; i++)
+          isA<GamePlayState>().having(
+            (e) => e.actualState,
+            'state',
+            GamePlayActualState.wordFound,
+          ),
+        isA<GamePlayState>().having(
+          (e) => e.actualState,
+          'state',
+          GamePlayActualState.allFound,
+        ),
+      ],
     );
   });
 }
