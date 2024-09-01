@@ -45,8 +45,8 @@ void main() {
       );
       whenListen<GamePlayState>(
         gamePlayBloc,
-        Stream.value(const GamePlayState(GamePlayActualState.allHidden)),
-        initialState: const GamePlayState(GamePlayActualState.allHidden),
+        Stream.value(GamePlayState(GamePlayActualState.allHidden)),
+        initialState: GamePlayState(GamePlayActualState.allHidden),
       );
     });
 

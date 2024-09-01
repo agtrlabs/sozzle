@@ -6,6 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:level_data/level_data.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/audio/domain/sfx.dart';
+import 'package:uuid/uuid.dart';
 
 part 'game_play_event.dart';
 part 'game_play_state.dart';
@@ -14,11 +15,11 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
   GamePlayBloc({
     required this.levelData,
     required this.audio,
-  }) : super(const GamePlayState(GamePlayActualState.allHidden)) {
+  }) : super(GamePlayState(GamePlayActualState.allHidden)) {
     on<GamePlayEventInputWord>(_handleInputWord);
     on<RevealRandomLetterEvent>(_handleRevealRandomLetter);
     on<GamePlayInitialEvent>((event, emit) {
-      emit(const GamePlayState(GamePlayActualState.initial));
+      emit(GamePlayState(GamePlayActualState.initial));
     });
   }
 
@@ -124,7 +125,7 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
     // TODO(me): implement bonusWord
     if (!levelData.words.contains(event.word)) {
       audio.play(Sfx.error);
-      emit(const GamePlayState(GamePlayActualState.notFound));
+      emit(GamePlayState(GamePlayActualState.notFound));
     } else {
       // scan the board
       final indexList = _scan(event.word);
@@ -133,20 +134,20 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
         //check if alreadyFound
         if (foundWords.contains(event.word)) {
           audio.play(Sfx.hint);
-          emit(const GamePlayState(GamePlayActualState.alreadyFound));
+          emit(GamePlayState(GamePlayActualState.alreadyFound));
         } else {
           // else add to foundWords
           foundWords.add(event.word);
           revealedCells.addAll(indexList);
           emit(
-            const GamePlayState(GamePlayActualState.wordFound),
+            GamePlayState(GamePlayActualState.wordFound),
           );
 
           //check if all words found
           if (foundWords.length == levelData.words.length) {
             audio.play(Sfx.win);
             emit(
-              const GamePlayState(GamePlayActualState.allFound),
+              GamePlayState(GamePlayActualState.allFound),
             );
           } else {
             audio.play(Sfx.open);
