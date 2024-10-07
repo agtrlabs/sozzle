@@ -29,7 +29,11 @@ class AudioController implements IAudioController {
     if (!_settings.isMute && _settings.isSoundOn) {
       //await player.play(AssetSource(sound[sfx]!));
 
-      await players[sfx]!.play(AssetSource(sound[sfx]!));
+      final player = players[sfx]!;
+      if (player.state == PlayerState.playing) {
+        await player.stop();
+      }
+      await player.play(AssetSource(sound[sfx]!));
     }
   }
 
