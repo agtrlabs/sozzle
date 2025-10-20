@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:sozzle/l10n/l10n.dart';
+import 'package:sozzle/l10n/arb/app_localizations.dart';
 import 'package:sozzle/src/settings/application/setting_repository.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
 import 'package:sozzle/src/settings/domain/i_setting_repository.dart';
