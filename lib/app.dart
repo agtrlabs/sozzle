@@ -77,7 +77,7 @@ class App extends StatelessWidget {
                 // routerDelegate: router.routerDelegate,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(
-                  appBarTheme: AppBarTheme(color: theme.appBarColor),
+                  appBarTheme: AppBarTheme(backgroundColor: theme.appBarColor),
                   colorScheme: ColorScheme.fromSwatch(
                     accentColor: theme.accentColor,
                     primarySwatch: theme.primarySwatch,

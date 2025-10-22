@@ -9,7 +9,11 @@ void main() {
     testWidgets(
       'should render [GamePlayLetters]',
       (tester) async {
-        await tester.pumpApp(GamePlayLetters(LevelData.empty()));
+        await tester.pumpApp(
+          GamePlayLetters(
+            LevelData.empty().copyWith(boardData: ['A', 'B', 'C']),
+          ),
+        );
 
         expect(find.byType(GamePlayLetters), findsOneWidget);
       },
