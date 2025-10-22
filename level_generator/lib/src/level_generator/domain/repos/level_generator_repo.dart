@@ -12,6 +12,7 @@ abstract class LevelGeneratorRepo {
   /// Don't use this for json files, if you have a json file, use the
   /// [GenerateLeveLFromJsonFile]
   ///
+  /// ```dart
   /// return LevelData(
   ///         levelId: dict["levelId"] as int,
   ///         words: dict["words"] as List<String>,
@@ -20,6 +21,7 @@ abstract class LevelGeneratorRepo {
   ///         boardData: dict["boardData"] as List<String>,
   ///         rewards: dict["rewards"]
   ///     );
+  ///```
   Future<Either<Failure, LevelData>>? generateLevelFromDict(
       Map<String, dynamic>? dict);
 
