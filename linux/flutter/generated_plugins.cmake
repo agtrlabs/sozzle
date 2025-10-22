@@ -4,7 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_linux
-  rive_common
+  rive_native
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

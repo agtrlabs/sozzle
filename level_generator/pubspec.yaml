@@ -8,13 +8,9 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.1.0-287.0.dev <4.0.0'
 
-
-
-
 dependencies:
-  cupertino_icons: ^1.0.8
   dartz: ^0.10.1
-  equatable: ^2.0.5
+  equatable: ^2.0.7
   flutter:
     sdk: flutter
   level_data:
@@ -32,30 +28,3 @@ flutter:
 
   assets:
     - assets/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

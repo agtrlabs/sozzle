@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sozzle/core/routes/routes.dart';
-import 'package:sozzle/l10n/l10n.dart';
+import 'package:sozzle/l10n/arb/app_localizations.dart';
 import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/audio/audio_controller.dart';
@@ -77,7 +77,7 @@ class App extends StatelessWidget {
                 // routerDelegate: router.routerDelegate,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(
-                  appBarTheme: AppBarTheme(color: theme.appBarColor),
+                  appBarTheme: AppBarTheme(backgroundColor: theme.appBarColor),
                   colorScheme: ColorScheme.fromSwatch(
                     accentColor: theme.accentColor,
                     primarySwatch: theme.primarySwatch,

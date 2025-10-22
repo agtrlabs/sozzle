@@ -7,34 +7,32 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  animated_text_kit: ^4.2.2
-  audioplayers: ^6.0.0
+  animated_text_kit: ^4.2.3
+  audioplayers: ^6.5.1
   awesome_dialog: ^3.2.1
   bloc: ^8.1.4
-  circular_pattern: ^0.0.3
-  device_preview: ^1.2.0
-  equatable: ^2.0.5
+  circular_pattern: ^0.1.1
+  device_preview: ^1.3.1
+  equatable: ^2.0.7
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
-  go_router: ^14.1.4
+  go_router: ^16.2.1
   grid_board:
     git:
       url: https://github.com/agtrlabs/grid_board.git
       ref: main
-  http: ^1.2.1
+  http: ^1.5.0
   hydrated_bloc: ^9.1.5
-  intl: ^0.19.0
+  intl: ^0.20.2
   level_data:
     path: packages/level_data
   localstore: ^1.4.0
-  path_provider: ^2.1.3
-  rive: ^0.13.5
-  uuid: ^4.4.0
-  # TODO(RIVE): Reinstall flutter on linux and uncomment level_complete_page.dart
-#  rive: ^0.12.3
+  path_provider: ^2.1.5
+  rive: ^0.14.0-dev.11
+  uuid: ^4.5.1
 
 dev_dependencies:
   bloc_test: ^9.1.7

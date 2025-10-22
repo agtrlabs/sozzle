@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
-import 'package:sozzle/core/extensions/rive_extensions.dart';
 import 'package:sozzle/core/res/media.dart';
 
 class GameButton extends StatefulWidget {
@@ -18,9 +17,9 @@ class GameButton extends StatefulWidget {
 }
 
 class _GameButtonState extends State<GameButton> {
-  RiveFile? _riveFile;
+  File? _riveFile;
 
-  StateMachineController? controller;
+  late RiveWidgetController controller;
 
   bool clicked = false;
 
@@ -32,15 +31,34 @@ class _GameButtonState extends State<GameButton> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
-  void _preload() {
-    rootBundle.load(Media.gameButton).then((data) {
-      setState(() {
-        _riveFile = RiveFile.import(data);
-      });
+  Future<void> _preload() async {
+    final data = await rootBundle.load(Media.gameButton);
+    _riveFile = await File.decode(
+      data.buffer.asUint8List(),
+      riveFactory: Factory.rive,
+    );
+    controller = RiveWidgetController(_riveFile!);
+    _onInit(controller.artboard);
+    setState(() {});
+  }
+
+  void _onInit(Artboard artboard) {
+    artboard.setText('buttonText', widget.text);
+
+    final viewModelInstance = controller.dataBind(DataBind.auto());
+
+    final currentState = viewModelInstance.string('currentState');
+    currentState?.addListener((value) {
+      if (value == 'click') {
+        clicked = true;
+      } else if (value == 'rest' && clicked) {
+        clicked = false;
+        widget.onPressed?.call();
+      }
     });
   }
 
@@ -51,26 +69,11 @@ class _GameButtonState extends State<GameButton> {
       child: SizedBox(
         width: 200,
         height: 50,
-        child: RiveAnimation.direct(
-          _riveFile!,
-          fit: BoxFit.cover,
-          stateMachines: const ['Button Animation'],
-          onInit: (artboard) {
-            artboard.textRun('buttonText')!.text = widget.text;
-            controller = StateMachineController.fromArtboard(
-              artboard,
-              'Button Animation',
-              onStateChange: (stateMachine, stateName) {
-                if (stateName == 'Click') {
-                  clicked = true;
-                } else if (stateName == 'Rest' && clicked) {
-                  clicked = false;
-                  widget.onPressed?.call();
-                }
-              },
-            );
-            artboard.addController(controller!);
-          },
+        child: RiveWidget(
+          controller: controller,
+          fit: Fit.cover,
+          cursor: SystemMouseCursors.click,
+          // stateMachines: const ['Button Animation'],
         ),
       ),
     );
