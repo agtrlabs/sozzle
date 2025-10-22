@@ -21,9 +21,12 @@ class Hint extends StatefulWidget {
 }
 
 class _HintState extends State<Hint> {
-  RiveFile? _hintFile;
-  SMIBool? _luminance;
-  SMIBool? _theme;
+  File? _hintFile;
+  late RiveWidgetController _controller;
+  late StateMachine? _stateController;
+  late StateMachine? _themeController;
+  BooleanInput? _luminance;
+  BooleanInput? _theme;
 
   @override
   void initState() {
@@ -31,30 +34,24 @@ class _HintState extends State<Hint> {
     preload();
   }
 
-  void preload() {
-    rootBundle.load(Media.animatedHint).then((data) {
-      setState(() {
-        _hintFile = RiveFile.import(data);
-      });
-    });
+  Future<void> preload() async {
+    final data = await rootBundle.load(Media.animatedHint);
+    _hintFile = await File.decode(
+      data.buffer.asUint8List(),
+      riveFactory: Factory.rive,
+    );
+    _controller = RiveWidgetController(_hintFile!);
+    _onInit(_controller.artboard);
+    setState(() {});
   }
 
   void _onInit(Artboard artboard) {
-    final stateController = StateMachineController.fromArtboard(
-      artboard,
-      'bulb',
-    );
-    final themeController = StateMachineController.fromArtboard(
-      artboard,
-      'theme',
-    );
-    artboard
-      ..addController(stateController!)
-      ..addController(themeController!);
-    _luminance = stateController.findInput<bool>('pressed')! as SMIBool;
-    _theme = themeController.findInput<bool>('isDark')! as SMIBool;
+    _stateController = artboard.stateMachine('bulb');
+    _themeController = artboard.stateMachine('theme');
+    _luminance = _stateController?.boolean('pressed');
+    _theme = _themeController?.boolean('isDark');
     flipBulbByBooster(context.read<UserStatsCubit>().state);
-    _theme?.change(context.read<ThemeCubit>().state is ThemeStateDark);
+    _theme?.value = context.read<ThemeCubit>().state is ThemeStateDark;
   }
 
   void flipBulbByBooster(UserStatsState statsState) {
@@ -62,10 +59,20 @@ class _HintState extends State<Hint> {
       (booster) => booster is UseAHint && booster.boosterCount > 0,
     );
     if (userHasHint) {
-      _luminance?.change(true);
+      _luminance?.value = true;
     } else {
-      _luminance?.change(false);
+      _luminance?.value = false;
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _stateController?.dispose();
+    _themeController?.dispose();
+    _luminance?.dispose();
+    _theme?.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,7 +82,7 @@ class _HintState extends State<Hint> {
       message: 'Use a hint',
       child: BlocConsumer<ThemeCubit, ThemeState>(
         listener: (context, themeState) {
-          _theme?.change(themeState is ThemeStateDark);
+          _theme?.value = themeState is ThemeStateDark;
         },
         builder: (context, themeState) {
           return BlocConsumer<UserStatsCubit, UserStatsState>(
@@ -123,11 +130,10 @@ class _HintState extends State<Hint> {
                       baseline: 45,
                       child: SizedBox(
                         width: 50,
-                        child: RiveAnimation.direct(
+                        child: RiveWidget(
                           key: UniqueKey(),
-                          _hintFile!,
-                          fit: BoxFit.cover,
-                          onInit: _onInit,
+                          controller: _controller,
+                          fit: Fit.cover,
                         ),
                       ),
                     ),
