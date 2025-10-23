@@ -20,6 +20,8 @@ class _GameButtonState extends State<GameButton> {
   File? _riveFile;
 
   late RiveWidgetController controller;
+  late ViewModelInstance viewModelInstance;
+  ViewModelInstanceString? currentState;
 
   bool clicked = false;
 
@@ -32,6 +34,8 @@ class _GameButtonState extends State<GameButton> {
   @override
   void dispose() {
     controller.dispose();
+    currentState?.clearListeners();
+    viewModelInstance.dispose();
     super.dispose();
   }
 
@@ -49,9 +53,9 @@ class _GameButtonState extends State<GameButton> {
   void _onInit(Artboard artboard) {
     artboard.setText('buttonText', widget.text);
 
-    final viewModelInstance = controller.dataBind(DataBind.auto());
+    viewModelInstance = controller.dataBind(DataBind.auto());
 
-    final currentState = viewModelInstance.string('currentState');
+    currentState = viewModelInstance.string('currentState');
     currentState?.addListener((value) {
       if (value == 'click') {
         clicked = true;
