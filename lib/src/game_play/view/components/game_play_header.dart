@@ -20,10 +20,15 @@ class GamePlayHeader extends StatelessWidget {
           builder: (context, state) {
             final theme = context.watch<ThemeCubit>().state;
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(
+                top: renderColumn ? 16 : 32,
+              ),
               child: switch (renderColumn) {
                 true => MobileHeader(state: state, theme: theme),
-                _ => DesktopHeader(state: state, theme: theme),
+                _ => ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 800),
+                    child: DesktopHeader(state: state, theme: theme),
+                  ),
               },
             );
           },
@@ -48,13 +53,11 @@ class DesktopHeader extends StatelessWidget {
           child: Scorecard(
             level: state.progress.currentLevel,
             failedAttempts: '0',
-            levelColour: theme.primaryTextColor,
-            failedAttemptsColour: theme.primaryTextColor,
-            headerColour: theme.primaryTextColor,
           ),
         ),
         IconButton(
           icon: const Icon(Icons.home),
+          iconSize: 30,
           color: theme.primaryTextColor,
           onPressed: () {
             context.go(HomePage.path);
@@ -77,10 +80,15 @@ class MobileHeader extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        Scorecard(
+          level: state.progress.currentLevel,
+          failedAttempts: '0',
+        ),
         Row(
           children: [
             IconButton(
               icon: const Icon(Icons.home),
+              iconSize: 30,
               color: theme.primaryTextColor,
               onPressed: () {
                 context.go(HomePage.path);
@@ -88,13 +96,6 @@ class MobileHeader extends StatelessWidget {
             ),
             const Hint(),
           ],
-        ),
-        Scorecard(
-          level: state.progress.currentLevel,
-          failedAttempts: '0',
-          levelColour: theme.primaryTextColor,
-          failedAttemptsColour: theme.primaryTextColor,
-          headerColour: theme.primaryTextColor,
         ),
       ],
     );

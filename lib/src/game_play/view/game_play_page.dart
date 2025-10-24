@@ -54,16 +54,7 @@ class GamePlayPage extends StatelessWidget {
                       child: Flex(
                         direction: Axis.vertical,
                         children: [
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: themeState.primaryTextColor,
-                                ),
-                              ),
-                            ),
-                            child: const GamePlayHeader(),
-                          ),
+                          const GamePlayHeader(),
                           const SizedBox(height: 10),
                           Flexible(
                             flex: 4,
