@@ -2,7 +2,6 @@
 // TODO(Test): Rive causes this to fail, so, restore this test after the next
 //  Rive major update when the issue is fixed
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import 'package:sozzle/core/res/media.dart';
 
@@ -40,9 +39,8 @@ class _GameButtonState extends State<GameButton> {
   }
 
   Future<void> _preload() async {
-    final data = await rootBundle.load(Media.gameButton);
-    _riveFile = await File.decode(
-      data.buffer.asUint8List(),
+    _riveFile = await File.asset(
+      Media.gameButton,
       riveFactory: Factory.rive,
     );
     controller = RiveWidgetController(_riveFile!);

@@ -3,7 +3,6 @@
 //  Rive major update when the issue is fixed
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 import 'package:sozzle/core/common/widgets/game_button.dart';
@@ -36,9 +35,8 @@ class _HintState extends State<Hint> {
   }
 
   Future<void> preload() async {
-    final data = await rootBundle.load(Media.animatedHint);
-    _hintFile = await File.decode(
-      data.buffer.asUint8List(),
+    _hintFile = await File.asset(
+      Media.animatedHint,
       riveFactory: Factory.rive,
     );
     _controller = RiveWidgetController(_hintFile!);
