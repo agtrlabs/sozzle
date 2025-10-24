@@ -51,9 +51,9 @@ class _GameButtonState extends State<GameButton> {
   }
 
   void _onInit(Artboard artboard) {
-    artboard.setText('buttonText', widget.text);
-
     viewModelInstance = controller.dataBind(DataBind.auto());
+
+    viewModelInstance.string('buttonText')?.value = widget.text;
 
     currentState = viewModelInstance.string('currentState');
     currentState?.addListener((value) {
