@@ -11,6 +11,7 @@ sealed class Media {
   // Rive
   static const lake = '$_baseRive/small_lake_on_a_rainy_day.riv';
   static const space = '$_baseRive/space.riv';
-  static const animatedHint = '$_baseRive/bulb.riv';
+  static const animatedHint = '$_baseRive/hint.riv';
   static const gameButton = '$_baseRive/game_button.riv';
+  static const scorecard = '$_baseRive/scorecard.riv';
 }

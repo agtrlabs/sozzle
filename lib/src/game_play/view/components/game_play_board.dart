@@ -6,18 +6,27 @@ import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
 import 'package:sozzle/src/user_stats/user_stats.dart';
 
-class GamePlayBoard extends StatelessWidget {
+class GamePlayBoard extends StatefulWidget {
   const GamePlayBoard(this.levelData, {super.key});
 
   final LevelData levelData;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = BlocProvider.of<ThemeCubit>(context).state;
+  State<GamePlayBoard> createState() => _GamePlayBoardState();
+}
 
-    final gridSize = GridSize(levelData.boardWidth, levelData.boardHeight);
+class _GamePlayBoardState extends State<GamePlayBoard> {
+  late final GridBoardController controller;
 
-    final cells = levelData.boardData.map(
+  @override
+  void initState() {
+    super.initState();
+    final gridSize = GridSize(
+      widget.levelData.boardWidth,
+      widget.levelData.boardHeight,
+    );
+
+    final cells = widget.levelData.boardData.map(
       (e) {
         return GridCell(
           controller: GridCellController(),
@@ -34,12 +43,23 @@ class GamePlayBoard extends StatelessWidget {
       },
     ).toList();
 
-    final controller = GridBoardController(
+    controller = GridBoardController(
       gridBoardProperties: GridBoardProperties(
         gridSize: gridSize,
       ),
       cells: cells,
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = BlocProvider.of<ThemeCubit>(context).state;
     return BlocListener<GamePlayBloc, GamePlayState>(
       listener: (context, gameState) {
         if (gameState is LetterRevealed) {
@@ -56,8 +76,7 @@ class GamePlayBoard extends StatelessWidget {
           }
         }
       },
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width - 50,
+      child: Center(
         child: GridBoard(
           backgroundColor: theme.backgroundColor,
           controller: controller,

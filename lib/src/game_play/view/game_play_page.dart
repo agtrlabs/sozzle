@@ -19,49 +19,61 @@ class GamePlayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = BlocProvider.of<ThemeCubit>(context).state;
-    return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: Center(
-        child: GameLoader(
-          future: RepositoryProvider.of<ILevelRepository>(context)
-              .getLevel(levelID),
-          builder: (BuildContext context, AsyncSnapshot<LevelData> snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const CircularProgressIndicator();
-            }
-            if (!snapshot.hasData) {
-              return const Text('Ops an error!');
-            } else {
-              final bloc = GamePlayBloc(
-                levelData: snapshot.data!,
-                audio: RepositoryProvider.of<IAudioController>(context),
-              );
-              debugPrint(bloc.levelData.words.toString());
-              return BlocProvider<GamePlayBloc>(
-                create: (context) => bloc..add(const GamePlayInitialEvent()),
-                child: BlocListener<GamePlayBloc, GamePlayState>(
-                  listener: (context, state) {
-                    if (state.actualState == GamePlayActualState.allFound) {
-                      context.read<UserStatsCubit>().advanceLevelUp();
-                      final levelData = bloc.levelData;
-                      context.go(LevelCompletePage.path, extra: levelData);
-                    }
-                  },
-                  child: Flex(
-                    direction: Axis.vertical,
-                    children: [
-                      const GamePlayHeader(),
-                      Flexible(flex: 4, child: GamePlayBoard(snapshot.data!)),
-                      Flexible(flex: 3, child: GamePlayLetters(snapshot.data!)),
-                    ],
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-      ),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, themeState) {
+        return Scaffold(
+          backgroundColor: themeState.backgroundColor,
+          body: Center(
+            child: GameLoader(
+              future: RepositoryProvider.of<ILevelRepository>(context)
+                  .getLevel(levelID),
+              builder:
+                  (BuildContext context, AsyncSnapshot<LevelData> snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const CircularProgressIndicator();
+                }
+                if (!snapshot.hasData) {
+                  return const Text('Ops an error!');
+                } else {
+                  final bloc = GamePlayBloc(
+                    levelData: snapshot.data!,
+                    audio: RepositoryProvider.of<IAudioController>(context),
+                  );
+                  debugPrint(bloc.levelData.words.toString());
+                  return BlocProvider<GamePlayBloc>(
+                    create: (context) =>
+                        bloc..add(const GamePlayInitialEvent()),
+                    child: BlocListener<GamePlayBloc, GamePlayState>(
+                      listener: (context, state) {
+                        if (state.actualState == GamePlayActualState.allFound) {
+                          context.read<UserStatsCubit>().advanceLevelUp();
+                          final levelData = bloc.levelData;
+                          context.go(LevelCompletePage.path, extra: levelData);
+                        }
+                      },
+                      child: Flex(
+                        direction: Axis.vertical,
+                        children: [
+                          const GamePlayHeader(),
+                          const SizedBox(height: 10),
+                          Flexible(
+                            flex: 4,
+                            child: GamePlayBoard(snapshot.data!),
+                          ),
+                          Flexible(
+                            flex: 3,
+                            child: GamePlayLetters(snapshot.data!),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

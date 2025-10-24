@@ -2,7 +2,6 @@
 // TODO(Test): Rive causes this to fail, so, restore this test after the next
 //  Rive major update when the issue is fixed
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import 'package:sozzle/core/res/media.dart';
 
@@ -20,6 +19,8 @@ class _GameButtonState extends State<GameButton> {
   File? _riveFile;
 
   late RiveWidgetController controller;
+  late ViewModelInstance viewModelInstance;
+  ViewModelInstanceString? currentState;
 
   bool clicked = false;
 
@@ -32,13 +33,14 @@ class _GameButtonState extends State<GameButton> {
   @override
   void dispose() {
     controller.dispose();
+    currentState?.clearListeners();
+    viewModelInstance.dispose();
     super.dispose();
   }
 
   Future<void> _preload() async {
-    final data = await rootBundle.load(Media.gameButton);
-    _riveFile = await File.decode(
-      data.buffer.asUint8List(),
+    _riveFile = await File.asset(
+      Media.gameButton,
       riveFactory: Factory.rive,
     );
     controller = RiveWidgetController(_riveFile!);
@@ -47,11 +49,11 @@ class _GameButtonState extends State<GameButton> {
   }
 
   void _onInit(Artboard artboard) {
-    artboard.setText('buttonText', widget.text);
+    viewModelInstance = controller.dataBind(DataBind.auto());
 
-    final viewModelInstance = controller.dataBind(DataBind.auto());
+    viewModelInstance.string('buttonText')?.value = widget.text;
 
-    final currentState = viewModelInstance.string('currentState');
+    currentState = viewModelInstance.string('currentState');
     currentState?.addListener((value) {
       if (value == 'click') {
         clicked = true;
