@@ -12,3 +12,6 @@ jobs:
       flutter_channel: stable
       flutter_version: 3.35.6
       min_coverage: 70
+      setup_command: |
+        sudo apt-get update
+        sudo apt-get install -y libgl1-mesa-glx libegl1-mesa-dev
