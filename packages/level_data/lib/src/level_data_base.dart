@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:level_data/src/reward_base.dart';
 
+/// A model representing the data of a level in the game
 class LevelData extends Equatable {
+  /// Creates a [LevelData] instance
   const LevelData({
     required this.levelId,
     required this.words,
@@ -20,10 +22,13 @@ class LevelData extends Equatable {
         boardHeight = 0,
         boardData = const [],
         rewards = const [];
+  /// Creates an empty [LevelData] instance
 
+  /// Creates a [LevelData] instance from a JSON string
   factory LevelData.fromJson(String json) =>
       LevelData.fromMap(jsonDecode(json) as Map<String, dynamic>);
 
+  /// Creates a [LevelData] instance from a map
   factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
         levelId: json['id'] as int,
         boardHeight: json['rows'] as int,
@@ -38,7 +43,7 @@ class LevelData extends Equatable {
   static const _levelPoint = 50;
 
   /// The points gained from this level
-  static get levelPoint => _levelPoint;
+  static int get levelPoint => _levelPoint;
 
   /// level id
   final int levelId;
@@ -74,6 +79,8 @@ class LevelData extends Equatable {
   /// The rewards gained from this level
   final List<Reward> rewards;
 
+
+  /// Converts the [LevelData] instance to a map
   Map<String, dynamic> toMap() => {
         'id': levelId,
         'board': boardData,
@@ -83,6 +90,7 @@ class LevelData extends Equatable {
         'rewards': rewards.map((e) => e.toJson()).toList(),
       };
 
+  /// Converts the [LevelData] instance to a JSON string
   String toJson() => json.encode(toMap());
 
   @override
@@ -98,6 +106,7 @@ class LevelData extends Equatable {
   @override
   bool get stringify => true;
 
+  /// Creates a copy of the current [LevelData] with optional new values
   LevelData copyWith({
     int? levelId,
     List<String>? words,
