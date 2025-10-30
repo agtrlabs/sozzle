@@ -20,6 +20,18 @@ void main() {
   const level = LevelData(
       levelId: 1,
       words: ['SAW', 'WASP'],
+      crosswords: {
+        'SAW': Crossword(
+          word: 'SAW',
+          direction: CrossWordDirection.across,
+          directionIndex: 1,
+        ),
+        'WASP': Crossword(
+          word: 'WASP',
+          direction: CrossWordDirection.down,
+          directionIndex: 1,
+        ),
+      },
       boardHeight: 5,
       boardWidth: 5,
       boardData: ['W', 'S', ''],
