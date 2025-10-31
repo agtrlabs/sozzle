@@ -51,7 +51,6 @@ class LevelRepository implements ILevelRepository {
 
   @override
   Future<List<LevelData>> getLevels() async {
-    await deleteLevels();
     final data = await _db.collection('levels').get()
         as Map<String, Map<String, dynamic>>?;
     if (data == null) return [];
