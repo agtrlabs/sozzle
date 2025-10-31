@@ -9,11 +9,9 @@ import 'dart:math';
 class WordListService {
   /// Service for managing word lists and selecting appropriate words for
   /// levels.
-  WordListService({
-    String? wordListPath,
-    Random? random,
-  }) : _wordListPath = wordListPath ?? 'assets/words/wordlist.txt',
-       _random = random ?? Random();
+  WordListService({required String wordListPath, Random? random})
+    : _wordListPath = wordListPath,
+      _random = random ?? Random();
 
   final String _wordListPath;
   final Random _random;
@@ -168,7 +166,12 @@ class WordListService {
           .where((w) => w.trim().isNotEmpty)
           .map((w) => w.trim().toUpperCase())
           .toList();
-    } on Exception catch (_) {
+    } on Exception catch (e) {
+      dev.log(
+        'Error loading word list from $_wordListPath: $e',
+        name: 'WordListService.loadWords',
+        error: e,
+      );
       _words = [];
     }
   }
