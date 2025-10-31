@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sozzle/core/common/widgets/scorecard.dart';
+import 'package:sozzle/src/game_play/view/components/crossword_clues_button.dart';
 import 'package:sozzle/src/game_play/view/components/hint.dart';
 import 'package:sozzle/src/home/home.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
@@ -20,9 +21,9 @@ class GamePlayHeader extends StatelessWidget {
           builder: (context, state) {
             final theme = context.watch<ThemeCubit>().state;
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(
-                top: renderColumn ? 16 : 32,
-              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ).copyWith(top: renderColumn ? 16 : 32),
               child: switch (renderColumn) {
                 true => MobileHeader(state: state, theme: theme),
                 _ => ConstrainedBox(
@@ -55,15 +56,21 @@ class DesktopHeader extends StatelessWidget {
             failedAttempts: '0',
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.home),
-          iconSize: 30,
-          color: theme.primaryTextColor,
-          onPressed: () {
-            context.go(HomePage.path);
-          },
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CrosswordCluesButton(),
+            IconButton(
+              icon: const Icon(Icons.home),
+              iconSize: 30,
+              color: theme.primaryTextColor,
+              onPressed: () {
+                context.go(HomePage.path);
+              },
+            ),
+            const Hint(),
+          ],
         ),
-        const Hint(),
       ],
     );
   }
@@ -80,12 +87,10 @@ class MobileHeader extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Scorecard(
-          level: state.progress.currentLevel,
-          failedAttempts: '0',
-        ),
+        Scorecard(level: state.progress.currentLevel, failedAttempts: '0'),
         Row(
           children: [
+            const CrosswordCluesButton(),
             IconButton(
               icon: const Icon(Icons.home),
               iconSize: 30,
