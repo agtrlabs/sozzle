@@ -64,13 +64,17 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
       }
     }
 
-    letters.clear();
+    /// I need this check to avoid clearing letters when we're in a test
+    /// environment where levelData.words might be empty.
+    if (widget.levelData.words.isNotEmpty) {
+      letters.clear();
 
-    letterCount.forEach((char, count) {
-      for (var i = 0; i < count; i++) {
-        letters.add(char);
-      }
-    });
+      letterCount.forEach((char, count) {
+        for (var i = 0; i < count; i++) {
+          letters.add(char);
+        }
+      });
+    }
   }
 
   @override
