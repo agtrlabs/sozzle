@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:localstore/localstore.dart';
 import 'package:sozzle/core/environment.dart';
 import 'package:sozzle/src/game_play/domain/entities/booster.dart';

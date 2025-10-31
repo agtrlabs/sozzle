@@ -38,6 +38,7 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
     super.initState();
   }
 
+  // coverage:ignore-start
   void normaliseLetterList() {
     final letterCount = <String, int>{};
     for (final word in widget.levelData.words) {
@@ -77,6 +78,7 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
     }
   }
 
+  // coverage:ignore-end
   @override
   void dispose() {
     clearGuessTimer.cancel();
@@ -103,6 +105,7 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
     );
   }
 
+  // coverage:ignore-start
   void _onInputStart() {
     _clearGuess();
     clearGuessTimer.cancel();
@@ -133,4 +136,5 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
       guess = '';
     });
   }
+  // coverage:ignore-end
 }

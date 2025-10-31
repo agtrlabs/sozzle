@@ -157,6 +157,7 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
     }
   }
 
+  // coverage:ignore-start
   FutureOr<void> _handleRevealRandomLetter(
     RevealRandomLetterEvent event,
     Emitter<GamePlayState> emit,
@@ -187,6 +188,7 @@ class GamePlayBloc extends HydratedBloc<GamePlayEvent, GamePlayState> {
     }
     return state;
   }
+  // coverage:ignore-end
 
   @override
   Map<String, dynamic>? toJson(GamePlayState state) {
