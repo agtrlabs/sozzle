@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:level_data/level_data.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
@@ -22,9 +23,10 @@ void main() {
   group('Apploader', () {
     /// System Under Test
     late MockApploaderRepository sut;
+    late ILevelRepository levelRepo;
 
     setUp(() {
-      final levelRepo = MockLevelRepo();
+      levelRepo = MockLevelRepo();
       final userStatsRepo = MockUserStatsRepo();
       final settingsRepo = MockSettingsRepo();
       sut = MockApploaderRepository(
@@ -39,6 +41,12 @@ void main() {
     });
 
     test('getLevels should return LevelList', () async {
+      final tLevelData = [
+        const LevelData.empty().copyWith(levelId: 1),
+        const LevelData.empty().copyWith(levelId: 2),
+      ];
+
+      when(() => levelRepo.getLevels()).thenAnswer((_) async => tLevelData);
       final result = await sut.getLevels();
       expect(result, isA<LevelList>());
     });
