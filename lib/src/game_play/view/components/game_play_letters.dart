@@ -11,7 +11,9 @@ import 'package:sozzle/src/game_play/view/components/guess_text.dart';
 
 class GamePlayLetters extends StatefulWidget {
   const GamePlayLetters(this.levelData, {super.key});
+
   final LevelData levelData;
+
   @override
   State<GamePlayLetters> createState() => _GamePlayLettersState();
 }
@@ -23,11 +25,52 @@ class _GamePlayLettersState extends State<GamePlayLetters> {
 
   @override
   void initState() {
-    // TODO(check): if needed, find anotherway to extract letters
-    letters = widget.levelData.boardData.toSet().toList()
-      ..remove(' ')
-      ..remove('');
+    letters = [];
+
+    for (final char in widget.levelData.boardData) {
+      if (char.trim().isNotEmpty) letters.add(char);
+    }
+
+    normaliseLetterList();
+
+    letters.shuffle();
+
     super.initState();
+  }
+
+  void normaliseLetterList() {
+    final letterCount = <String, int>{};
+    for (final word in widget.levelData.words) {
+      // Holds the count of each letter in the current word
+      final wordLetterCount = <String, int>{};
+      // For each letter in the word, count its occurrences
+      // and store in wordLetterCount
+      for (final char in word.split('')) {
+        wordLetterCount[char] = (wordLetterCount[char] ?? 0) + 1;
+      }
+      // Update the overall letterCount to ensure it has
+      // the maximum count needed for each letter
+      // For example, if the letter 'A' appears 2 times in one word
+      // and 3 times in another, letterCount['A'] should be 3
+      for (final entry in wordLetterCount.entries) {
+        final char = entry.key;
+        final count = entry.value;
+        if (letterCount.containsKey(char)) {
+          letterCount[char] =
+              letterCount[char]! < count ? count : letterCount[char]!;
+        } else {
+          letterCount[char] = count;
+        }
+      }
+    }
+
+    letters.clear();
+
+    letterCount.forEach((char, count) {
+      for (var i = 0; i < count; i++) {
+        letters.add(char);
+      }
+    });
   }
 
   @override
