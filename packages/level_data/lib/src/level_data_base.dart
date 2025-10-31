@@ -1,44 +1,58 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:level_data/src/crossword_base.dart';
 import 'package:level_data/src/reward_base.dart';
 
+/// A model representing the data of a level in the game
 class LevelData extends Equatable {
+  /// Creates a [LevelData] instance
   const LevelData({
     required this.levelId,
     required this.words,
     required this.boardWidth,
     required this.boardHeight,
     required this.boardData,
+    required this.crosswords,
     this.rewards = const [],
   });
 
-  LevelData.empty()
-      : levelId = 0,
-        words = const [],
-        boardWidth = 0,
-        boardHeight = 0,
-        boardData = const [],
-        rewards = const [];
+  /// Creates an empty [LevelData] instance
+  const LevelData.empty()
+    : levelId = 0,
+      words = const [],
+      boardWidth = 0,
+      boardHeight = 0,
+      boardData = const [],
+      crosswords = const {},
+      rewards = const [];
 
+  /// Creates a [LevelData] instance from a JSON string
   factory LevelData.fromJson(String json) =>
       LevelData.fromMap(jsonDecode(json) as Map<String, dynamic>);
 
+  /// Creates a [LevelData] instance from a map
   factory LevelData.fromMap(Map<String, dynamic> json) => LevelData(
-        levelId: json['id'] as int,
-        boardHeight: json['rows'] as int,
-        boardWidth: json['cols'] as int,
-        boardData: List<String>.from(json['board'] as List<dynamic>),
-        words: List<String>.from(json['words'] as List<dynamic>),
-        rewards: List<String>.from((json['rewards'] as List<dynamic>)).map((e) {
-          return Reward.fromJson(e);
-        }).toList(),
-      );
+    levelId: json['id'] as int,
+    boardHeight: json['rows'] as int,
+    boardWidth: json['cols'] as int,
+    boardData: List<String>.from(json['board'] as List<dynamic>),
+    words: List<String>.from(json['words'] as List<dynamic>),
+    rewards: List<String>.from(json['rewards'] as List<dynamic>).map((e) {
+      return Reward.fromJson(e);
+    }).toList(),
+    crosswords: (json['crosswords'] as Map<String, dynamic>).map(
+      (key, value) => MapEntry(
+        key,
+        Crossword.fromMap(value as Map<String, dynamic>),
+      ),
+    ),
+  );
 
   static const _levelPoint = 50;
 
   /// The points gained from this level
-  static get levelPoint => _levelPoint;
+  static int get levelPoint => _levelPoint;
 
   /// level id
   final int levelId;
@@ -74,30 +88,40 @@ class LevelData extends Equatable {
   /// The rewards gained from this level
   final List<Reward> rewards;
 
-  Map<String, dynamic> toMap() => {
-        'id': levelId,
-        'board': boardData,
-        'words': words,
-        'rows': boardHeight,
-        'cols': boardWidth,
-        'rewards': rewards.map((e) => e.toJson()).toList(),
-      };
+  /// The crosswords in the level
+  final Map<String, Crossword> crosswords;
 
+  /// Converts the [LevelData] instance to a map
+  Map<String, dynamic> toMap() => {
+    'id': levelId,
+    'board': boardData,
+    'words': words,
+    'rows': boardHeight,
+    'cols': boardWidth,
+    'rewards': rewards.map((e) => e.toJson()).toList(),
+    'crosswords': crosswords.map(
+      (key, value) => MapEntry(key, value.toMap()),
+    ),
+  };
+
+  /// Converts the [LevelData] instance to a JSON string
   String toJson() => json.encode(toMap());
 
   @override
   List<dynamic> get props => [
-        levelId,
-        words,
-        boardHeight,
-        boardWidth,
-        boardData,
-        rewards,
-      ];
+    levelId,
+    words,
+    boardHeight,
+    boardWidth,
+    boardData,
+    rewards,
+    crosswords.keys,
+  ];
 
   @override
   bool get stringify => true;
 
+  /// Creates a copy of the current [LevelData] with optional new values
   LevelData copyWith({
     int? levelId,
     List<String>? words,
@@ -105,6 +129,7 @@ class LevelData extends Equatable {
     int? boardWidth,
     List<String>? boardData,
     List<Reward>? rewards,
+    Map<String, Crossword>? crosswords,
   }) {
     return LevelData(
       levelId: levelId ?? this.levelId,
@@ -113,6 +138,7 @@ class LevelData extends Equatable {
       boardWidth: boardWidth ?? this.boardWidth,
       boardData: boardData ?? this.boardData,
       rewards: rewards ?? this.rewards,
+      crosswords: crosswords ?? this.crosswords,
     );
   }
 }

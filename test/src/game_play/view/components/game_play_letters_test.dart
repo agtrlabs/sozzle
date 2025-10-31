@@ -11,7 +11,7 @@ void main() {
       (tester) async {
         await tester.pumpApp(
           GamePlayLetters(
-            LevelData.empty().copyWith(boardData: ['A', 'B', 'C']),
+            const LevelData.empty().copyWith(boardData: ['A', 'B', 'C']),
           ),
         );
 

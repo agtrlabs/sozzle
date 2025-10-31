@@ -48,6 +48,7 @@ EXIST
       boardHeight: 5,
       levelId: 1,
       words: const ['EXIST', 'TEST'],
+      crosswords: const {},
     );
     setUp(() {
       bloc = GamePlayBloc(
@@ -156,6 +157,7 @@ R D
       boardHeight: 4,
       levelId: 2,
       words: const ['LOWR', 'WORD', 'OLD', 'LOW', 'OWL', 'WORLD'],
+      crosswords: const {},
     );
     setUp(() {
       bloc = GamePlayBloc(

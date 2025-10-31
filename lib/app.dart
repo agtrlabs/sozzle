@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:level_generator/level_generator.dart';
 import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/arb/app_localizations.dart';
 import 'package:sozzle/src/apploader/application/apploader_repository.dart';
@@ -25,7 +26,15 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ILevelRepository>(
-          create: (context) => LevelRepository(),
+          create: (context) => LevelRepository(
+            levelGenerator: LevelGenerator(
+              crosswordGenerator: CrosswordGenerator(),
+              wordListService: WordListService(
+                wordListPath: 'assets/words/wordlist.txt',
+              ),
+              definitionFetcher: DefinitionFetcher(),
+            ),
+          ),
         ),
         RepositoryProvider<IUserStatsRepository>(
           create: (context) => UserStatsRepository(),

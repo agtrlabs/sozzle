@@ -29,6 +29,8 @@ dependencies:
   intl: ^0.20.2
   level_data:
     path: packages/level_data
+  level_generator:
+    path: packages/level_generator
   localstore: ^1.4.0
   path_provider: ^2.1.5
   rive: ^0.14.0-dev.11

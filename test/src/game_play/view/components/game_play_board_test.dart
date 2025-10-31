@@ -22,6 +22,7 @@ void main() {
     boardHeight: 4,
     levelId: 2,
     words: const ['LOWR', 'WORD', 'OLD', 'LOW', 'OWL', 'WORLD'],
+    crosswords: const {},
   );
   group('GamePlayBoard', () {
     late MockUserStatsCubit userStatsCubit;

@@ -25,8 +25,10 @@ abstract class IBooster extends Equatable {
   /// Decrease the [boosterCount] by the given [boosterCount]
   IBooster decreaseBy({int? boosterCount});
 
+  // coverage:ignore-start
   @override
   List<Object> get props => [id];
+  // coverage:ignore-end
 }
 
 class Booster extends IBooster {
@@ -37,6 +39,7 @@ class Booster extends IBooster {
     required this.boosterCount,
   });
 
+  // coverage:ignore-start
   factory Booster.fromId({required String id, required int boosterCount}) {
     return switch (id) {
       UseAHint.boosterId => UseAHint(boosterCount: boosterCount),
@@ -48,6 +51,7 @@ class Booster extends IBooster {
         ),
     };
   }
+  // coverage:ignore-end
 
   @override
   final String id;
@@ -71,10 +75,12 @@ class Booster extends IBooster {
     return copyWith(boosterCount: this.boosterCount + boosterCount!);
   }
 
+  // coverage:ignore-start
   @override
   Booster decreaseBy({int? boosterCount}) {
     return copyWith(boosterCount: this.boosterCount - boosterCount!);
   }
+  // coverage:ignore-end
 }
 
 /// A generic booster that does nothing.

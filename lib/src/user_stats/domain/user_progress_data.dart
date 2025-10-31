@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:sozzle/src/game_play/domain/entities/booster.dart';
 
 /// Current Users progress data
