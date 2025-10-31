@@ -7,7 +7,7 @@ void main() {
     test('can be instantiated', () {
       final generator = LevelGenerator(
         crosswordGenerator: CrosswordGenerator(),
-        wordListService: WordListService(),
+        wordListService: WordListService(wordListPath: 'Test String'),
         definitionFetcher: DefinitionFetcher(),
       );
       expect(generator, isNotNull);

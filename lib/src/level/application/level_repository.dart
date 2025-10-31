@@ -51,10 +51,11 @@ class LevelRepository implements ILevelRepository {
 
   @override
   Future<List<LevelData>> getLevels() async {
-    final data = await _db.collection('levels').get()
-        as Map<String, Map<String, dynamic>>?;
+    final data = await _db.collection('levels').get();
     if (data == null) return [];
-    return data.values.map(LevelData.fromMap).toList(growable: false);
+    return List<Map<String, dynamic>>.from(data.values)
+        .map(LevelData.fromMap)
+        .toList(growable: false);
   }
 
   Future<void> deleteLevels() async {
