@@ -161,7 +161,7 @@ class _ClueItem extends StatelessWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: isFound
-                    ? theme.primaryTextColor.withOpacity(0.5)
+                    ? theme.primaryTextColor.withValues(alpha: 0.5)
                     : theme.primaryTextColor,
               ),
             ),
@@ -178,7 +178,7 @@ class _ClueItem extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     color: isFound
-                        ? theme.primaryTextColor.withOpacity(0.5)
+                        ? theme.primaryTextColor.withValues(alpha: 0.5)
                         : theme.primaryTextColor,
                     decoration: isFound ? TextDecoration.lineThrough : null,
                   ),
@@ -192,7 +192,7 @@ class _ClueItem extends StatelessWidget {
                       '(${clue.word.length} letters)',
                       style: TextStyle(
                         fontSize: 13,
-                        color: theme.primaryTextColor.withOpacity(0.6),
+                        color: theme.primaryTextColor.withValues(alpha: 0.6),
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -201,7 +201,7 @@ class _ClueItem extends StatelessWidget {
                       Icon(
                         Icons.check_circle,
                         size: 16,
-                        color: Colors.green.withOpacity(0.7),
+                        color: Colors.green.withValues(alpha: 0.7),
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -209,7 +209,7 @@ class _ClueItem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Colors.green.withOpacity(0.7),
+                          color: Colors.green.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
