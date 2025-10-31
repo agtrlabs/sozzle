@@ -57,9 +57,16 @@ class CrosswordGrid {
 
   /// Flattens the 2D [gridData] into the 1D [boardData] format
   /// your game expects.
+  ///
+  /// LevelData uses column-major order: index = col * height + row
+  /// So we iterate columns first, then rows.
   List<String> get flattenedBoardData {
     final flatList = <String>[];
-    gridData.forEach(flatList.addAll);
+    for (var col = 0; col < width; col++) {
+      for (var row = 0; row < height; row++) {
+        flatList.add(gridData[row][col]);
+      }
+    }
     return flatList;
   }
 }

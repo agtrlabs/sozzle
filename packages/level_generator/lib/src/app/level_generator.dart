@@ -89,8 +89,8 @@ class LevelGenerator {
     return LevelData(
       levelId: level,
       words: levelWords,
-      boardWidth: grid.height,
-      boardHeight: grid.width,
+      boardWidth: grid.width,
+      boardHeight: grid.height,
       boardData: grid.flattenedBoardData,
       crosswords: crosswords,
     );
