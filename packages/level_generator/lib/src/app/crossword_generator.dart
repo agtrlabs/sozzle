@@ -45,7 +45,7 @@ class CrosswordGrid {
     }
   }
 
-  /// Flattens the 2D [gridData] into the 1D [boardData] format
+  /// Flattens the 2D [gridData] into the 1D `boardData` format
   /// your game expects.
   List<String> get flattenedBoardData {
     final flatList = <String>[];
@@ -225,6 +225,7 @@ class CrosswordGenerator {
     // We must intersect with at least one word.
     // (This check is implicitly handled by _findAllValidPlacements,
     // but we can add a counter if we want to be explicit)
+    // ignore: unused_local_variable
     var intersections = 0;
 
     for (var k = 0; k < word.length; k++) {
