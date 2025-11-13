@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:game_core/game_core.dart';
 import 'package:sozzle/src/apploader/apploader.dart';
 import 'package:sozzle/src/game_play/bloc/game_play_bloc.dart';
 import 'package:sozzle/src/settings/cubit/setting_cubit.dart';
@@ -18,3 +19,6 @@ class MockAppLoaderCubit extends MockCubit<ApploaderState>
 
 class MockGamePlayBloc extends MockBloc<GamePlayEvent, GamePlayState>
     implements GamePlayBloc {}
+
+class MockGameCoreBloc extends MockBloc<GameCoreEvent, GameCoreState>
+    implements GameCoreBloc {}
