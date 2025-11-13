@@ -1,3 +1,6 @@
+// This is a test for the deprecated version of the generator
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:level_generator/src/app/crossword_generator.dart';
 import 'package:test/test.dart';
 
