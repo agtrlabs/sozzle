@@ -3,26 +3,32 @@ import 'package:go_router/go_router.dart';
 
 class BorderElevatedButton extends StatelessWidget {
   const BorderElevatedButton({
-    required this.route,
     required this.text,
     required this.backgroundColor,
     required this.borderColor,
     required this.textColor,
+    this.route,
+    this.onPressed,
     super.key,
-  });
+  }) : assert(
+          route == null || onPressed == null,
+          'Either route or onPressed must be provided, not both.',
+        );
 
-  final String route;
   final String text;
   final Color backgroundColor;
   final Color borderColor;
   final Color textColor;
+  final String? route;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        context.go(route);
-      },
+      onPressed: onPressed ??
+          () {
+            context.go(route!);
+          },
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(backgroundColor),
         side: WidgetStateProperty.all(
