@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:level_data/level_data.dart';
 
 void main() {
@@ -41,6 +43,6 @@ void main() {
       ],
   );
 
-  print(level);
+  log(level.toString(), name: 'LevelDataExample');
 
 }
