@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:game_core/game_core.dart';
 import 'package:level_generator/level_generator.dart';
 import 'package:sozzle/core/routes/routes.dart';
 import 'package:sozzle/l10n/arb/app_localizations.dart';
@@ -12,6 +13,7 @@ import 'package:sozzle/src/apploader/application/apploader_repository.dart';
 import 'package:sozzle/src/apploader/cubit/apploader_cubit.dart';
 import 'package:sozzle/src/audio/audio_controller.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
+import 'package:sozzle/src/game_core/game_core.dart';
 import 'package:sozzle/src/level/application/level_repository.dart';
 import 'package:sozzle/src/level/domain/i_level_repository.dart';
 import 'package:sozzle/src/settings/application/setting_repository.dart';
@@ -72,6 +74,16 @@ class App extends StatelessWidget {
             create: (context) => UserStatsCubit(
               context.read<IUserStatsRepository>(),
             )..readCurrentStats(),
+          ),
+          BlocProvider(
+            create: (context) => GameCoreBloc(
+              levelRepository: LevelRepositoryAdapter(
+                levelRepository: context.read<ILevelRepository>(),
+              ),
+              progressRepository: UserProgressRepositoryAdapter(
+                userStatsRepository: context.read<IUserStatsRepository>(),
+              ),
+            )..add(const GameStarted()),
           ),
         ],
         child: RepositoryProvider<IAudioController>(
