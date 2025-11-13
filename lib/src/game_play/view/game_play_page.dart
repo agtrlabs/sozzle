@@ -1,15 +1,10 @@
 // coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:level_data/level_data.dart';
+import 'package:game_core/game_core.dart';
 import 'package:sozzle/src/audio/domain/i_audio_controller.dart';
 import 'package:sozzle/src/game_play/game_play.dart';
-import 'package:sozzle/src/game_play/view/components/game_loader.dart';
-import 'package:sozzle/src/level/domain/i_level_repository.dart';
-import 'package:sozzle/src/level_won/view/level_complete_page.dart';
 import 'package:sozzle/src/theme/theme.dart';
-import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
 
 class GamePlayPage extends StatelessWidget {
   const GamePlayPage({required this.levelID, super.key});
@@ -24,51 +19,50 @@ class GamePlayPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: themeState.backgroundColor,
           body: Center(
-            child: GameLoader(
-              future: RepositoryProvider.of<ILevelRepository>(context)
-                  .getLevel(levelID),
-              builder:
-                  (BuildContext context, AsyncSnapshot<LevelData> snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
+            child: BlocBuilder<GameCoreBloc, GameCoreState>(
+              builder: (context, gameCoreState) {
+                if (gameCoreState is GameCoreLoadingLevel) {
                   return const CircularProgressIndicator();
                 }
-                if (!snapshot.hasData) {
-                  return const Text('Ops an error!');
-                } else {
-                  final bloc = GamePlayBloc(
-                    levelData: snapshot.data!,
-                    audio: RepositoryProvider.of<IAudioController>(context),
-                  );
-                  debugPrint(bloc.levelData.words.toString());
-                  return BlocProvider<GamePlayBloc>(
-                    create: (context) =>
-                        bloc..add(const GamePlayInitialEvent()),
-                    child: BlocListener<GamePlayBloc, GamePlayState>(
-                      listener: (context, state) {
-                        if (state.actualState == GamePlayActualState.allFound) {
-                          context.read<UserStatsCubit>().advanceLevelUp();
-                          final levelData = bloc.levelData;
-                          context.go(LevelCompletePage.path, extra: levelData);
-                        }
-                      },
-                      child: Flex(
-                        direction: Axis.vertical,
-                        children: [
-                          const GamePlayHeader(),
-                          const SizedBox(height: 10),
-                          Flexible(
-                            flex: 4,
-                            child: GamePlayBoard(snapshot.data!),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: GamePlayLetters(snapshot.data!),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+
+                if (gameCoreState is! GameCorePlaying) {
+                  return const Text('Loading level...');
                 }
+
+                final level = gameCoreState.level;
+                final bloc = GamePlayBloc(
+                  levelData: level.data,
+                  audio: RepositoryProvider.of<IAudioController>(context),
+                );
+
+                return BlocProvider<GamePlayBloc>(
+                  create: (context) => bloc..add(const GamePlayInitialEvent()),
+                  child: BlocListener<GamePlayBloc, GamePlayState>(
+                    listener: (context, state) {
+                      if (state.actualState == GamePlayActualState.allFound) {
+                        // Notify GameCore that the level is completed
+                        context
+                            .read<GameCoreBloc>()
+                            .add(const LevelCompleted());
+                      }
+                    },
+                    child: Flex(
+                      direction: Axis.vertical,
+                      children: [
+                        const GamePlayHeader(),
+                        const SizedBox(height: 10),
+                        Flexible(
+                          flex: 4,
+                          child: GamePlayBoard(level.data),
+                        ),
+                        Flexible(
+                          flex: 3,
+                          child: GamePlayLetters(level.data),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },
             ),
           ),
