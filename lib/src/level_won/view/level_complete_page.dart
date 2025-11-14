@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_core/game_core.dart';
 import 'package:level_data/level_data.dart';
 import 'package:rive/rive.dart';
 import 'package:sozzle/core/common/widgets/sozzle_app_bar.dart';
 import 'package:sozzle/core/res/media.dart';
-import 'package:sozzle/src/game_play/view/game_play_page.dart';
-import 'package:sozzle/src/home/view/home_page.dart';
 import 'package:sozzle/src/level_won/level_won.dart';
 
 class LevelCompletePage extends StatefulWidget {
@@ -52,7 +51,9 @@ class _LevelCompletePageState extends State<LevelCompletePage> {
           icon: const Icon(Icons.home),
           color: Colors.white,
           onPressed: () {
-            context.go(HomePage.path);
+            context.read<GameCoreBloc>().add(
+                  const ReturnToHomeRequested(),
+                );
           },
         ),
       ),
@@ -92,9 +93,9 @@ class _LevelCompletePageState extends State<LevelCompletePage> {
                                   const EdgeInsets.symmetric(horizontal: 45),
                               child: NextLevelButton(
                                 onPressed: () {
-                                  context.go(
-                                    '${GamePlayPage.path}/${widget.levelData.levelId + 1}',
-                                  );
+                                  context.read<GameCoreBloc>().add(
+                                        const NextLevelRequested(),
+                                      );
                                 },
                               ),
                             ),

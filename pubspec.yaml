@@ -19,6 +19,8 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
+  game_core:
+    path: packages/game_core
   go_router: ^16.2.1
   grid_board:
     git:

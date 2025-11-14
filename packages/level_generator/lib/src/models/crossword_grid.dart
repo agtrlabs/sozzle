@@ -55,7 +55,7 @@ class CrosswordGrid {
     }
   }
 
-  /// Flattens the 2D [gridData] into the 1D [boardData] format
+  /// Flattens the 2D [gridData] into the 1D `boardData` format
   /// your game expects.
   ///
   /// LevelData uses column-major order: index = col * height + row

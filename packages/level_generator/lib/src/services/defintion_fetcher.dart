@@ -35,6 +35,7 @@ class DefinitionFetcher {
 
   /// Fetches a single word's definition with exponential backoff for
   /// resilience.
+  // ignore: unused_element
   Future<MapEntry<String, String>> _fetchSingleAIDefinition(
     String word, {
     int attempt = 0,

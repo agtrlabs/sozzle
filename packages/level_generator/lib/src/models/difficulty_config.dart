@@ -1,5 +1,6 @@
 /// Configuration for the game difficulty
 class DifficultyConfig {
+  /// Configuration for the game difficulty
   const DifficultyConfig({
     required this.minWordLength,
     required this.maxWordLength,
@@ -87,6 +88,7 @@ class DifficultyConfig {
   /// Base size of the grid (width and height)
   final int baseGridSize;
 
+  /// The difficulty level as a string
   final String difficulty;
 
   /// Create a copy with some fields replaced

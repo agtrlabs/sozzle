@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_core/game_core.dart';
 import 'package:sozzle/src/common/border_elevated_button.dart';
 import 'package:sozzle/src/home/view/play_button.dart';
 import 'package:sozzle/src/theme/theme.dart';
-import 'package:sozzle/src/user_stats/user_stats.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,9 +29,10 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            BlocBuilder<UserStatsCubit, UserStatsState>(
+            BlocBuilder<GameCoreBloc, GameCoreState>(
               builder: (context, state) {
-                return PlayButton(state.progress.currentLevel.toString());
+                final levelId = state.progress.currentLevel;
+                return PlayButton(levelId);
               },
             ),
             const SizedBox(
