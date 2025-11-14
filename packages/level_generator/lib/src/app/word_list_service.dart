@@ -3,17 +3,72 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math';
 
-// import 'package:flutter/services.dart';
-
 /// Service for managing word lists and selecting appropriate words for levels.
+///
+/// This service supports multiple loading strategies to work across platforms:
+///
+/// **For Flutter apps (mobile/web):**
+/// ```dart
+/// import 'package:flutter/services.dart';
+///
+/// final service = WordListService(
+///   wordLoader: () => rootBundle.loadString('assets/words/wordlist.txt'),
+///   description: 'assets/words/wordlist.txt',
+/// );
+/// ```
+///
+/// **For desktop/CLI/tests:**
+/// ```dart
+/// final service = WordListService.fromFile(
+///   filePath: 'path/to/wordlist.txt',
+/// );
+/// ```
+///
+/// **For tests with fixtures:**
+/// ```dart
+/// final service = WordListService(
+///   wordLoader: () async => 'WORD1\nWORD2\nWORD3',
+///   description: 'test fixture',
+/// );
+/// ```
 class WordListService {
   /// Service for managing word lists and selecting appropriate words for
   /// levels.
-  WordListService({required String wordListPath, Random? random})
-    : _wordListPath = wordListPath,
-      _random = random ?? Random();
+  ///
+  /// [wordLoader] is an async function that returns the raw word list content
+  /// as a string. This allows for flexible loading strategies (e.g., from
+  /// Flutter assets, from a file, or from a test fixture).
+  ///
+  /// [description] is an optional label used for logging purposes.
+  WordListService({
+    required Future<String> Function() wordLoader,
+    String? description,
+    Random? random,
+  }) : _wordLoader = wordLoader,
+       _description = description ?? 'word list',
+       _random = random ?? Random();
 
-  final String _wordListPath;
+  /// Factory constructor for loading from a file path (useful for CLI/desktop).
+  ///
+  /// Example:
+  /// ```dart
+  /// final service = WordListService.fromFile(
+  ///   filePath: '/path/to/wordlist.txt',
+  /// );
+  /// ```
+  factory WordListService.fromFile({
+    required String filePath,
+    Random? random,
+  }) {
+    return WordListService(
+      wordLoader: () => File(filePath).readAsString(),
+      description: filePath,
+      random: random,
+    );
+  }
+
+  final Future<String> Function() _wordLoader;
+  final String _description;
   final Random _random;
 
   List<String> _words = [];
@@ -153,14 +208,14 @@ class WordListService {
     return 3 + ((levelNumber - 1) ~/ 5) + 1;
   }
 
-  /// Loads the word list from the specified file.
+  /// Loads the word list using the provided loader function.
   Future<void> loadWords() async {
     try {
       if (_loadAttempts < 10 && _words.isNotEmpty) {
         _loadAttempts++;
         return;
       }
-      final wordList = await File(_wordListPath).readAsString();
+      final wordList = await _wordLoader();
       _words = wordList
           .split('\n')
           .where((w) => w.trim().isNotEmpty)
@@ -168,7 +223,7 @@ class WordListService {
           .toList();
     } on Exception catch (e) {
       dev.log(
-        'Error loading word list from $_wordListPath: $e',
+        'Error loading word list from $_description: $e',
         name: 'WordListService.loadWords',
         error: e,
       );
