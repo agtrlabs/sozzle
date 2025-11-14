@@ -1,8 +1,7 @@
 // Copyright (c) 2022, AGTR Labs
 // coverage:ignore-file
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:game_core/game_core.dart';
@@ -34,7 +33,9 @@ class App extends StatelessWidget {
             levelGenerator: LevelGenerator(
               crosswordGenerator: CrosswordGenerator(),
               wordListService: WordListService(
-                wordListPath: File('assets/words/wordlist.txt').absolute.path,
+                wordLoader: () =>
+                    rootBundle.loadString('assets/words/wordlist.txt'),
+                description: 'assets/words/wordlist.txt',
               ),
               definitionFetcher: DefinitionFetcher(),
             ),
