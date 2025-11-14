@@ -1,13 +1,13 @@
 // coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_core/game_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sozzle/core/common/widgets/scorecard.dart';
 import 'package:sozzle/src/game_play/view/components/crossword_clues_button.dart';
 import 'package:sozzle/src/game_play/view/components/hint.dart';
 import 'package:sozzle/src/home/home.dart';
 import 'package:sozzle/src/theme/cubit/theme_cubit.dart';
-import 'package:sozzle/src/user_stats/cubit/user_stats_cubit.dart';
 
 class GamePlayHeader extends StatelessWidget {
   const GamePlayHeader({super.key});
@@ -17,7 +17,7 @@ class GamePlayHeader extends StatelessWidget {
     return LayoutBuilder(
       builder: (_, constraint) {
         final renderColumn = constraint.maxWidth < 731;
-        return BlocBuilder<UserStatsCubit, UserStatsState>(
+        return BlocBuilder<GameCoreBloc, GameCoreState>(
           builder: (context, state) {
             final theme = context.watch<ThemeCubit>().state;
             return Padding(
@@ -42,7 +42,7 @@ class GamePlayHeader extends StatelessWidget {
 class DesktopHeader extends StatelessWidget {
   const DesktopHeader({required this.state, required this.theme, super.key});
 
-  final UserStatsState state;
+  final GameCoreState state;
   final ThemeState theme;
 
   @override
@@ -79,7 +79,7 @@ class DesktopHeader extends StatelessWidget {
 class MobileHeader extends StatelessWidget {
   const MobileHeader({required this.state, required this.theme, super.key});
 
-  final UserStatsState state;
+  final GameCoreState state;
   final ThemeState theme;
 
   @override
