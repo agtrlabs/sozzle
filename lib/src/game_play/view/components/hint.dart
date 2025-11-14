@@ -56,11 +56,14 @@ class _HintState extends State<Hint> {
     final themeState = context.read<ThemeCubit>().state;
     _theme?.value = themeState is ThemeStateDark;
     _textColour?.value = themeState.primaryTextColor;
-    _hintCount?.value = statsState.progress.boosters
-        .whereType<UseAHint>()
-        .first
-        .boosterCount
-        .toDouble();
+    final hintBoosters = statsState.progress.boosters.whereType<UseAHint>();
+
+    for (final booster in hintBoosters) {
+      if (booster.boosterCount > 0) {
+        _hintCount?.value = booster.boosterCount.toDouble();
+        break;
+      }
+    }
   }
 
   void flipBulbByBooster(UserStatsState statsState) {
