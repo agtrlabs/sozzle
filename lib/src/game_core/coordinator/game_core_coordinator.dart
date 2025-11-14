@@ -42,7 +42,7 @@ class GameCoreCoordinator extends StatelessWidget {
           case GameCoreIdle():
             // Navigate to home when game is idle
             // (unless we're already there or on settings/splash)
-            if (!currentLocation.startsWith(HomePage.path) &&
+            if (currentLocation != HomePage.path &&
                 !currentLocation.contains('/settings') &&
                 !currentLocation.contains('/splash')) {
               context.go(HomePage.path);

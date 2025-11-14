@@ -31,7 +31,7 @@ void main() {
       );
       when(() => appLoaderRepo.getUserProgressData())
           .thenAnswer((invocation) async => UserProgressData(currentLevel: 1));
-      when(() => appLoaderRepo.saveData())
+      when(() => appLoaderRepo.saveData(writeToDisk: any(named: 'writeToDisk')))
           .thenAnswer((_) => Stream.fromIterable([0, 0.4, 0.6, 0.8, 1]));
     });
 

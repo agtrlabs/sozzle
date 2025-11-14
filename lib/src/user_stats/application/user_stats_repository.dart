@@ -23,10 +23,6 @@ class UserStatsRepository implements IUserStatsRepository {
       await save(initialProgress);
       return initialProgress;
     }
-    // TODO(REMOVE): Remove this code before production or after we add levels
-    if ((data['currentLevel'] as num).toInt() > 2) {
-      await _db.collection('stats').delete();
-    }
     var progress = UserProgressData.fromMap(data);
     if (Environment.instance.type == EnvironmentType.PRODUCTION) {
       return progress;

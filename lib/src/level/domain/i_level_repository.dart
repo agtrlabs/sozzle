@@ -5,5 +5,6 @@ import 'package:level_data/level_data.dart';
 abstract class ILevelRepository {
   Future<LevelData> getLevel(int id);
   Future<List<LevelData>> getLevels();
+  Future<bool> hasLevel(int levelId);
   Future<void> setLevel(LevelData level);
 }

@@ -18,5 +18,5 @@ abstract class IApploaderRepository {
   Future<Settings> getSetting();
   Future<LevelList> getLevels();
   Future<UserProgressData> getUserProgressData();
-  Stream<double> saveData();
+  Stream<double> saveData({bool writeToDisk = true});
 }
