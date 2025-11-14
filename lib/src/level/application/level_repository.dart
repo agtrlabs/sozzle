@@ -16,7 +16,6 @@ class LevelRepository implements ILevelRepository {
 
   @override
   Future<LevelData> getLevel(int levelId) async {
-    // TODO(any): error handling
     try {
       final data = await _db.collection('levels').doc('$levelId').get();
       if (data == null) {
@@ -56,6 +55,12 @@ class LevelRepository implements ILevelRepository {
     return List<Map<String, dynamic>>.from(data.values)
         .map(LevelData.fromMap)
         .toList(growable: false);
+  }
+
+  @override
+  Future<bool> hasLevel(int levelId) async {
+    final data = await _db.collection('levels').doc('$levelId').get();
+    return data != null;
   }
 
   Future<void> deleteLevels() async {

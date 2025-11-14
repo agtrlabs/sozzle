@@ -25,6 +25,8 @@ class MockApploaderRepository implements IApploaderRepository {
   @override
   Future<LevelList> getLevels() async {
     final levels = await levelRepository.getLevels();
+    // Clear the list before adding to prevent accumulation
+    list = LevelList([]);
     list.levels.addAll(levels);
     return list;
   }
@@ -35,14 +37,20 @@ class MockApploaderRepository implements IApploaderRepository {
   }
 
   @override
-  Stream<double> saveData() async* {
+  Stream<double> saveData({bool writeToDisk = true}) async* {
     /// progress percent
     var progress = 0.0;
     yield progress;
     final increment = (1 / list.levels.length) * 100;
 
     for (final level in list.levels) {
-      await levelRepository.setLevel(level);
+      // Only write to disk if requested and level doesn't already exist
+      if (writeToDisk) {
+        final exists = await levelRepository.hasLevel(level.levelId);
+        if (!exists) {
+          await levelRepository.setLevel(level);
+        }
+      }
       //update percent
       progress += increment;
       //level save to file

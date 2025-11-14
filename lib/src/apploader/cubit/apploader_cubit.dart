@@ -66,7 +66,8 @@ class ApploaderCubit extends Cubit<ApploaderState> {
 
     await apploaderRepository.getUserProgressData();
 
-    final saveData = apploaderRepository.saveData();
+    // Reuse progress without writing to disk (already done in updatePuzzleData)
+    final saveData = apploaderRepository.saveData(writeToDisk: false);
 
     await for (final percent in saveData) {
       emit(
